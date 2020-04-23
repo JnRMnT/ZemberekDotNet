@@ -20,3 +20,9 @@ steps:
     command: 'test'
     projects: '**/*.csproj'
   displayName: Run Tests
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+  displayName: Publish Artifacts
