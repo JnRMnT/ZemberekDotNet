@@ -14,3 +14,9 @@ steps:
   inputs:
     command: 'build'
     projects: '**/*.csproj'
+  displayName: Build Solution
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: '**/*.csproj'
+  displayName: Run Tests
