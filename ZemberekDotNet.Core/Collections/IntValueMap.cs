@@ -193,14 +193,9 @@ namespace ZemberekDotNet.Core.Collections
             return res;
         }
 
-        public IEnumerator<T> GetEnumerator()
+        public override IEnumerator<T> GetEnumerator()
         {
             return new EntryIterator(this) as IEnumerator<T>;
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return new EntryIterator(this);
         }
 
         public class Entry<X> : IComparable<Entry<X>>

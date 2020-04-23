@@ -268,14 +268,14 @@ namespace ZemberekDotNet.Core.Collections
                 " Keys = " + keys + " ]";
         }
 
-        public IEnumerator<T> GetEnumerator()
+        public virtual IEnumerator<T> GetEnumerator()
         {
             return new KeyEnumerator(this);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return new KeyEnumerator(this);
+            return GetEnumerator();
         }
 
         private class KeyEnumerator : IEnumerator<T>
