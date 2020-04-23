@@ -14,12 +14,12 @@ steps:
   inputs:
     command: 'build'
     projects: '**/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
   displayName: Build Solution
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
     projects: '**/*.csproj'
+    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
   displayName: Run Tests
 - task: CopyFiles@2
   inputs:
