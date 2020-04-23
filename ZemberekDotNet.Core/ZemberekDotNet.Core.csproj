@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
@@ -11,23 +11,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\Text\html-char-map-common.txt" />
-    <None Remove="Resources\Text\html-char-map-full.txt" />
-    <None Remove="Resources\Text\special-char-to-simple-char.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="log4net" Version="2.0.8" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Resources\Text\html-char-map-common.txt">
+      <Pack>true</Pack>
+      <PackagePath>\</PackagePath>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Text\html-char-map-full.txt">
+      <Pack>true</Pack>
+      <PackagePath>\</PackagePath>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Text\special-char-to-simple-char.txt">
+      <Pack>true</Pack>
+      <PackagePath>\</PackagePath>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
