@@ -15,21 +15,18 @@ namespace ZemberekDotNet.Core.IO
         public static readonly string LineSeperator = Environment.NewLine;
         public static readonly int CharBufferSize = 1 << 20;
         private static readonly int BYTE_BUFFER_SIZE = 1 << 20;
-        private static readonly byte[] bomBytes = new byte[] { (byte)0xef, (byte)0xbb, (byte)0xbf };
+        private static readonly byte[] bomBytes = new byte[] { 0xef, 0xbb, 0xbf };
 
         private IOs()
         {
         }
 
-        /**
-         * Reads a buffered reader as a single string. If there are multi lines, it appends a LINE
-         * SEPARATOR.
-         *
-         * @param reader a reader
-         * @return simple string representation of the entire reader. careful with the memory usage.
-         * @throws NullPointerException: if reader is null.
-         * @throws java.io.IOException if an IO error occurs.
-         */
+        /// <summary>
+        /// Reads a buffered reader as a single string. If there are multi lines, it appends a LINE
+        /// SEPARATOR.
+        /// </summary>
+        /// <param name="reader">a reader</param>
+        /// <returns>simple string representation of the entire reader. careful with the memory usage.</returns>
         public static string ReadAsString(StreamReader reader)
         {
             try
@@ -43,7 +40,9 @@ namespace ZemberekDotNet.Core.IO
                 }
                 if (sb.Length >= LineSeperator.Length)
                 {
-                    sb.Remove(sb.Length - LineSeperator.Length, sb.Length);
+                    int start = sb.Length - LineSeperator.Length;
+                    int length = sb.Length - start;
+                    sb.Remove(start, length);
                 }
                 return sb.ToString();
             }
@@ -274,7 +273,7 @@ namespace ZemberekDotNet.Core.IO
          * @return copied byte count.
          * @throws java.io.IOException if an IO error occurs.
          */
-        public static long Copy(BinaryReader inputStream, BinaryWriter outputStream)
+        public static long Copy(BinaryReader inputStream, Stream outputStream)
         {
             return Copy(inputStream, outputStream, false);
         }
@@ -287,7 +286,7 @@ namespace ZemberekDotNet.Core.IO
         /// <param name="outputStream">output stream</param>
         /// <param name="keepOutputOpen">keepOutputOpen if true, output stream will not be closed.</param>
         /// <returns></returns>
-        internal static long Copy(BinaryReader inputStream, BinaryWriter outputStream, bool keepOutputOpen)
+        internal static long Copy(BinaryReader inputStream, Stream outputStream, bool keepOutputOpen)
         {
             long total = 0;
             try
@@ -486,8 +485,8 @@ namespace ZemberekDotNet.Core.IO
          * @throws NullPointerException if the output is null
          * @throws java.io.IOException if an I/O error occurs
          */
-        public static void WriteTostringLines(
-            ICollection<object> lines,
+        public static void WriteTostringLines<T>(
+            ICollection<T> lines,
             StreamWriter writer)
         {
 
@@ -497,7 +496,7 @@ namespace ZemberekDotNet.Core.IO
             }
 
             long i = 0;
-            foreach (object line in lines)
+            foreach (T line in lines)
             {
                 string l = "";
                 if (line != null)

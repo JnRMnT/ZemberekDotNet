@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using ZemberekDotNet.Core.Native.Helpers;
 
 public static class ArrayExtensions
 {
@@ -20,5 +19,12 @@ public static class ArrayExtensions
         T[] copy = new T[newLength];
         Array.Copy(original, 0, copy, 0, Math.Min(original.Length, newLength));
         return copy;
+    }
+
+    public static byte[] ToByteArray<T>(this T[] array)
+    {
+        byte[] result = new byte[array.Length * SizeHelper.SizeOf(typeof(T))];
+        Buffer.BlockCopy(array, 0, result, 0, result.Length);
+        return result;
     }
 }

@@ -2,8 +2,7 @@
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Text;
-using ZemberekDotNet.Core.IO;
-using static ZemberekDotNet.Core.IO.Template;
+using static ZemberekDotNet.Core.IO.SimpleTextReader.Template;
 
 namespace ZemberekDotNet.Core.IO
 {
@@ -51,6 +50,14 @@ namespace ZemberekDotNet.Core.IO
         {
             Contract.Requires(filePath != null, "File name cannot be null..");
             streamReader = new StreamReader(new FileStream(filePath, FileMode.Open, FileAccess.Read));
+            encoding = Encoding.Default.BodyName;
+            this.template = new Template(encoding);
+        }
+        
+        public SimpleTextReader(Stream stream)
+        {
+            Contract.Requires(stream != null, "Stream cannot be null..");
+            streamReader = new StreamReader(stream);
             encoding = Encoding.Default.BodyName;
             this.template = new Template(encoding);
         }
@@ -375,92 +382,92 @@ namespace ZemberekDotNet.Core.IO
                 return this;
             }
         }
-    }
 
-    public class Template
-    {
-        internal string encoding;
-        internal bool trim = false;
-        internal bool ignoreWhiteSpaceLines = false;
-        internal string regexp;
-        internal string[] ignorePrefix;
-
-        public Template()
+        public class Template
         {
-            encoding = System.Text.Encoding.Default.BodyName;
-        }
+            internal string encoding;
+            internal bool trim = false;
+            internal bool ignoreWhiteSpaceLines = false;
+            internal string regexp;
+            internal string[] ignorePrefix;
 
-        public Template(string encoding)
-        {
-            this.encoding = encoding;
-        }
-
-        public Template Encoding(string encoding)
-        {
-            if (encoding == null)
+            public Template()
             {
-                this.encoding = System.Text.Encoding.Default.BodyName;
-            }
-            this.encoding = encoding;
-            return this;
-        }
-
-        public Template IgnoreWhiteSpaceLines()
-        {
-            this.ignoreWhiteSpaceLines = true;
-            return this;
-        }
-
-        public Template IgnoreIfStartsWith(params string[] prefix)
-        {
-            this.ignorePrefix = prefix;
-            return this;
-        }
-
-        public Template AllowMatchingRegexp(string regexp)
-        {
-            this.regexp = regexp;
-            return this;
-        }
-
-        public SimpleTextReader GenerateReader(StreamReader streamReader)
-        {
-            return new SimpleTextReader(streamReader, this);
-        }
-
-        public SimpleTextReader GenerateReader(string fileName)
-        {
-            return new SimpleTextReader(new StreamReader(new FileStream(fileName, FileMode.Open, FileAccess.Read)), this);
-        }
-
-        public Template Trim()
-        {
-            this.trim = true;
-            return this;
-        }
-
-
-        internal class IgnorePrefixFilter : IFilter<string>
-        {
-
-            string[] tokens;
-
-            internal IgnorePrefixFilter(params string[] token)
-            {
-                Contract.Requires(token != null, "Cannot initialize Filter with null string.");
-                this.tokens = token;
+                encoding = System.Text.Encoding.Default.BodyName;
             }
 
-            public bool CanPass(string s)
+            public Template(string encoding)
             {
-                foreach (string token in tokens)
+                this.encoding = encoding;
+            }
+
+            public Template Encoding(string encoding)
+            {
+                if (encoding == null)
                 {
-                    if (s.StartsWith(token))
-                    {
-                        return false;
-                    }
+                    this.encoding = System.Text.Encoding.Default.BodyName;
                 }
-                return true;
+                this.encoding = encoding;
+                return this;
+            }
+
+            public Template IgnoreWhiteSpaceLines()
+            {
+                this.ignoreWhiteSpaceLines = true;
+                return this;
+            }
+
+            public Template IgnoreIfStartsWith(params string[] prefix)
+            {
+                this.ignorePrefix = prefix;
+                return this;
+            }
+
+            public Template AllowMatchingRegexp(string regexp)
+            {
+                this.regexp = regexp;
+                return this;
+            }
+
+            public SimpleTextReader GenerateReader(StreamReader streamReader)
+            {
+                return new SimpleTextReader(streamReader, this);
+            }
+
+            public SimpleTextReader GenerateReader(string fileName)
+            {
+                return new SimpleTextReader(new StreamReader(new FileStream(fileName, FileMode.Open, FileAccess.Read)), this);
+            }
+
+            public Template Trim()
+            {
+                this.trim = true;
+                return this;
+            }
+
+
+            internal class IgnorePrefixFilter : IFilter<string>
+            {
+
+                string[] tokens;
+
+                internal IgnorePrefixFilter(params string[] token)
+                {
+                    Contract.Requires(token != null, "Cannot initialize Filter with null string.");
+                    this.tokens = token;
+                }
+
+                public bool CanPass(string s)
+                {
+                    foreach (string token in tokens)
+                    {
+                        if (s.StartsWith(token))
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
             }
         }
     }

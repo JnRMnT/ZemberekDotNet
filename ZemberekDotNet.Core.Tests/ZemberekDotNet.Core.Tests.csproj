@@ -7,6 +7,33 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\IO\file_for_md5.txt" />
+    <None Remove="Resources\IO\key-value-colon-separator.txt" />
+    <None Remove="Resources\IO\multi_line_text_file.txt" />
+    <None Remove="Resources\IO\tr.count" />
+    <None Remove="Resources\IO\turkish_utf8_with_BOM.txt" />
+    <None Remove="Resources\perfect-hash-1000.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\IO\file_for_md5.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\IO\key-value-colon-separator.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\IO\multi_line_text_file.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\IO\tr.count">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\IO\turkish_utf8_with_BOM.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.0.0" />
     <PackageReference Include="MSTest.TestFramework" Version="2.0.0" />
@@ -15,6 +42,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ZemberekDotNet.Core\ZemberekDotNet.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\perfect-hash-1000.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

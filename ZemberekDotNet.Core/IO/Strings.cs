@@ -28,6 +28,11 @@ namespace ZemberekDotNet.Core.IO
         {
         }
 
+        public static bool IsNullOrEmpty(string text)
+        {
+            return string.IsNullOrEmpty(text);
+        }
+
         /// <summary>
         /// checks if a string has text content other than white space.
         /// </summary>
@@ -470,7 +475,7 @@ namespace ZemberekDotNet.Core.IO
                 {
                     padding[i] = padChars[i % padLen];
                 }
-                return string.Concat(str, padding);
+                return string.Concat(str, new String(padding));
             }
         }
 
@@ -721,7 +726,7 @@ namespace ZemberekDotNet.Core.IO
                 {
                     padding[i] = padChars[i % padLen];
                 }
-                return string.Concat(padding, str);
+                return string.Concat(new String(padding), str);
             }
         }
 
@@ -780,7 +785,7 @@ namespace ZemberekDotNet.Core.IO
         /// <param name="gramSize">size of the gram.</param>
         /// <returns>the grams as an array. if the gram size is larger than the word itself, it retuns an
         /// empty array. gram size cannot be smaller than 1</returns>
-        public static string[] separateGrams(string word, int gramSize)
+        public static string[] SeparateGrams(string word, int gramSize)
         {
             if (gramSize < 1)
             {
@@ -793,7 +798,7 @@ namespace ZemberekDotNet.Core.IO
             string[] grams = new string[word.Length - gramSize + 1];
             for (int i = 0; i <= word.Length - gramSize; i++)
             {
-                grams[i] = word.Substring(i, i + gramSize);
+                grams[i] = word.Substring(i, gramSize);
             }
             return grams;
         }
