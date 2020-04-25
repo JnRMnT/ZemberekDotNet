@@ -1,8 +1,12 @@
 ZemberekDotNet
 ============
 [![Test Status](https://img.shields.io/azure-devops/tests/jnrmnt/ZemberekDotNet/13)](https://img.shields.io/azure-devops/tests/jnrmnt/ZemberekDotNet/13)
+[![Code Coverage](https://img.shields.io/azure-devops/coverage/jnrmnt/ZemberekDotNet/13)](https://img.shields.io/azure-devops/coverage/jnrmnt/ZemberekDotNet/13)
+
 [![Build Status](https://dev.azure.com/jnrmnt/ZemberekDotNet/_apis/build/status/ZemberekDotNet?branchName=master)](https://dev.azure.com/jnrmnt/ZemberekDotNet/_build/latest?definitionId=13&branchName=master)
 [![Release Status](https://vsrm.dev.azure.com/jnrmnt/_apis/public/Release/badge/dbf777b3-aa03-4952-92dc-55f20eba6724/1/1)](https://vsrm.dev.azure.com/jnrmnt/_apis/public/Release/badge/dbf777b3-aa03-4952-92dc-55f20eba6724/1/1)
+
+
 
 
 ZemberekDotNet is/will be the .NET Port of [Zemberek-NLP](https://github.com/ahmetaa/zemberek-nlp) (Natural Language Processing tools for Turkish).
@@ -27,3 +31,6 @@ This library will be kept in sync with Zemberek-NLP and same module structure wi
 
 ## Target Platforms
 Packages are targeting .NET Standart 2.1 Framework so that it can be used within .Net Core and .Net Framework projects. Examples/console applications will also be prepared with .Net Core aiming that the whole library can be used cross platform.
+
+## CI/CD
+Repository is configured to continuously trigger a build, test and release cycle using Azure DevOps. At the end of a successful release, it automatically publishes the artifacts to NuGet.org.

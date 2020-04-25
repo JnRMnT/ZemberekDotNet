@@ -19,7 +19,15 @@ steps:
   inputs:
     command: 'test'
     projects: '**/*.csproj'
+    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
   displayName: Run Tests
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)'
+    Contents: '**/*.nupkg'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    flattenFolders: true
+  displayName: Copy Packages To Artifacts Folder
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
