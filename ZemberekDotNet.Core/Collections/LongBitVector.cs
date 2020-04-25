@@ -84,7 +84,7 @@ namespace ZemberekDotNet.Core.Collections
             }
             this.capacityInterval = capacityInterval;
             EnsureSize(initialCapacity);
-            words = new long[(int)((ulong)initialCapacity >> 6) + capacityInterval];
+            words = new long[(int)(initialCapacity >> 6) + capacityInterval];
             this.size = 0;
         }
 
@@ -158,7 +158,7 @@ namespace ZemberekDotNet.Core.Collections
             {
                 Array.Fill(words, -1);
                 int last = (int)(size / 64);
-                words[last] &= cutMasks[(int)((uint)size & mod64Mask)] >> 1;
+                words[last] &= cutMasks[(int)(size & mod64Mask)] >> 1;
             }
             else
             {
@@ -265,8 +265,8 @@ namespace ZemberekDotNet.Core.Collections
 
         public long GetLong(long start, int bitAmount)
         {
-            int startInd = (int)((ulong)start >> 6);
-            int endInd = (int)((ulong)(start + bitAmount) >> 6);
+            int startInd = (int)(start >> 6);
+            int endInd = (int)((start + bitAmount) >> 6);
             long startMod = start & mod64Mask;
             if (startInd == endInd)
             {
@@ -274,8 +274,8 @@ namespace ZemberekDotNet.Core.Collections
             }
             else
             {
-                long first = (long)((ulong)words[startInd] >> (int)startMod);
-                long second = (long)((ulong)words[endInd] << (int)(64 - startMod));
+                long first = (long)(words[startInd] >> (int)startMod);
+                long second = (long)(words[endInd] << (int)(64 - startMod));
                 return (long)(first | second) & cutMasks[bitAmount - 1];
             }
         }
@@ -306,9 +306,9 @@ namespace ZemberekDotNet.Core.Collections
             {
                 throw new ArgumentException("Amount cannot be negative:" + amount);
             }
-            if ((uint)words.Length << 6 < size + 1 + amount >> 6)
+            if (words.Length << 6 < size + 1 + amount >> 6)
             {
-                EnsureCapacity(capacityInterval + (int)((uint)amount >> 6));
+                EnsureCapacity(capacityInterval + (int)(amount >> 6));
             }
             for (int i = 0; i < amount; i++)
             {
@@ -326,7 +326,7 @@ namespace ZemberekDotNet.Core.Collections
             {
                 throw new ArgumentException("Bit length cannot be negative or lareger than 64:" + bitLength);
             }
-            if ((uint)words.Length << 6 < size + 1)
+            if (words.Length << 6 < size + 1)
             {
                 EnsureCapacity(capacityInterval);
             }
@@ -369,7 +369,7 @@ namespace ZemberekDotNet.Core.Collections
         /// <param name="bitAmount">keyAmount of bits to check.</param>
         public void CheckAndEnsureCapacity(int bitAmount)
         {
-            if ((uint)words.Length << 6 < size + bitAmount + 1)
+            if (words.Length << 6 < size + bitAmount + 1)
             {
                 EnsureCapacity(capacityInterval);
             }
@@ -384,7 +384,7 @@ namespace ZemberekDotNet.Core.Collections
         /// <returns>bit value.</returns>
         public bool Get(long n)
         {
-            return (words[(int)((ulong)n >> 6)] & longSetMasks[(int)(n & mod64Mask)]) != 0L;
+            return (words[(int)(n >> 6)] & longSetMasks[(int)(n & mod64Mask)]) != 0L;
         }
 
         /// <summary>
@@ -392,8 +392,8 @@ namespace ZemberekDotNet.Core.Collections
         /// </summary>
         void Compress()
         {
-            long[] newData = new long[(int)((uint)size >> 6) + 1];
-            Array.Copy(words, 0, newData, 0, (int)((uint)size >> 6) + 1);
+            long[] newData = new long[(size >> 6) + 1];
+            Array.Copy(words, 0, newData, 0, (size >> 6) + 1);
             words = newData;
         }
 
@@ -405,7 +405,7 @@ namespace ZemberekDotNet.Core.Collections
         /// <param name="n">bit index</param>
         public void Set(long n)
         {
-            words[(int)((ulong)n >> 6)] |= longSetMasks[(int)(n & mod64Mask)];
+            words[(int)(n >> 6)] |= longSetMasks[(int)(n & mod64Mask)];
         }
 
         /// <summary>
@@ -418,7 +418,7 @@ namespace ZemberekDotNet.Core.Collections
         {
             foreach (long l in n)
             {
-                words[(int)((ulong)l >> 6)] |= longSetMasks[(int)(l & mod64Mask)];
+                words[(int)(l >> 6)] |= longSetMasks[(int)(l & mod64Mask)];
             }
         }
 
@@ -430,7 +430,7 @@ namespace ZemberekDotNet.Core.Collections
         /// <param name="n">bit index</param>
         public void Clear(long n)
         {
-            words[(int)((ulong)n >> 6)] &= longResetMasks[(int)(n & mod64Mask)];
+            words[(int)(n >> 6)] &= longResetMasks[(int)(n & mod64Mask)];
         }
 
         /// <summary>
@@ -443,7 +443,7 @@ namespace ZemberekDotNet.Core.Collections
         {
             foreach (long l in n)
             {
-                words[(int)((ulong)l >> 6)] &= longResetMasks[(int)(l & mod64Mask)];
+                words[(int)(l >> 6)] &= longResetMasks[(int)(l & mod64Mask)];
             }
         }
 

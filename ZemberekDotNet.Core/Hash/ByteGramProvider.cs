@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace ZemberekDotNet.Core.Hash
 {
-    public class ByteGramProvider: IIntHashKeyProvider
+    public class ByteGramProvider : IIntHashKeyProvider
     {
         byte[] data;
         int order;
@@ -15,13 +17,17 @@ namespace ZemberekDotNet.Core.Hash
             this.order = raf.ReadInt32();
             this.ngramCount = raf.ReadInt32();
             int byteAmount = order * ngramCount * 4;
-            data = new byte[byteAmount];
-            int actual = raf.Read(data);
-            if (actual != byteAmount)
+            List<byte> bytes = new List<byte>();
+            for (int i = 0; i < order * ngramCount; i++)
             {
-                throw new InvalidOperationException(
-                    "File suppose to have " + byteAmount + " bytes for " + ngramCount + " ngrams");
+                byte[] value = BitConverter.GetBytes(raf.ReadInt32());
+                if (BitConverter.IsLittleEndian)
+                {
+                    value = value.Reverse().ToArray();
+                }
+                bytes.AddRange(value);
             }
+            data = bytes.ToArray();
             raf.Close();
         }
 

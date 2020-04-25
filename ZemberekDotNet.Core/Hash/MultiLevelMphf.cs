@@ -37,9 +37,9 @@ namespace ZemberekDotNet.Core.Hash
     /// </summary>
     public class MultiLevelMphf : IMphf
     {
-        public static readonly int HASH_MULTIPLIER = 16777619;
-        public static readonly uint INITIAL_HASH_SEED = 0x811C9DC5;
-        public static readonly int BIT_MASK_21 = (1 << 21) - 1;
+        public static readonly int HashMultiplier = 16777619;
+        public static readonly uint InitialHashSeed = 0x811C9DC5;
+        public static readonly int BitMask21 = (1 << 21) - 1;
         readonly HashIndexes[] hashLevelData;
 
         private MultiLevelMphf(HashIndexes[] hashLevelData)
@@ -60,47 +60,47 @@ namespace ZemberekDotNet.Core.Hash
 
         public static int Hash(byte[] data, int seed)
         {
-            int d = seed > 0 ? seed : (int)INITIAL_HASH_SEED;
+            int d = seed > 0 ? seed : (int)InitialHashSeed;
             foreach (int a in data)
             {
-                d = (d ^ a) * HASH_MULTIPLIER;
+                d = (d ^ a) * HashMultiplier;
             }
             return d & 0x7fffffff;
         }
 
         public static int Hash(int[] data, int seed)
         {
-            int d = seed > 0 ? seed : (int)INITIAL_HASH_SEED;
+            int d = seed > 0 ? seed : (int)InitialHashSeed;
             foreach (int a in data)
             {
-                d = ((d ^ a) * HASH_MULTIPLIER);
+                d = ((d ^ a) * HashMultiplier);
             }
             return d & 0x7fffffff;
         }
 
         public static int Hash(int d0, int d1, int d2, int seed)
         {
-            int d = seed > 0 ? seed : (int)INITIAL_HASH_SEED;
-            d = (d ^ d0) * HASH_MULTIPLIER;
-            d = (d ^ d1) * HASH_MULTIPLIER;
-            d = (d ^ d2) * HASH_MULTIPLIER;
+            int d = seed > 0 ? seed : (int)InitialHashSeed;
+            d = (d ^ d0) * HashMultiplier;
+            d = (d ^ d1) * HashMultiplier;
+            d = (d ^ d2) * HashMultiplier;
             return d & 0x7fffffff;
         }
 
         public static int Hash(int d0, int d1, int seed)
         {
-            uint d = seed > 0 ? (uint)seed : INITIAL_HASH_SEED;
-            d = (uint)((d ^ d0) * HASH_MULTIPLIER);
-            d = (uint)((d ^ d1) * HASH_MULTIPLIER);
+            uint d = seed > 0 ? (uint)seed : InitialHashSeed;
+            d = (uint)((d ^ d0) * HashMultiplier);
+            d = (uint)((d ^ d1) * HashMultiplier);
             return (int)d & 0x7fffffff;
         }
 
         public static int Hash(String data, int seed)
         {
-            int d = seed > 0 ? seed : (int)INITIAL_HASH_SEED;
+            int d = seed > 0 ? seed : (int)InitialHashSeed;
             for (int i = 0; i < data.Length; i++)
             {
-                d = (d ^ data[i]) * HASH_MULTIPLIER;
+                d = (d ^ data[i]) * HashMultiplier;
             }
             return d & 0x7fffffff;
         }
@@ -117,22 +117,22 @@ namespace ZemberekDotNet.Core.Hash
          */
         public static int Hash(long gramData, int order, int seed)
         {
-            int d = seed > 0 ? seed : (int)INITIAL_HASH_SEED;
+            int d = seed > 0 ? seed : (int)InitialHashSeed;
             for (int i = 0; i < order; i++)
             {
-                int h = (int)(gramData & BIT_MASK_21);
+                int h = (int)(gramData & BitMask21);
                 gramData = gramData >> 21;
-                d = ((d ^ h) * HASH_MULTIPLIER);
+                d = ((d ^ h) * HashMultiplier);
             }
             return d & 0x7fffffff;
         }
 
         public static int Hash(int[] data, int begin, int end, int seed)
         {
-            int d = seed > 0 ? seed : (int)INITIAL_HASH_SEED;
+            int d = seed > 0 ? seed : (int)InitialHashSeed;
             for (int i = begin; i < end; i++)
             {
-                d = (d ^ data[i]) * HASH_MULTIPLIER;
+                d = (d ^ data[i]) * HashMultiplier;
             }
             return d & 0x7fffffff;
         }
