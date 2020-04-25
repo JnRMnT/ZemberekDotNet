@@ -14,5 +14,30 @@ namespace ZemberekDotNet.Core.Logging
         {
             logger.Warn(message);
         }
+
+        public static void Warn(string message, params object[] parameters)
+        {
+            Warn(string.Format(message, parameters));
+        }
+
+        public static void Debug(string message)
+        {
+            logger.Debug(message);
+        }
+
+        public static void Debug(string message, params object[] parameters)
+        {
+            logger.Debug(string.Format(message, parameters));
+        }
+
+        public static void Info(string message)
+        {
+            logger.Info(message);
+        }
+
+        public static void Info(string message, params object[] parameters)
+        {
+            logger.Info(string.Format(message, parameters));
+        }
     }
 }
