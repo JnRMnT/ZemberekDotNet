@@ -60,7 +60,7 @@ namespace ZemberekDotNet.Core.Compression
         /// </summary>
         /// <param name="lookup"></param>
         /// <returns></returns>
-        public static LossyIntLookup generate(FloatValueMap<string> lookup)
+        public static LossyIntLookup Generate(FloatValueMap<string> lookup)
         {
             List<String> keyList = lookup.GetKeyList();
             StringHashKeyProvider provider = new StringHashKeyProvider(keyList);
