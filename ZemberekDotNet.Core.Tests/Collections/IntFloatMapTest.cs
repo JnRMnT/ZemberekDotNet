@@ -231,8 +231,8 @@ namespace ZemberekDotNet.Core.Tests.Collections
 
         private void RemoveSpan(IntFloatMap im, int start, int end)
         {
-            int spanStart = Math.Min(start, end);
-            int spanEnd = Math.Max(start, end);
+            int spanStart = System.Math.Min(start, end);
+            int spanEnd = System.Math.Max(start, end);
             for (int i = spanStart; i <= spanEnd; i++)
             {
                 im.Remove(i);
@@ -241,8 +241,8 @@ namespace ZemberekDotNet.Core.Tests.Collections
 
         private void CheckSpanRemoved(IntFloatMap im, int start, int end)
         {
-            int spanStart = Math.Min(start, end);
-            int spanEnd = Math.Max(start, end);
+            int spanStart = System.Math.Min(start, end);
+            int spanEnd = System.Math.Max(start, end);
             for (int i = spanStart; i <= spanEnd; i++)
             {
                 AssertEqualsF(im.Get(i), IntIntMap.NoResult);
@@ -253,15 +253,15 @@ namespace ZemberekDotNet.Core.Tests.Collections
         {
             InsertSpan(im, start, end);
             // Expected size.
-            int size = Math.Abs(start) + Math.Abs(end) + 1;
+            int size = System.Math.Abs(start) + System.Math.Abs(end) + 1;
             AssertEqualsF(size, im.Size());
             CheckSpan(im, start, end);
         }
 
         private void InsertSpan(IntFloatMap im, int start, int end)
         {
-            int spanStart = Math.Min(start, end);
-            int spanEnd = Math.Max(start, end);
+            int spanStart = System.Math.Min(start, end);
+            int spanEnd = System.Math.Max(start, end);
             for (int i = spanStart; i <= spanEnd; i++)
             {
                 im.Put(i, i);
@@ -270,8 +270,8 @@ namespace ZemberekDotNet.Core.Tests.Collections
 
         private void CheckSpan(IntFloatMap im, int start, int end)
         {
-            int spanStart = Math.Min(start, end);
-            int spanEnd = Math.Max(start, end);
+            int spanStart = System.Math.Min(start, end);
+            int spanEnd = System.Math.Max(start, end);
             for (int i = spanStart; i <= spanEnd; i++)
             {
                 AssertEqualsF(im.Get(i), i);

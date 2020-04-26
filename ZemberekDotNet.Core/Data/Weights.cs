@@ -77,7 +77,7 @@ namespace ZemberekDotNet.Core.Data
             foreach (string key in data)
             {
                 float w = data.Get(key);
-                if (Math.Abs(w) > epsilon)
+                if (System.Math.Abs(w) > epsilon)
                 {
                     pruned.Set(key, w);
                 }

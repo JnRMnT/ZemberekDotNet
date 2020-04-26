@@ -67,7 +67,7 @@ namespace ZemberekDotNet.Core
         }
 
         // TODO: write a better one.
-        public List<string> splitToList(string line)
+        public List<string> SplitToList(string line)
         {
             int wordCount = 0;
             int[] spaces = new int[line.Length / 3];

@@ -72,7 +72,7 @@ namespace ZemberekDotNet.Core.Tests.Collections
             UIntSet uIntSet = new UIntSet();
             while (uIntSet.Size() < size)
             {
-                uIntSet.Add(Math.Abs(random.Next()));
+                uIntSet.Add(System.Math.Abs(random.Next()));
             }
             int[] res = uIntSet.GetKeys();
             Shuffle(res);
@@ -85,7 +85,7 @@ namespace ZemberekDotNet.Core.Tests.Collections
             UIntSet uIntSet = new UIntSet();
             while (uIntSet.Size() < size)
             {
-                uIntSet.Add(Math.Abs(random.Next(limit)));
+                uIntSet.Add(System.Math.Abs(random.Next(limit)));
             }
             int[] res = uIntSet.GetKeys();
             Shuffle(res);
