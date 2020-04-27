@@ -129,7 +129,6 @@ namespace ZemberekDotNet.Core.Text
 
             public bool HasNext()
             {
-
                 if (loader == null)
                 {
                     NextPath();
@@ -178,17 +177,26 @@ namespace ZemberekDotNet.Core.Text
 
             bool IEnumerator.MoveNext()
             {
-                throw new NotImplementedException();
+                if (HasNext())
+                {
+                    MoveNext();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
 
             public void Reset()
             {
-                throw new NotImplementedException();
+                this.Current = null;
+                this.index = 0;
             }
 
             public void Dispose()
             {
-                throw new NotImplementedException();
+                iterator.Dispose();
             }
         }
 
@@ -273,7 +281,6 @@ namespace ZemberekDotNet.Core.Text
 
             internal class TextIterator : IEnumerator<TextChunk>, IDisposable
             {
-
                 int blockIndex = 0;
                 List<String> currentBlock;
                 bool finished = false;
@@ -334,21 +341,14 @@ namespace ZemberekDotNet.Core.Text
                 }
                 public bool MoveNext()
                 {
-                    if (HasNext())
-                    {
-                        TextChunk chunk = new TextChunk(
-                            owner.path,
-                            owner.sourceIndex,
-                            blockIndex,
-                            currentBlock);
-                        blockIndex++;
-                        Current = chunk;
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    TextChunk chunk = new TextChunk(
+                        owner.path,
+                        owner.sourceIndex,
+                        blockIndex,
+                        currentBlock);
+                    blockIndex++;
+                    Current = chunk;
+                    return true;
                 }
 
                 public void Reset()
