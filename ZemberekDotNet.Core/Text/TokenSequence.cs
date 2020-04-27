@@ -10,8 +10,8 @@ namespace ZemberekDotNet.Core.Text
     /// </summary>
     public class TokenSequence
     {
-        public static readonly string SENTENCE_START = "<s>";
-        public static readonly string SENTENCE_END = "</s>";
+        public static readonly string SentenceStart = "<s>";
+        public static readonly string SentenceEnd = "</s>";
         readonly string[] words;
 
         public TokenSequence(List<string> words)
@@ -54,8 +54,8 @@ namespace ZemberekDotNet.Core.Text
             while (it.MoveNext())
             {
                 string s = it.Current;
-                if (s.Equals(SENTENCE_START, StringComparison.InvariantCultureIgnoreCase)
-                    || s.Equals(SENTENCE_END, StringComparison.InvariantCultureIgnoreCase))
+                if (s.Equals(SentenceStart, StringComparison.InvariantCultureIgnoreCase)
+                    || s.Equals(SentenceEnd, StringComparison.InvariantCultureIgnoreCase))
                 {
                     continue;
                 }
