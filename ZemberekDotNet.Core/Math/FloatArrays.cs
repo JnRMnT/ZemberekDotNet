@@ -12,6 +12,7 @@ namespace ZemberekDotNet.Core.Math
 {
     public class FloatArrays
     {
+        private static readonly CultureInfo EnUsCulture = CultureInfo.GetCultureInfo("en-US");
         public static readonly float[] ZeroLengthArray = new float[0];
         public static readonly float[][] ZeroLengthMatrix = new float[0][];
         public static readonly Regex FeatureLinesPattern = new Regex("(?:\\[)(.+?)(?:\\])", RegexOptions.Singleline | RegexOptions.Multiline);
@@ -213,7 +214,7 @@ namespace ZemberekDotNet.Core.Math
          * @return byte array including the de-normalized n-bit Big-Endian representations of float values
          * in float array where n is bitsPerSample
          */
-        static byte[] DenormalizeLittleEndian(float[] input, int bitsPerSample)
+        public static byte[] DenormalizeLittleEndian(float[] input, int bitsPerSample)
         {
             int bytesPerSample = bitsPerSample % 8 == 0 ? bitsPerSample / 8 : bitsPerSample / 8 + 1;
             int maxVal = 1 << bitsPerSample - 1;
@@ -377,11 +378,11 @@ namespace ZemberekDotNet.Core.Math
         public static string Format(int fractionDigits, String delimiter, params float[] input)
         {
             StringBuilder sb = new StringBuilder();
-            String formatStr = "%." + fractionDigits + "f";
+            String formatStr = "{0:F" + fractionDigits + "}";
             int i = 0;
             foreach (float v in input)
             {
-                sb.Append(String.Format(CultureInfo.InvariantCulture, formatStr, v));
+                sb.Append(String.Format(EnUsCulture, formatStr, v));
                 if (i++ < input.Length - 1)
                 {
                     sb.Append(delimiter);
@@ -390,18 +391,23 @@ namespace ZemberekDotNet.Core.Math
             return sb.ToString();
         }
 
-        /**
-         * Formats a float array as string using English Locale.
-         */
+        /// <summary>
+        /// Formats a float array as string using English Locale.
+        /// </summary>
+        /// <param name="rightPad"></param>
+        /// <param name="fractionDigits"></param>
+        /// <param name="delimiter"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static string Format(int rightPad, int fractionDigits, String delimiter, params float[] input)
         {
             StringBuilder sb = new StringBuilder();
-            string formatStr = "%." + fractionDigits + "f";
+            String formatStr = "{0:F" + fractionDigits + "}";
             int i = 0;
             foreach (float v in input)
             {
-                string num = string.Format(formatStr, v);
-                sb.Append(string.Format(CultureInfo.InvariantCulture, "%-" + rightPad + "s", num));
+                string num = string.Format(EnUsCulture, formatStr, v);
+                sb.Append(string.Format(EnUsCulture, "{0,-" + rightPad + "}", num));
                 if (i++ < input.Length - 1)
                 {
                     sb.Append(delimiter);
@@ -777,7 +783,7 @@ namespace ZemberekDotNet.Core.Math
             }
             if (a1.Length != a2.Length)
             {
-                throw new InvalidOperationException("Array sizes must be equal. But, first:"
+                throw new ArgumentException("Array sizes must be equal. But, first:"
                     + a1.Length + ", and second:" + a2.Length);
             }
         }
