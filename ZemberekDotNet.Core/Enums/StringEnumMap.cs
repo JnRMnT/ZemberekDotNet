@@ -43,9 +43,9 @@ namespace ZemberekDotNet.Core.Enums
             this.ignoreCase = ignoreCase;
         }
 
-        public static StringEnumMap<T> Get(Type clazz)
+        public static StringEnumMap<T> Get()
         {
-            return new StringEnumMap<T>(clazz);
+            return new StringEnumMap<T>(typeof(T));
         }
 
         public T GetEnum(string s)
@@ -68,7 +68,7 @@ namespace ZemberekDotNet.Core.Enums
             return map.Keys.ToHashSet();
         }
 
-        public Collection<T> GetEnums(Collection<string> strings)
+        public ICollection<T> GetEnums(ICollection<string> strings)
         {
             if (strings == null || strings.IsEmpty())
             {

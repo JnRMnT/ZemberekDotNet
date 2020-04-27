@@ -13,9 +13,18 @@ namespace ZemberekDotNet.Core.Text
 {
     public class TextUtil
     {
-        //public static readonly Splitter SPACE_SPLITTER = Splitter.on(" ").omitEmptystrings().trimResults();
-        //public static readonly Splitter TAB_SPLITTER = Splitter.on("\t").omitEmptystrings().trimResults();
-        //public static readonly Splitter COMMA_SPLITTER = Splitter.on(",").omitEmptystrings().trimResults();
+        public static readonly Func<string, string[]> SpaceSplitter = (string input) =>
+        {
+            return input.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries).Select(e => e.Trim()).ToArray();
+        };
+        public static readonly Func<string, string[]> TabSplitter = (string input) =>
+        {
+            return Regex.Split(input, @"\t").Select(e => e.ToStringOrEmpty().Trim()).Where(e => !string.IsNullOrEmpty(e)).ToArray();
+        };
+        public static readonly Func<string, string[]> CommaSplitter = (string input) =>
+        {
+            return input.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries).Select(e => e.Trim()).ToArray();
+        };
 
         public static readonly string HtmlStart = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">";
         public static readonly string MetaCharsetUtf8 = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>";

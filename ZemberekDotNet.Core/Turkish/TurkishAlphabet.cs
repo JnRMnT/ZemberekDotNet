@@ -488,7 +488,7 @@ namespace ZemberekDotNet.Core.Turkish
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
-        public TurkicLetter GetLastVowel(char[] s)
+        public TurkicLetter GetLastVowel(string s)
         {
             if (s.Length == 0)
             {
@@ -546,7 +546,7 @@ namespace ZemberekDotNet.Core.Turkish
         /// <param name="source"></param>
         /// <param name="target"></param>
         /// <returns></returns>
-        public bool CheckVowelHarmonyA(char[] source, char[] target)
+        public bool CheckVowelHarmonyA(string source, string target)
         {
             TurkicLetter sourceLastVowel = GetLastVowel(source);
             TurkicLetter targetFirstVowel = GetLastVowel(target);
@@ -554,7 +554,7 @@ namespace ZemberekDotNet.Core.Turkish
         }
 
 
-        public bool CheckVowelHarmonyI(char[] source, char[] target)
+        public bool CheckVowelHarmonyI(string source, string target)
         {
             TurkicLetter sourceLastVowel = GetLastVowel(source);
             TurkicLetter targetFirstVowel = GetLastVowel(target);
