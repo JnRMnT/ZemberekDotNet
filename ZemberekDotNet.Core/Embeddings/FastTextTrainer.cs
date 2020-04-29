@@ -44,7 +44,7 @@ namespace ZemberekDotNet.Core.Embeddings
             }
 
             Matrix output_;
-            if (args_.model == Args.model_name.Supervised)
+            if (args_.model == Args.ModelName.Supervised)
             {
                 output_ = new Matrix(dict_.NLabels(), args_.dim);
             }
@@ -54,7 +54,7 @@ namespace ZemberekDotNet.Core.Embeddings
             }
 
             Model model_ = new Model(input_, output_, args_, 0);
-            if (args_.model == Args.model_name.Supervised)
+            if (args_.model == Args.ModelName.Supervised)
             {
                 model_.SetTargetCounts(dict_.GetCounts(Dictionary.TypeLabel));
             }
@@ -223,7 +223,7 @@ namespace ZemberekDotNet.Core.Embeddings
 
             public Model Call()
             {
-                if (args_.model == Args.model_name.Supervised)
+                if (args_.model == Args.ModelName.Supervised)
                 {
                     model.SetTargetCounts(dictionary.GetCounts(Dictionary.TypeLabel));
                 }
@@ -257,18 +257,18 @@ namespace ZemberekDotNet.Core.Embeddings
                             progress = (float)((1.0 * tokenCount) / (args_.epoch * ntokens));
                             float lr = (float)(args_.lr * (1.0 - progress));
 
-                            if (args_.model == Args.model_name.Supervised)
+                            if (args_.model == Args.ModelName.Supervised)
                             {
                                 IntVector labels = new IntVector();
                                 localTokenCount += dictionary.GetLine(lineStr, line, labels);
                                 Supervised(model, lr, line.CopyOf(), labels.CopyOf());
                             }
-                            else if (args_.model == Args.model_name.Cbow)
+                            else if (args_.model == Args.ModelName.Cbow)
                             {
                                 localTokenCount += dictionary.GetLine(lineStr, line, model.GetRng());
                                 CBow(model, lr, line.CopyOf());
                             }
-                            else if (args_.model == Args.model_name.SkipGram)
+                            else if (args_.model == Args.ModelName.SkipGram)
                             {
                                 localTokenCount += dictionary.GetLine(lineStr, line, model.GetRng());
                                 SkipGram(model, lr, line.CopyOf());

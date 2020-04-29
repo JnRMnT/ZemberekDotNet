@@ -17,7 +17,7 @@ namespace ZemberekDotNet.Core.Quantization
 
         public static FloatLookup GetLookup(BinaryReader dis)
         {
-            int range = dis.ReadInt32();
+            int range = dis.ReadInt32().EnsureEndianness();
             byte[] data = new byte[range * 4];
             dis.Read(data);
             return new FloatLookup(new ByteArrayLoader(data).GetAllFloats(range));
@@ -25,7 +25,7 @@ namespace ZemberekDotNet.Core.Quantization
 
         public static FloatLookup GetLookupFromDouble(BinaryReader dis)
         {
-            int range = dis.ReadInt32();
+            int range = dis.ReadInt32().EnsureEndianness();
             byte[] data = new byte[range * 8];
             dis.Read(data);
             return new FloatLookup(new ByteArrayLoader(data).GetAllFloatsFromDouble(range));
@@ -99,10 +99,10 @@ namespace ZemberekDotNet.Core.Quantization
             {
                 using (BinaryWriter binaryWriter = new BinaryWriter(fileStream))
                 {
-                    binaryWriter.Write(range);
+                    binaryWriter.Write(range.EnsureEndianness());
                     foreach (float v in data)
                     {
-                        binaryWriter.Write(v);
+                        binaryWriter.Write(v.EnsureEndianness());
                     }
                 }
             }
@@ -110,10 +110,10 @@ namespace ZemberekDotNet.Core.Quantization
 
         public void Save(BinaryWriter dos)
         {
-            dos.Write(range);
+            dos.Write(range.EnsureEndianness());
             foreach (float v in data)
             {
-                dos.Write(v);
+                dos.Write(v.EnsureEndianness());
             }
         }
 

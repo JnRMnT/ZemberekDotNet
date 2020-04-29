@@ -103,8 +103,8 @@ namespace ZemberekDotNet.Core.Embeddings
 
         public FastText Train(string corpus)
         {
-            Args.model_name m = builder.type == ModelType.SkipGram ?
-                Args.model_name.SkipGram : Args.model_name.Cbow;
+            Args.ModelName m = builder.type == ModelType.SkipGram ?
+                Args.ModelName.SkipGram : Args.ModelName.Cbow;
             Args args = Args.ForWordVectors(m);
             args.dim = builder.dimension;
             args.wordNgrams = builder.wordNgramOrder;

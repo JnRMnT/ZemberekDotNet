@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers.Binary;
 using System.Linq;
 
 public static class IntegerExtensions
@@ -22,6 +23,42 @@ public static class IntegerExtensions
 
     public static int ReverseBytes(this int value)
     {
-        return BitConverter.ToInt32(BitConverter.GetBytes(value).Reverse().ToArray());
+        return BinaryPrimitives.ReverseEndianness(value);
+    }
+
+    /// <summary>
+    /// This method is called during binary read/write operations
+    /// to ensure the serialization happens with big endian
+    /// </summary>
+    /// <param name="value">Little endian value to convert to big endian</param>
+    /// <returns>Big endian value</returns>
+    public static int EnsureEndianness(this int value)
+    {
+        if (BitConverter.IsLittleEndian)
+        {
+            return BinaryPrimitives.ReverseEndianness(value);
+        }
+        else
+        {
+            return value;
+        }
+    }
+
+    /// <summary>
+    /// This method is called during binary read/write operations
+    /// to ensure the serialization happens with big endian
+    /// </summary>
+    /// <param name="value">Little endian value to convert to big endian</param>
+    /// <returns>Big endian value</returns>
+    public static uint EnsureEndianness(this uint value)
+    {
+        if (BitConverter.IsLittleEndian)
+        {
+            return BinaryPrimitives.ReverseEndianness(value);
+        }
+        else
+        {
+            return value;
+        }
     }
 }

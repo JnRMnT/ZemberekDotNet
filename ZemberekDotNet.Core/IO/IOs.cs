@@ -14,7 +14,7 @@ namespace ZemberekDotNet.Core.IO
     {
         public static readonly string LineSeperator = Environment.NewLine;
         public static readonly int CharBufferSize = 1 << 20;
-        private static readonly int BYTE_BUFFER_SIZE = 1 << 20;
+        private static readonly int ByteBufferSize = 1 << 20;
         private static readonly byte[] bomBytes = new byte[] { 0xef, 0xbb, 0xbf };
 
         private IOs()
@@ -293,7 +293,7 @@ namespace ZemberekDotNet.Core.IO
             {
                 Contracts.Contract.Requires(inputStream != null, "Input stream cannot be null.");
                 Contracts.Contract.Requires(outputStream != null, "Output stream cannot be null.");
-                byte[] buf = new byte[BYTE_BUFFER_SIZE];
+                byte[] buf = new byte[ByteBufferSize];
                 int i;
                 while ((i = inputStream.Read(buf)) != -1)
                 {
@@ -356,14 +356,14 @@ namespace ZemberekDotNet.Core.IO
          * @throws java.io.IOException if an error occurs during read of the stream.
          * @throws NullPointerException if input stream is null
          */
-        public static byte[] calculateMD5(BinaryReader inputStream)
+        public static byte[] CalculateMD5(BinaryReader inputStream)
         {
             try
             {
                 Contracts.Contract.Requires(inputStream != null, "input stream cannot be null.");
                 using (MD5 md5Hash = MD5.Create())
                 {
-                    byte[] buffer = new byte[BYTE_BUFFER_SIZE];
+                    byte[] buffer = new byte[ByteBufferSize];
                     int read;
 
                     while ((read = inputStream.Read(buffer)) > 0)

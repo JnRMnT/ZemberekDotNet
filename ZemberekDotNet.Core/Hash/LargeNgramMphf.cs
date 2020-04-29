@@ -139,16 +139,16 @@ namespace ZemberekDotNet.Core.Hash
          */
         public static LargeNgramMphf Deserialize(BinaryReader dis)
         {
-            int maxBitMask = dis.ReadInt32();
-            int bucketMask = dis.ReadInt32();
-            int pageShift = dis.ReadInt32();
-            int phfCount = dis.ReadInt32();
+            int maxBitMask = dis.ReadInt32().EnsureEndianness();
+            int bucketMask = dis.ReadInt32().EnsureEndianness();
+            int pageShift = dis.ReadInt32().EnsureEndianness();
+            int phfCount = dis.ReadInt32().EnsureEndianness();
 
             int[]
             offsets = new int[phfCount];
             for (int i = 0; i < offsets.Length; i++)
             {
-                offsets[i] = dis.ReadInt32();
+                offsets[i] = dis.ReadInt32().EnsureEndianness();
             }
             MultiLevelMphf[] hashes = new MultiLevelMphf[phfCount];
             for (int i = 0; i < offsets.Length; i++)
@@ -221,13 +221,13 @@ namespace ZemberekDotNet.Core.Hash
 
         public void Serialize(BinaryWriter dos)
         {
-            dos.Write(this.maxBitMask);
-            dos.Write(this.bucketMask);
-            dos.Write(this.pageShift);
-            dos.Write(this.mphfs.Length);
+            dos.Write(this.maxBitMask.EnsureEndianness());
+            dos.Write(this.bucketMask.EnsureEndianness());
+            dos.Write(this.pageShift.EnsureEndianness());
+            dos.Write(this.mphfs.Length.EnsureEndianness());
             foreach (int offset in offsets)
             {
-                dos.Write(offset);
+                dos.Write(offset.EnsureEndianness());
             }
             foreach (MultiLevelMphf mphf in mphfs)
             {
@@ -276,8 +276,8 @@ namespace ZemberekDotNet.Core.Hash
                 {
                     using (BinaryReader raf = new BinaryReader(fileStream))
                     {
-                        this.order = raf.ReadInt32();
-                        this.gramCount = raf.ReadInt32();
+                        this.order = raf.ReadInt32().EnsureEndianness();
+                        this.gramCount = raf.ReadInt32().EnsureEndianness();
                         raf.Close();
                         this.tmpDir = tmpdir;
                         this.pageBit = pageBit;
@@ -396,8 +396,8 @@ namespace ZemberekDotNet.Core.Hash
             {
                 this.file = file;
                 dos = new BinaryWriter(new FileStream(file, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Write, 1000000));
-                dos.Write(order);
-                dos.Write(0);
+                dos.Write(order.EnsureEndianness());
+                dos.Write(0.EnsureEndianness());
                 this.order = order;
             }
 
@@ -415,8 +415,8 @@ namespace ZemberekDotNet.Core.Hash
                 {
                     using (BinaryWriter rafw = new BinaryWriter(fileStream))
                     {
-                        rafw.Write(order);
-                        rafw.Write(count);
+                        rafw.Write(order.EnsureEndianness());
+                        rafw.Write(count.EnsureEndianness());
                     }
                 }
             }

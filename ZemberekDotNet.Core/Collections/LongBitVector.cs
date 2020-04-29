@@ -120,13 +120,13 @@ namespace ZemberekDotNet.Core.Collections
         /// <returns>a new LongbotVector loaded from the data input stream.</returns>
         public static LongBitVector Deserialize(BinaryReader dis)
         {
-            int length = dis.ReadInt32();
-            long size = dis.ReadInt64();
+            int length = dis.ReadInt32().EnsureEndianness();
+            long size = dis.ReadInt64().EnsureEndianness();
             long[]
             words = new long[length];
             for (int i = 0; i < words.Length; i++)
             {
-                words[i] = dis.ReadInt64();
+                words[i] = dis.ReadInt64().EnsureEndianness();
             }
             return new LongBitVector(words, size);
         }

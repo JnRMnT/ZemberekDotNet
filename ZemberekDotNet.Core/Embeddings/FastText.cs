@@ -68,12 +68,12 @@ namespace ZemberekDotNet.Core.Embeddings
         public static bool CheckModel(Stream stream)
         {
             BinaryReader dis = IOUtil.GetDataInputStream(stream);
-            int magic = dis.ReadInt32();
+            int magic = dis.ReadInt32().EnsureEndianness();
             if (magic != FastTextFileFormatMagicInt32)
             {
                 return false;
             }
-            int version = dis.ReadInt32();
+            int version = dis.ReadInt32().EnsureEndianness();
             if (version != FastTextVersion)
             {
                 return false;
@@ -120,12 +120,12 @@ namespace ZemberekDotNet.Core.Embeddings
 
         public void SaveOutput(string outPath)
         {
-            int n = (args_.model == Args.model_name.Supervised) ? dict_.NLabels() : dict_.NWords();
+            int n = (args_.model == Args.ModelName.Supervised) ? dict_.NLabels() : dict_.NWords();
             StreamWriter pw = new StreamWriter(File.OpenWrite(outPath), Encoding.UTF8);
             pw.WriteLine(dict_.NWords() + " " + args_.dim);
             for (int i = 0; i < n; i++)
             {
-                String word = (args_.model == Args.model_name.Supervised) ?
+                String word = (args_.model == Args.ModelName.Supervised) ?
                     dict_.GetLabel(i) : dict_.GetWord(i);
                 Vector vector = new Vector(args_.dim);
                 vector.AddRow(model_.wo_, i);
@@ -135,19 +135,19 @@ namespace ZemberekDotNet.Core.Embeddings
 
         private static bool CheckModel(BinaryReader dis)
         {
-            int magic = dis.ReadInt32();
+            int magic = dis.ReadInt32().EnsureEndianness();
             if (magic != FastTextFileFormatMagicInt32)
             {
                 return false;
             }
-            int version = dis.ReadInt32();
+            int version = dis.ReadInt32().EnsureEndianness();
             return version == FastTextVersion;
         }
 
         private void SignModel(BinaryWriter dos)
         {
-            dos.Write(FastTextFileFormatMagicInt32);
-            dos.Write(FastTextVersion);
+            dos.Write(FastTextFileFormatMagicInt32.EnsureEndianness());
+            dos.Write(FastTextVersion.EnsureEndianness());
         }
 
         public void SaveModel(string outFilePath)
@@ -192,7 +192,7 @@ namespace ZemberekDotNet.Core.Embeddings
             Args args_ = Args.load(dis);
             Dictionary dict_ = Dictionary.Load(dis, args_);
             Model model_ = Model.Load(dis, args_);
-            if (args_.model == Args.model_name.Supervised)
+            if (args_.model == Args.ModelName.Supervised)
             {
                 model_.SetTargetCounts(dict_.GetCounts(Dictionary.TypeLabel));
             }
@@ -261,7 +261,7 @@ namespace ZemberekDotNet.Core.Embeddings
         FastText Quantize(BinaryReader dis, Args qargs)
         {
             Args args_ = Args.load(dis);
-            if (args_.model != Args.model_name.Supervised)
+            if (args_.model != Args.ModelName.Supervised)
             {
                 throw new InvalidOperationException("Only supervised models can be quantized.");
             }
@@ -299,7 +299,7 @@ namespace ZemberekDotNet.Core.Embeddings
             model_.quant_ = true;
             model_.SetQuantizePointer(qwi_, qwo_, args_.qout);
 
-            if (args_.model == Args.model_name.Supervised)
+            if (args_.model == Args.ModelName.Supervised)
             {
                 model_.SetTargetCounts(dict_.GetCounts(Dictionary.TypeLabel));
             }
@@ -426,7 +426,7 @@ namespace ZemberekDotNet.Core.Embeddings
         {
             Vector svec = new Vector(args_.dim);
             IntVector line;
-            if (args_.model == Args.model_name.Supervised)
+            if (args_.model == Args.ModelName.Supervised)
             {
                 line = new IntVector();
                 dict_.GetLine(s, line, model_.GetRng());
@@ -473,7 +473,7 @@ namespace ZemberekDotNet.Core.Embeddings
         public Vector GetSentenceVector(String s)
         {
             Vector svec = new Vector(args_.dim);
-            if (args_.model == Args.model_name.Supervised)
+            if (args_.model == Args.ModelName.Supervised)
             {
                 IntVector line = new IntVector(), labels = new IntVector();
                 dict_.GetLine(s, line, labels);

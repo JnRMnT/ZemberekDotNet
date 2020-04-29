@@ -295,27 +295,27 @@ namespace ZemberekDotNet.Core.Embeddings
 
         public void Save(BinaryWriter dos)
         {
-            dos.Write(dim_);
-            dos.Write(nsubq_);
-            dos.Write(dsub_);
-            dos.Write(lastdsub_);
+            dos.Write(dim_.EnsureEndianness());
+            dos.Write(nsubq_.EnsureEndianness());
+            dos.Write(dsub_.EnsureEndianness());
+            dos.Write(lastdsub_.EnsureEndianness());
             for (int i = 0; i < centroids_.data.Length; i++)
             {
-                dos.Write(centroids_.data[i]);
+                dos.Write(centroids_.data[i].EnsureEndianness());
             }
         }
 
         public void Load(BinaryReader dis)
         {
-            dim_ = dis.ReadInt32();
-            nsubq_ = dis.ReadInt32();
-            dsub_ = dis.ReadInt32();
-            lastdsub_ = dis.ReadInt32();
+            dim_ = dis.ReadInt32().EnsureEndianness();
+            nsubq_ = dis.ReadInt32().EnsureEndianness();
+            dsub_ = dis.ReadInt32().EnsureEndianness();
+            lastdsub_ = dis.ReadInt32().EnsureEndianness();
             float[]
             centroidData = new float[dim_ * ksub_];
             for (int i = 0; i < centroidData.Length; i++)
             {
-                centroidData[i] = dis.ReadSingle();
+                centroidData[i] = dis.ReadSingle().EnsureEndianness();
             }
             centroids_ = new FArray(centroidData);
         }

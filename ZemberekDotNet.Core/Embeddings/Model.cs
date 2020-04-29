@@ -79,7 +79,7 @@ namespace ZemberekDotNet.Core.Embeddings
             {
                 qInput_ = new QMatrix();
                 qInput_.Load(dis);
-                input_ = Matrix.EMPTY;
+                input_ = Matrix.Empty;
             }
             else
             {
@@ -93,7 +93,7 @@ namespace ZemberekDotNet.Core.Embeddings
             {
                 qOutput_ = new QMatrix();
                 qOutput_.Load(dis);
-                output_ = Matrix.EMPTY;
+                output_ = Matrix.Empty;
             }
             else
             {
@@ -279,14 +279,14 @@ namespace ZemberekDotNet.Core.Embeddings
                 throw new ArgumentException("k needs to be 1 or higher! Value = " + k);
             }
 
-            if (args_.model != Args.model_name.Supervised)
+            if (args_.model != Args.ModelName.Supervised)
             {
                 throw new ArgumentException(
                     "Model needs to be supervised for prediction! Mmodel = " + args_.model);
             }
 
             PriorityQueue<FloatIntPair> heap = new PriorityQueue<FloatIntPair>(k + 1, PairComparer);
-            if (args_.loss == Args.loss_name.HierarchicalSoftmax)
+            if (args_.loss == Args.LossName.HierarchicalSoftmax)
             {
                 Dfs(k, threshold, 2 * osz_ - 2, 0.0f, heap, hidden);
             }
@@ -391,11 +391,11 @@ namespace ZemberekDotNet.Core.Embeddings
             }
             Vector hidden_ = ComputeHidden(input);
             Vector grad_ = new Vector(hsz_);
-            if (args_.loss == Args.loss_name.NegativeSampling)
+            if (args_.loss == Args.LossName.NegativeSampling)
             {
                 loss_ += NegativeSampling(grad_, hidden_, target, lr);
             }
-            else if (args_.loss == Args.loss_name.HierarchicalSoftmax)
+            else if (args_.loss == Args.LossName.HierarchicalSoftmax)
             {
                 loss_ += HierarchicalSoftmax(grad_, hidden_, target, lr);
             }
@@ -405,7 +405,7 @@ namespace ZemberekDotNet.Core.Embeddings
             }
             nexamples_ += 1;
 
-            if (args_.model == Args.model_name.Supervised)
+            if (args_.model == Args.ModelName.Supervised)
             {
                 grad_.Mul((float)(1.0 / input.Length));
             }
@@ -419,11 +419,11 @@ namespace ZemberekDotNet.Core.Embeddings
         public void SetTargetCounts(int[] counts)
         {
             Contract.Assert(counts.Length == osz_);
-            if (args_.loss == Args.loss_name.NegativeSampling)
+            if (args_.loss == Args.LossName.NegativeSampling)
             {
                 negativeSampler = NegativeSampler.Instantiate(counts, rng);
             }
-            if (args_.loss == Args.loss_name.HierarchicalSoftmax)
+            if (args_.loss == Args.LossName.HierarchicalSoftmax)
             {
                 hierarchicalSoftmax = HierarchicalSoftMax.BuildTree(counts, osz_);
             }

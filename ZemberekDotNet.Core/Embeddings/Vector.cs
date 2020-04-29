@@ -122,7 +122,7 @@ namespace ZemberekDotNet.Core.Embeddings
             List<string> values = new List<string>(data_.Length);
             foreach (float v in data_)
             {
-                values.Add(string.Format("%.6f", v));
+                values.Add(string.Format("{0:F6}", v));
             }
             return string.Join(" ", values);
         }

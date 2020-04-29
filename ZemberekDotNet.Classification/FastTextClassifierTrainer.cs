@@ -118,7 +118,7 @@ namespace ZemberekDotNet.Classification
         {
             Args args = Args.ForSupervised();
             args.loss = builder.type == LossType.Softmax ?
-                Args.loss_name.Softmax : Args.loss_name.HierarchicalSoftmax;
+                Args.LossName.Softmax : Args.LossName.HierarchicalSoftmax;
             args.dim = builder.dimension;
             args.wordNgrams = builder.wordNgramOrder;
             args.thread = builder.threadCount;

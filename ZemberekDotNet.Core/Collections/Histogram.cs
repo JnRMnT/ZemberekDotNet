@@ -58,8 +58,8 @@ namespace ZemberekDotNet.Core.Collections
                 {
                     throw new InvalidOperationException("Bad histogram line = " + s);
                 }
-                String item = keyComesFirst ? s.Substring(0, index) : s.Substring(index + 1);
-                String countStr = keyComesFirst ? s.Substring(index + 1) : s.Substring(0, index);
+                string item = keyComesFirst ? s.Substring(0, index) : s.Substring(index + 1);
+                string countStr = keyComesFirst ? s.Substring(index + 1) : s.Substring(0, index);
                 int count = int.Parse(countStr);
                 result.Add(item, count);
             }
@@ -95,13 +95,13 @@ namespace ZemberekDotNet.Core.Collections
             foreach (var key in h.map)
             {
                 dos.Write(key);
-                dos.Write(h.GetCount(key));
+                dos.Write(h.GetCount(key).EnsureEndianness());
             }
         }
 
         public static Histogram<string> DeserializeStringHistogram(BinaryReader dis)
         {
-            int size = dis.ReadInt32();
+            int size = dis.ReadInt32().EnsureEndianness();
             if (size < 0)
             {
                 throw new InvalidOperationException("Cannot deserialize String histogram. Count value is negative : " + size);
@@ -114,7 +114,7 @@ namespace ZemberekDotNet.Core.Collections
             return result;
         }
 
-        public void SaveSortedByCounts(string path, String delimiter)
+        public void SaveSortedByCounts(string path, string delimiter)
         {
             try
             {

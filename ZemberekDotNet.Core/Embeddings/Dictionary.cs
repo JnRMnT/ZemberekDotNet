@@ -159,23 +159,23 @@ namespace ZemberekDotNet.Core.Embeddings
         public static Dictionary Load(BinaryReader dis, Args args)
         {
             Dictionary dict = new Dictionary(args);
-            dict.size_ = dis.ReadInt32();
-            dict.nwords_ = dis.ReadInt32();
-            dict.nlabels_ = dis.ReadInt32();
-            dict.ntokens_ = dis.ReadInt64();
-            dict.pruneidx_size_ = dis.ReadInt32();
+            dict.size_ = dis.ReadInt32().EnsureEndianness();
+            dict.nwords_ = dis.ReadInt32().EnsureEndianness();
+            dict.nlabels_ = dis.ReadInt32().EnsureEndianness();
+            dict.ntokens_ = dis.ReadInt64().EnsureEndianness();
+            dict.pruneidx_size_ = dis.ReadInt32().EnsureEndianness();
             for (int i = 0; i < dict.size_; i++)
             {
                 Entry e = new Entry();
                 e.word = dis.ReadUTF();
-                e.count = dis.ReadInt32();
-                e.type = dis.ReadInt32();
+                e.count = dis.ReadInt32().EnsureEndianness();
+                e.type = dis.ReadInt32().EnsureEndianness();
                 dict.words_.Add(e);
             }
             for (int i = 0; i < dict.pruneidx_size_; i++)
             {
-                int first = dis.ReadInt32();
-                int second = dis.ReadInt32();
+                int first = dis.ReadInt32().EnsureEndianness();
+                int second = dis.ReadInt32().EnsureEndianness();
                 dict.pruneidx_.Put(first, second);
             }
             dict.Init();
@@ -595,22 +595,22 @@ namespace ZemberekDotNet.Core.Embeddings
 
         public void Save(BinaryWriter binaryWriter)
         {
-            binaryWriter.Write(size_);
-            binaryWriter.Write(nwords_);
-            binaryWriter.Write(nlabels_);
-            binaryWriter.Write(ntokens_);
-            binaryWriter.Write(pruneidx_size_);
+            binaryWriter.Write(size_.EnsureEndianness());
+            binaryWriter.Write(nwords_.EnsureEndianness());
+            binaryWriter.Write(nlabels_.EnsureEndianness());
+            binaryWriter.Write(ntokens_.EnsureEndianness());
+            binaryWriter.Write(pruneidx_size_.EnsureEndianness());
             for (int i = 0; i < size_; i++)
             {
                 Entry e = words_[i];
                 binaryWriter.WriteUTF(e.word);
-                binaryWriter.Write(e.count);
-                binaryWriter.Write(e.type);
+                binaryWriter.Write(e.count.EnsureEndianness());
+                binaryWriter.Write(e.type.EnsureEndianness());
             }
             foreach (int key in pruneidx_.GetKeys())
             {
-                binaryWriter.Write(key);
-                binaryWriter.Write(pruneidx_.Get(key));
+                binaryWriter.Write(key.EnsureEndianness());
+                binaryWriter.Write(pruneidx_.Get(key).EnsureEndianness());
             }
         }
 

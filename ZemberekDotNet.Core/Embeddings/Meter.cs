@@ -65,8 +65,8 @@ namespace ZemberekDotNet.Core.Embeddings
         public void WriteGeneralMetrics(StreamWriter streamWriter, int k)
         {
             streamWriter.WriteLine("N\t" + nexamples_);
-            streamWriter.WriteLine(String.Format("P@%d\t%.3f", k, metrics_.Precision()));
-            streamWriter.WriteLine(String.Format("R@%d\t%.3f", k, metrics_.Recall()));
+            streamWriter.WriteLine(String.Format("P@{0}\t{1:F3}", k, metrics_.Precision()));
+            streamWriter.WriteLine(String.Format("R@{0}\t{1:F3}", k, metrics_.Recall()));
         }
 
         public class Metrics

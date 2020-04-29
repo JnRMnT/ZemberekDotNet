@@ -1,9 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>0.17.1.0</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\" />
+    <Content Include="Resources\**\*">
+      <Pack>true</Pack>
+      <PackagePath>\Resources\</PackagePath>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ZemberekDotNet.Core\ZemberekDotNet.Core.csproj" />
+  </ItemGroup>
 
 </Project>

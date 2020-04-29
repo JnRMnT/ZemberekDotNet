@@ -115,9 +115,9 @@ namespace ZemberekDotNet.Core.Embeddings
         public void Save(BinaryWriter binaryWriter)
         {
             binaryWriter.Write(qnorm_);
-            binaryWriter.Write(m_);
-            binaryWriter.Write(n_);
-            binaryWriter.Write(codesize_);
+            binaryWriter.Write(m_.EnsureEndianness());
+            binaryWriter.Write(n_.EnsureEndianness());
+            binaryWriter.Write(codesize_.EnsureEndianness());
             binaryWriter.Write(codes_);
             pq_.Save(binaryWriter);
             if (qnorm_)
@@ -130,9 +130,9 @@ namespace ZemberekDotNet.Core.Embeddings
         public void Load(BinaryReader binaryReader)
         {
             qnorm_ = binaryReader.ReadBoolean();
-            m_ = binaryReader.ReadInt32();
-            n_ = binaryReader.ReadInt32();
-            codesize_ = binaryReader.ReadInt32();
+            m_ = binaryReader.ReadInt32().EnsureEndianness();
+            n_ = binaryReader.ReadInt32().EnsureEndianness();
+            codesize_ = binaryReader.ReadInt32().EnsureEndianness();
             codes_ = new byte[codesize_];
             binaryReader.Read(codes_);
             pq_ = new ProductQuantizer();

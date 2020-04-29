@@ -18,7 +18,7 @@ namespace ZemberekDotNet.Core.Compression
         private IMphf mphf; // Minimal perfect hash function that provides string to integer index lookup.
         private int[] data; // contains fingerprints and actual data.
 
-        private static readonly uint MAGIC = 0xcafebeef;
+        private static readonly uint Magic = 0xcafebeef;
 
         private LossyIntLookup(IMphf mphf, int[] data)
         {
@@ -82,11 +82,11 @@ namespace ZemberekDotNet.Core.Compression
         public void Serialize(string path)
         {
             BinaryWriter dos = IOUtil.GetDataOutputStream(path);
-            dos.Write(MAGIC);
-            dos.Write(data.Length);
+            dos.Write(Magic.EnsureEndianness());
+            dos.Write(data.Length.EnsureEndianness());
             foreach (int d in data)
             {
-                dos.Write(d);
+                dos.Write(d.EnsureEndianness());
             }
             mphf.Serialize(dos);
         }
@@ -107,7 +107,7 @@ namespace ZemberekDotNet.Core.Compression
             }
             int magic = (int)Bytes.ToInt(fourBytes, true);
             dis.BaseStream.Seek(-4, SeekOrigin.Current);
-            return magic == MAGIC;
+            return magic == Magic;
         }
 
         /// <summary>
@@ -117,17 +117,17 @@ namespace ZemberekDotNet.Core.Compression
         /// <returns></returns>
         public static LossyIntLookup Deserialize(BinaryReader dis)
         {
-            long magic = dis.ReadInt32();
-            if (magic != MAGIC)
+            long magic = dis.ReadInt32().EnsureEndianness();
+            if (magic != Magic)
             {
                 throw new InvalidOperationException("File does not carry expected value in the beginning.");
             }
-            int length = dis.ReadInt32();
+            int length = dis.ReadInt32().EnsureEndianness();
             int[]
             data = new int[length];
             for (int i = 0; i < data.Length; i++)
             {
-                data[i] = dis.ReadInt32();
+                data[i] = dis.ReadInt32().EnsureEndianness();
             }
             IMphf mphf = MultiLevelMphf.Deserialize(dis);
             return new LossyIntLookup(mphf, data);

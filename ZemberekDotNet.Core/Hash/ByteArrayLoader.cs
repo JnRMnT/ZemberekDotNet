@@ -18,46 +18,54 @@ namespace ZemberekDotNet.Core.Hash
 
         public double[] GetAllDoubles(int amount)
         {
-            BinaryReader dis = GetDataInputStream();
-            double[] d = new double[amount];
-            for (int i = 0; i < amount; i++)
+            using (BinaryReader dis = GetDataInputStream())
             {
-                d[i] = dis.ReadDouble();
+                double[] d = new double[amount];
+                for (int i = 0; i < amount; i++)
+                {
+                    d[i] = dis.ReadDouble().EnsureEndianness();
+                }
+                return d;
             }
-            return d;
         }
 
         public int[] GetAllInts(int amount)
         {
-            BinaryReader dis = GetDataInputStream();
-            int[] d = new int[amount];
-
-            for (int i = 0; i < amount; i++)
+            using (BinaryReader dis = GetDataInputStream())
             {
-                d[i] = dis.ReadInt32();
+                int[] d = new int[amount];
+
+                for (int i = 0; i < amount; i++)
+                {
+                    d[i] = dis.ReadInt32().EnsureEndianness();
+                }
+                return d;
             }
-            return d;
         }
 
         public float[] GetAllFloats(int amount)
         {
-            BinaryReader dis = GetDataInputStream();
-            float[] d = new float[amount];
-            for (int i = 0; i < amount; i++)
+            using (BinaryReader dis = GetDataInputStream())
             {
-                d[i] = dis.ReadSingle();
+                float[] d = new float[amount];
+                for (int i = 0; i < amount; i++)
+                {
+                    d[i] = dis.ReadSingle().EnsureEndianness();
+                }
+                return d;
             }
-            return d;
         }
         public float[] GetAllFloatsFromDouble(int amount)
         {
-            BinaryReader dis = GetDataInputStream();
-            float[] d = new float[amount];
-            for (int i = 0; i < amount; i++)
+            using (BinaryReader dis = GetDataInputStream())
             {
-                d[i] = (float)dis.ReadDouble();
+                float[] d = new float[amount];
+                for (int i = 0; i < amount; i++)
+                {
+                    d[i] = (float)dis.ReadDouble().EnsureEndianness();
+                }
+                return d;
             }
-            return d;
         }
     }
 }

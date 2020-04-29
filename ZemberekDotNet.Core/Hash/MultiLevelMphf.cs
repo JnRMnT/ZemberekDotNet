@@ -177,19 +177,19 @@ namespace ZemberekDotNet.Core.Hash
          */
         public static MultiLevelMphf Deserialize(BinaryReader dis)
         {
-            int levelCount = dis.ReadInt32();
+            int levelCount = dis.ReadInt32().EnsureEndianness();
             HashIndexes[] indexes = new HashIndexes[levelCount];
             for (int i = 0; i < levelCount; i++)
             {
-                int keycount = dis.ReadInt32();
-                int bucketAmount = dis.ReadInt32();
+                int keycount = dis.ReadInt32().EnsureEndianness();
+                int bucketAmount = dis.ReadInt32().EnsureEndianness();
                 byte[] hashSeedValues = new byte[bucketAmount];
                 dis.Read(hashSeedValues);
-                int failedIndexesCount = dis.ReadInt32();
+                int failedIndexesCount = dis.ReadInt32().EnsureEndianness();
                 int[] failedIndexes = new int[failedIndexesCount];
                 for (int j = 0; j < failedIndexesCount; j++)
                 {
-                    failedIndexes[j] = dis.ReadInt32();
+                    failedIndexes[j] = dis.ReadInt32().EnsureEndianness();
                 }
                 indexes[i] = new HashIndexes(keycount, bucketAmount, hashSeedValues, failedIndexes);
             }
@@ -435,16 +435,16 @@ namespace ZemberekDotNet.Core.Hash
          */
         public void Serialize(BinaryWriter dos)
         {
-            dos.Write(hashLevelData.Length);
+            dos.Write(hashLevelData.Length.EnsureEndianness());
             foreach (HashIndexes index in hashLevelData)
             {
-                dos.Write(index.keyAmount);
-                dos.Write(index.bucketAmount);
+                dos.Write(index.keyAmount.EnsureEndianness());
+                dos.Write(index.bucketAmount.EnsureEndianness());
                 dos.Write(index.bucketHashSeedValues);
-                dos.Write(index.failedIndexes.Length);
+                dos.Write(index.failedIndexes.Length.EnsureEndianness());
                 foreach (int i in index.failedIndexes)
                 {
-                    dos.Write(i);
+                    dos.Write(i.EnsureEndianness());
                 }
             }
         }

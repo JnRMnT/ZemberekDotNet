@@ -16,8 +16,8 @@ namespace ZemberekDotNet.Core.Embeddings
         public int minCountLabel;
         public int neg;
         public int wordNgrams;
-        public loss_name loss;
-        public model_name model;
+        public LossName loss;
+        public ModelName model;
         public int bucket;
         public int minn;
         public int maxn;
@@ -51,14 +51,14 @@ namespace ZemberekDotNet.Core.Embeddings
             pretrainedVectors = "";
         }
 
-        public static Args ForWordVectors(model_name modelName)
+        public static Args ForWordVectors(ModelName modelName)
         {
             Args args = new Args();
             args.minn = 3;
             args.maxn = 6;
             args.subWordHashProvider = new EmbeddingHashProviders.CharacterNgramHashProvider(args.minn, args.maxn);
             args.lr = 0.05;
-            args.loss = loss_name.NegativeSampling;
+            args.loss = LossName.NegativeSampling;
             args.model = modelName;
             args.wordNgrams = 1;
             return args;
@@ -73,8 +73,8 @@ namespace ZemberekDotNet.Core.Embeddings
             args.subWordHashProvider =
                 new EmbeddingHashProviders.EmptySubwordHashProvider();
             args.lr = 0.1;
-            args.loss = loss_name.Softmax;
-            args.model = model_name.Supervised;
+            args.loss = LossName.Softmax;
+            args.model = ModelName.Supervised;
             args.wordNgrams = 2;
             return args;
         }
@@ -82,51 +82,51 @@ namespace ZemberekDotNet.Core.Embeddings
         public static Args load(BinaryReader binaryReader)
         {
             Args args = new Args();
-            args.dim = binaryReader.ReadInt32();
-            args.ws = binaryReader.ReadInt32();
-            args.epoch = binaryReader.ReadInt32();
-            args.minCount = binaryReader.ReadInt32();
-            args.neg = binaryReader.ReadInt32();
-            args.wordNgrams = binaryReader.ReadInt32();
-            int loss = binaryReader.ReadInt32();
-            if (loss == (int)loss_name.HierarchicalSoftmax)
+            args.dim = binaryReader.ReadInt32().EnsureEndianness();
+            args.ws = binaryReader.ReadInt32().EnsureEndianness();
+            args.epoch = binaryReader.ReadInt32().EnsureEndianness();
+            args.minCount = binaryReader.ReadInt32().EnsureEndianness();
+            args.neg = binaryReader.ReadInt32().EnsureEndianness();
+            args.wordNgrams = binaryReader.ReadInt32().EnsureEndianness();
+            int loss = binaryReader.ReadInt32().EnsureEndianness();
+            if (loss == (int)LossName.HierarchicalSoftmax)
             {
-                args.loss = loss_name.HierarchicalSoftmax;
+                args.loss = LossName.HierarchicalSoftmax;
             }
-            else if (loss == (int)loss_name.NegativeSampling)
+            else if (loss == (int)LossName.NegativeSampling)
             {
-                args.loss = loss_name.NegativeSampling;
+                args.loss = LossName.NegativeSampling;
             }
-            else if (loss == (int)loss_name.Softmax)
+            else if (loss == (int)LossName.Softmax)
             {
-                args.loss = loss_name.Softmax;
+                args.loss = LossName.Softmax;
             }
             else
             {
                 throw new InvalidOperationException("Unknown loss type.");
             }
-            int model = binaryReader.ReadInt32();
-            if (model == (int)model_name.Cbow)
+            int model = binaryReader.ReadInt32().EnsureEndianness();
+            if (model == (int)ModelName.Cbow)
             {
-                args.model = model_name.Cbow;
+                args.model = ModelName.Cbow;
             }
-            else if (model == (int)model_name.SkipGram)
+            else if (model == (int)ModelName.SkipGram)
             {
-                args.model = model_name.SkipGram;
+                args.model = ModelName.SkipGram;
             }
-            else if (model == (int)model_name.Supervised)
+            else if (model == (int)ModelName.Supervised)
             {
-                args.model = model_name.Supervised;
+                args.model = ModelName.Supervised;
             }
             else
             {
                 throw new InvalidOperationException("Unknown model type.");
             }
-            args.bucket = binaryReader.ReadInt32();
-            args.minn = binaryReader.ReadInt32();
-            args.maxn = binaryReader.ReadInt32();
-            args.lrUpdateRate = binaryReader.ReadInt32();
-            args.t = binaryReader.ReadDouble();
+            args.bucket = binaryReader.ReadInt32().EnsureEndianness();
+            args.minn = binaryReader.ReadInt32().EnsureEndianness();
+            args.maxn = binaryReader.ReadInt32().EnsureEndianness();
+            args.lrUpdateRate = binaryReader.ReadInt32().EnsureEndianness();
+            args.t = binaryReader.ReadDouble().EnsureEndianness();
 
             if (args.minn != 0)
             {
@@ -143,29 +143,29 @@ namespace ZemberekDotNet.Core.Embeddings
 
         public void Save(BinaryWriter binaryWriter)
         {
-            binaryWriter.Write(dim);
-            binaryWriter.Write(ws);
-            binaryWriter.Write(epoch);
-            binaryWriter.Write(minCount);
-            binaryWriter.Write(neg);
-            binaryWriter.Write(wordNgrams);
-            binaryWriter.Write((int)loss);
-            binaryWriter.Write((int)model);
-            binaryWriter.Write(bucket);
-            binaryWriter.Write(minn);
-            binaryWriter.Write(maxn);
-            binaryWriter.Write(lrUpdateRate);
-            binaryWriter.Write(t);
+            binaryWriter.Write(dim.EnsureEndianness());
+            binaryWriter.Write(ws.EnsureEndianness());
+            binaryWriter.Write(epoch.EnsureEndianness());
+            binaryWriter.Write(minCount.EnsureEndianness());
+            binaryWriter.Write(neg.EnsureEndianness());
+            binaryWriter.Write(wordNgrams.EnsureEndianness());
+            binaryWriter.Write(((int)loss).EnsureEndianness());
+            binaryWriter.Write(((int)model).EnsureEndianness());
+            binaryWriter.Write(bucket.EnsureEndianness());
+            binaryWriter.Write(minn.EnsureEndianness());
+            binaryWriter.Write(maxn.EnsureEndianness());
+            binaryWriter.Write(lrUpdateRate.EnsureEndianness());
+            binaryWriter.Write(t.EnsureEndianness());
         }
 
-        public enum model_name
+        public enum ModelName
         {
             Cbow = 1,
             SkipGram = 2,
             Supervised = 3
         }
 
-        public enum loss_name
+        public enum LossName
         {
             HierarchicalSoftmax = 1,
             NegativeSampling = 2,

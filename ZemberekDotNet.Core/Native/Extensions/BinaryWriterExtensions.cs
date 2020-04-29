@@ -38,7 +38,7 @@ public static class BinaryWriterExtensions
         {
             c = str[i];
             if (!((c >= 0x0001) && (c <= 0x007F))) break;
-            bytearr[count++] = (byte)c;
+            bytearr[count++] = (byte)c.EnsureEndianness();
         }
 
         for (; i < strlen; i++)
@@ -51,14 +51,14 @@ public static class BinaryWriterExtensions
             }
             else if (c > 0x07FF)
             {
-                bytearr[count++] = (byte)(0xE0 | ((c >> 12) & 0x0F));
-                bytearr[count++] = (byte)(0x80 | ((c >> 6) & 0x3F));
-                bytearr[count++] = (byte)(0x80 | ((c >> 0) & 0x3F));
+                bytearr[count++] = (byte)((0xE0 | ((c >> 12) & 0x0F)));
+                bytearr[count++] = (byte)((0x80 | ((c >> 6) & 0x3F)));
+                bytearr[count++] = (byte)((0x80 | ((c >> 0) & 0x3F)));
             }
             else
             {
-                bytearr[count++] = (byte)(0xC0 | ((c >> 6) & 0x1F));
-                bytearr[count++] = (byte)(0x80 | ((c >> 0) & 0x3F));
+                bytearr[count++] = (byte)((0xC0 | ((c >> 6) & 0x1F)));
+                bytearr[count++] = (byte)((0x80 | ((c >> 0) & 0x3F)));
             }
         }
 

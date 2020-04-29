@@ -1,13 +1,12 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
 public static class BinaryReaderExtensions
 {
     public static string ReadUTF(this BinaryReader binaryReader)
     {
-        ushort utflen = binaryReader.ReadUInt16();
+        ushort utflen = binaryReader.ReadUInt16().EnsureEndianness();
         byte[] bytearr = new byte[utflen];
-        char[] chararr = new char[utflen]; 
+        char[] chararr = new char[utflen];
 
         int c, char2, char3;
         int count = 0;
@@ -17,7 +16,7 @@ public static class BinaryReaderExtensions
 
         while (count < utflen)
         {
-            c = (int)bytearr[count] & 0xff;
+            c = ((int)bytearr[count]) & 0xff;
             if (c > 127) break;
             count++;
             chararr[chararr_count++] = (char)c;
@@ -25,7 +24,7 @@ public static class BinaryReaderExtensions
 
         while (count < utflen)
         {
-            c = (int)bytearr[count] & 0xff;
+            c = ((int)bytearr[count]) & 0xff;
             switch (c >> 4)
             {
                 case 0:
@@ -47,7 +46,7 @@ public static class BinaryReaderExtensions
                     if (count > utflen)
                         throw new InvalidDataException(
                             "malformed input: partial character at end");
-                    char2 = (int)bytearr[count - 1];
+                    char2 = ((int)bytearr[count - 1]);
                     if ((char2 & 0xC0) != 0x80)
                         throw new InvalidDataException(
                             "malformed input around byte " + count);
@@ -60,8 +59,8 @@ public static class BinaryReaderExtensions
                     if (count > utflen)
                         throw new InvalidDataException(
                             "malformed input: partial character at end");
-                    char2 = (int)bytearr[count - 2];
-                    char3 = (int)bytearr[count - 1];
+                    char2 = ((int)bytearr[count - 2]);
+                    char3 = ((int)bytearr[count - 1]);
                     if (((char2 & 0xC0) != 0x80) || ((char3 & 0xC0) != 0x80))
                         throw new InvalidDataException(
                             "malformed input around byte " + (count - 1));
@@ -76,6 +75,6 @@ public static class BinaryReaderExtensions
             }
         }
         // The number of chars produced may be less than utflen
-        return new String(chararr, 0, chararr_count);
+        return new string(chararr, 0, chararr_count);
     }
 }

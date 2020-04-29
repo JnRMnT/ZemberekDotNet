@@ -926,10 +926,10 @@ namespace ZemberekDotNet.Core.Math
 
         public static void Serialize(BinaryWriter dos, float[] data)
         {
-            dos.Write(data.Length);
+            dos.Write(data.Length.EnsureEndianness());
             foreach (float v in data)
             {
-                dos.Write(v);
+                dos.Write(v.EnsureEndianness());
             }
         }
 
@@ -937,13 +937,13 @@ namespace ZemberekDotNet.Core.Math
         {
             foreach (float v in data)
             {
-                dos.Write(v);
+                dos.Write(v.EnsureEndianness());
             }
         }
 
         public static void Serialize(BinaryWriter dos, float[][] data)
         {
-            dos.Write(data.Length);
+            dos.Write(data.Length.EnsureEndianness());
             foreach (float[] floats in data)
             {
                 Serialize(dos, floats);
@@ -960,12 +960,12 @@ namespace ZemberekDotNet.Core.Math
 
         public static float[] Deserialize(BinaryReader dis)
         {
-            int amount = dis.ReadInt32();
+            int amount = dis.ReadInt32().EnsureEndianness();
             float[]
             result = new float[amount];
             for (int i = 0; i < amount; i++)
             {
-                result[i] = dis.ReadSingle();
+                result[i] = dis.ReadSingle().EnsureEndianness();
             }
             return result;
         }
@@ -975,7 +975,7 @@ namespace ZemberekDotNet.Core.Math
             float[] result = new float[amount];
             for (int i = 0; i < amount; i++)
             {
-                result[i] = dis.ReadSingle();
+                result[i] = dis.ReadSingle().EnsureEndianness();
             }
             return result;
         }
@@ -984,13 +984,13 @@ namespace ZemberekDotNet.Core.Math
         {
             for (int i = 0; i < result.Length; i++)
             {
-                result[i] = dis.ReadSingle();
+                result[i] = dis.ReadSingle().EnsureEndianness();
             }
         }
 
         public static float[][] Deserialize2d(BinaryReader dis)
         {
-            int amount = dis.ReadInt32();
+            int amount = dis.ReadInt32().EnsureEndianness();
             float[][] result = new float[amount][];
             for (int i = 0; i < amount; i++)
             {

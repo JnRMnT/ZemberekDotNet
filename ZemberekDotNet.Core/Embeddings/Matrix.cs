@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 using System.IO;
+using System.Linq;
 using ZemberekDotNet.Core.Math;
 
 namespace ZemberekDotNet.Core.Embeddings
@@ -46,7 +47,7 @@ namespace ZemberekDotNet.Core.Embeddings
             }
         }
 
-        public static readonly Matrix EMPTY = new Matrix(0, 0, new float[0]);
+        public static readonly Matrix Empty = new Matrix(0, 0, new float[0]);
 
         public Matrix Copy()
         {
@@ -70,8 +71,8 @@ namespace ZemberekDotNet.Core.Embeddings
         /// <returns></returns>
         public static Matrix Load(BinaryReader dis)
         {
-            int m_ = dis.ReadInt32();
-            int n_ = dis.ReadInt32();
+            int m_ = dis.ReadInt32().EnsureEndianness();
+            int n_ = dis.ReadInt32().EnsureEndianness();
             float[][] data = new float[m_][];
             for (int i = 0; i < m_; i++)
             {
@@ -95,6 +96,10 @@ namespace ZemberekDotNet.Core.Embeddings
                 dis.Read(b);
                 float[] tmp = new float[block / 4];
                 Buffer.BlockCopy(b, 0, tmp, 0, b.Length);
+                for (int i = 0; i < tmp.Length; i++)
+                {
+                    tmp[i] = tmp[i].EnsureEndianness();
+                }
 
                 for (int k = 0; k < tmp.Length / n_; k++)
                 {
@@ -272,8 +277,8 @@ namespace ZemberekDotNet.Core.Embeddings
         /// <param name="dos"></param>
         public void Save(BinaryWriter dos)
         {
-            dos.Write(m_);
-            dos.Write(n_);
+            dos.Write(m_.EnsureEndianness());
+            dos.Write(n_.EnsureEndianness());
 
             int blockSize = n_ * 4;
 
@@ -293,6 +298,15 @@ namespace ZemberekDotNet.Core.Embeddings
                 for (int i = start; i < end; i++)
                 {
                     Buffer.BlockCopy(data_[i], 0, b, j, data_[i].Length * 4);
+                    for (int k = j; k < j + data_[i].Length * 4; k += 4)
+                    {
+                        byte tmp = b[k];
+                        b[k] = b[k + 3];
+                        b[k + 3] = tmp;
+                        tmp = b[k + 1];
+                        b[k + 1] = b[k + 2];
+                        b[k + 2] = tmp;
+                    }
                     j += data_[i].Length * 4;
                 }
                 dos.Write(b);
@@ -313,7 +327,7 @@ namespace ZemberekDotNet.Core.Embeddings
             Console.Write(s + "[" + i + "] = ");
             for (int k = 0; k < n; k++)
             {
-                Console.Write(string.Format("%.4f ", data_[i][k]));
+                Console.Write(string.Format("{0:F4} ", data_[i][k]));
             }
             Console.WriteLine();
         }

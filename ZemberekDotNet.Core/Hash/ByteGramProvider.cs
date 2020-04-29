@@ -14,13 +14,13 @@ namespace ZemberekDotNet.Core.Hash
         public ByteGramProvider(FileStream file)
         {
             BinaryReader raf = new BinaryReader(file);
-            this.order = raf.ReadInt32();
-            this.ngramCount = raf.ReadInt32();
+            this.order = raf.ReadInt32().EnsureEndianness();
+            this.ngramCount = raf.ReadInt32().EnsureEndianness();
             int byteAmount = order * ngramCount * 4;
             List<byte> bytes = new List<byte>();
             for (int i = 0; i < order * ngramCount; i++)
             {
-                byte[] value = BitConverter.GetBytes(raf.ReadInt32());
+                byte[] value = BitConverter.GetBytes(raf.ReadInt32().EnsureEndianness());
                 if (BitConverter.IsLittleEndian)
                 {
                     value = value.Reverse().ToArray();

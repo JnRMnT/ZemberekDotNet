@@ -59,13 +59,13 @@ namespace ZemberekDotNet.Core.Tests.Hash
             FileStream file = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Write, 1000000);
             Console.WriteLine("writing");
             BinaryWriter dos = new BinaryWriter(file);
-            dos.Write(order);
-            dos.Write(gramCount);
+            dos.Write(order.EnsureEndianness());
+            dos.Write(gramCount.EnsureEndianness());
             for (int j = 0; j < keys.Length; j++)
             {
                 for (int i = 0; i < order; i++)
                 {
-                    dos.Write(j);
+                    dos.Write(j.EnsureEndianness());
                 }
             }
             dos.Close();
