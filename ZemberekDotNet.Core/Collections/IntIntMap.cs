@@ -30,12 +30,12 @@ namespace ZemberekDotNet.Core.Collections
 
         private void SetValue(int i, int value)
         {
-            entries[i] = (entries[i] & 0x0000_0000_FFFF_FFFFL) | ((ulong)value & 0xFFFF_FFFFL) << 32;
+            entries[i] = (entries[i] & 0x0000_0000_FFFF_FFFFL) | ((value & 0xFFFF_FFFFL) << 32);
         }
 
         private void SetKeyValue(int i, int key, int value)
         {
-            entries[i] = (((ulong)key & 0xFFFF_FFFFL) | ((ulong)value << 32));
+            entries[i] = (key & 0xFFFF_FFFFL) | ((long)value << 32);
         }
 
         private int GetValue(int i)
@@ -106,7 +106,7 @@ namespace ZemberekDotNet.Core.Collections
             int slot = FirstProbe(key);
             while (true)
             {
-                ulong entry = entries[slot];
+                long entry = entries[slot];
                 int t = (int)(entry & 0xFFFF_FFFFL);
                 if (t == key)
                 {

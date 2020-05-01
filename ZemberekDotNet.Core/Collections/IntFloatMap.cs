@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ZemberekDotNet.Core.Collections
+﻿namespace ZemberekDotNet.Core.Collections
 {
     /// <summary>
     ///  A simple hashmap with integer keys and float values. Implements open address linear probing
@@ -35,12 +31,12 @@ namespace ZemberekDotNet.Core.Collections
 
         private void SetValue(int i, float value)
         {
-            entries[i] = ((entries[i] & 0x0000_0000_FFFF_FFFFL) | ((((ulong)value.ToIntBits()) << 32)));
+            entries[i] = (long)(((ulong)entries[i] & 0x0000_0000_FFFF_FFFFL) | ((((ulong)value.ToIntBits()) << 32)));
         }
 
         private void SetKeyValue(int i, int key, float value)
         {
-            entries[i] = ((ulong)key & 0xFFFF_FFFFL) | (((ulong)value.ToIntBits()) << 32);
+            entries[i] = (long)(((ulong)key & 0xFFFF_FFFFL) | (((ulong)value.ToIntBits()) << 32));
         }
 
         private float GetValue(int i)
@@ -110,7 +106,7 @@ namespace ZemberekDotNet.Core.Collections
             int slot = FirstProbe(key);
             while (true)
             {
-                ulong entry = entries[slot];
+                long entry = entries[slot];
                 int t = (int)(entry & 0xFFFF_FFFFL);
                 if (t == key)
                 {

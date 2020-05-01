@@ -15,7 +15,7 @@ namespace ZemberekDotNet.Core.Collections
         public static int MaxCapacity = 1 << 30;
         // Backing array for keys and values. Each 64 bit slot is used for storing
         // 32 bit key, value pairs.
-        protected ulong[] entries;
+        protected long[] entries;
         // Number of keys in the map = size of the map.
         protected int keyCount;
         // Number of Removed keys.
@@ -30,8 +30,8 @@ namespace ZemberekDotNet.Core.Collections
         public CompactIntMapBase(int capacity)
         {
             capacity = NearestPowerOf2Capacity(capacity, MaxCapacity);
-            entries = new ulong[capacity];
-            Array.Fill(entries, (ulong)Empty);
+            entries = new long[capacity];
+            Array.Fill(entries, Empty);
             threshold = (int)(capacity * CalculateLoadFactor(capacity));
         }
 
@@ -131,7 +131,8 @@ namespace ZemberekDotNet.Core.Collections
 
         public void SetKey(int i, int key)
         {
-            entries[i] = (ulong)(((int)(entries[i] & 0xFFFF_FFFF_0000_0000L)) | key);
+            long bitOperator = unchecked((long)0xFFFF_FFFF_0000_0000L);
+            entries[i] = (entries[i] & bitOperator) | key;
         }
 
         public bool ContainsKey(int key)
