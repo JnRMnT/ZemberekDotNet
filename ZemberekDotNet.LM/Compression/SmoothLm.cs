@@ -113,7 +113,7 @@ namespace ZemberekDotNet.LM.Compression
         public static SmoothLmBuilder Builder(Stream stream)
         {
             return new SmoothLmBuilder(stream);
-        }        
+        }
 
         private SmoothLm(BinaryReader dis)
         {
@@ -240,13 +240,13 @@ namespace ZemberekDotNet.LM.Compression
                     Environment.NewLine));
             }
             sb.Append(string.Format("Log Base              : {0:F2}{1}", logBase, Environment.NewLine));
-            sb.Append(string.Format("Unigram Weight        : %.2f%n", unigramWeight));
-            sb.Append(string.Format("Using Stupid Back-off?: %s%n", useStupidBackoff ? "Yes" : "No"));
+            sb.Append(string.Format("Unigram Weight        : {0:F2}{1}", unigramWeight, Environment.NewLine));
+            sb.Append(string.Format("Using Stupid Back-off?: {0}{1}", useStupidBackoff ? "Yes" : "No", Environment.NewLine));
             if (useStupidBackoff)
             {
                 sb.Append(string.Format("Stupid Back-off Alpha Value   : {0:F2}{1}", stupidBackoffAlpha, Environment.NewLine));
             }
-            sb.Append(string.Format("Unknown Back-off N-gram penalty: %.2f%n", unknownBackoffPenalty));
+            sb.Append(string.Format("Unknown Back-off N-gram penalty: {0:F2}{1}", unknownBackoffPenalty, Environment.NewLine));
             return sb.ToString();
         }
 
@@ -840,7 +840,7 @@ namespace ZemberekDotNet.LM.Compression
         {
             return logBase;
         }
-        
+
         public enum MphfType
         {
             Small, Large

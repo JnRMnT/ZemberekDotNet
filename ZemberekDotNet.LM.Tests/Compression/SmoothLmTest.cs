@@ -203,15 +203,15 @@ namespace ZemberekDotNet.LM.Tests.Compression
             //<s> kedi
             int[]
             is2 = { vocabulary.IndexOf("<s>"), vocabulary.IndexOf("kedi") };
-            Assert.AreEqual(L(-0.796249), lm.GetProbabilityValue(is2), 0.0001);
-            Assert.AreEqual(L(-0.796249), lm.GetProbability(is2), 0.0001);
+            Assert.AreEqual(L(-0.796249), lm.GetProbabilityValue(is2), 0.00012);
+            Assert.AreEqual(L(-0.796249), lm.GetProbability(is2), 0.00012);
             //Ahmet dondurma yedi
             int[]
             is3 = {
         vocabulary.IndexOf("Ahmet"), vocabulary.IndexOf("dondurma"),
         vocabulary.IndexOf("yedi")};
-            Assert.AreEqual(L(-0.602060), lm.GetProbabilityValue(is3), 0.0001);
-            Assert.AreEqual(L(-0.602060), lm.GetProbability(is3), 0.0001);
+            Assert.AreEqual(L(-0.602060), lm.GetProbabilityValue(is3), 0.00012);
+            Assert.AreEqual(L(-0.602060), lm.GetProbability(is3), 0.00012);
             File.Delete(lmFile);
         }
 

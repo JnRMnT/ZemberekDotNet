@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using ZemberekDotNet.Core.Collections;
@@ -47,7 +48,7 @@ namespace ZemberekDotNet.Core.Data
             FloatValueMap<string> data = new FloatValueMap<string>(10000);
             foreach (string s in lines)
             {
-                float weight = float.Parse(Strings.SubstringUntilFirst(s, " "));
+                float weight = float.Parse(Strings.SubstringUntilFirst(s, " "), CultureInfo.InvariantCulture);
                 string key = Strings.SubstringAfterFirst(s, " ");
                 data.Set(key, weight);
             }

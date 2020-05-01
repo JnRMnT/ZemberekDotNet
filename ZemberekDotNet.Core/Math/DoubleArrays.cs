@@ -840,7 +840,7 @@ namespace ZemberekDotNet.Core.Math
             double[] result = new double[tokens.Count];
             for (int i = 0; i < result.Length; i++)
             {
-                result[i] = float.Parse(tokens[i]);
+                result[i] = float.Parse(tokens[i], CultureInfo.InvariantCulture);
             }
             return result;
         }
@@ -917,7 +917,7 @@ namespace ZemberekDotNet.Core.Math
             float[] result = new float[tokens.Count];
             for (int i = 0; i < tokens.Count; i++)
             {
-                result[i] = float.Parse(tokens[i]);
+                result[i] = float.Parse(tokens[i], CultureInfo.InvariantCulture);
             }
             return result;
         }

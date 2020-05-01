@@ -441,7 +441,7 @@ namespace ZemberekDotNet.LM.Compression
                             break;
                         }
                         tokens = tokenizer.Split(clean);
-                        logProbability = float.Parse(tokens[0]);
+                        logProbability = float.Parse(tokens[0], CultureInfo.InvariantCulture);
 
                         for (int i = 0; i < _n; i++)
                         {
@@ -456,7 +456,7 @@ namespace ZemberekDotNet.LM.Compression
                             logBackoff = 0;
                             if (tokens.Length == _n + 2)
                             {
-                                logBackoff = float.Parse(tokens[_n + 1]);
+                                logBackoff = float.Parse(tokens[_n + 1], CultureInfo.InvariantCulture);
                             }
                             backoOffs.Write(ReduceFraction(logBackoff).EnsureEndianness());
                         }
