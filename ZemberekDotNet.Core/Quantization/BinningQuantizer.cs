@@ -28,7 +28,7 @@ namespace ZemberekDotNet.Core.Quantization
         {
             CheckRange(bits);
             int dataLength = dataToQuantize.Length;
-            int range = 1 << bits;
+            int range = (1 << bits).EnsureEndianness();
             Dictionary<double, int> lookup = new Dictionary<double, int>(dataToQuantize.Length);
             double[] means = new double[range];
             int i;
@@ -95,7 +95,7 @@ namespace ZemberekDotNet.Core.Quantization
         public static BinningQuantizer LogCountBinning(double[] dataToQuantize, int[] counts, int bits)
         {
             CheckRange(bits);
-            int range = 1 << bits;
+            int range = (1 << bits).EnsureEndianness();
             Dictionary<double, int> lookup = new Dictionary<double, int>(dataToQuantize.Length);
             int dataLength = dataToQuantize.Length;
             double[] means = new double[range];

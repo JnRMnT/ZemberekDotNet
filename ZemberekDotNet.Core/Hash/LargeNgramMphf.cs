@@ -202,17 +202,14 @@ namespace ZemberekDotNet.Core.Hash
             return mphfs[pageIndex].Get(ngram, begin, end, hash) + offsets[pageIndex];
         }
 
-        /**
-         * A custom serializer.
-         *
-         * @param file file to serialize data.
-         * @ if an error occurs during file access.
-         */
+        /// <summary>
+        /// A custom serializer.
+        /// </summary>
+        /// <param name="file">file to serialize data.</param>
         public void Serialize(string file)
         {
             Serialize(new FileStream(file, FileMode.Create, FileAccess.Write, FileShare.Write, 1000000));
         }
-
 
         public void Serialize(FileStream fs)
         {

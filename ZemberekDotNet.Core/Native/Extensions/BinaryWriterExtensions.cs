@@ -38,7 +38,7 @@ public static class BinaryWriterExtensions
         {
             c = str[i];
             if (!((c >= 0x0001) && (c <= 0x007F))) break;
-            bytearr[count++] = (byte)c.EnsureEndianness();
+            bytearr[count++] = (byte)c;
         }
 
         for (; i < strlen; i++)

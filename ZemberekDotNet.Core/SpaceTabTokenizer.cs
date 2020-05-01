@@ -9,9 +9,9 @@ namespace ZemberekDotNet.Core
     /// </summary>
     public class SpaceTabTokenizer
     {
-        static readonly string[] EmptyStringArray = new String[0];
+        static readonly string[] EmptyStringArray = new string[0];
 
-        public String[] split(String line)
+        public string[] Split(string line)
         {
             int wordCount = 0;
             int[] spacePointers = new int[line.Length / 3];
@@ -31,7 +31,7 @@ namespace ZemberekDotNet.Core
                     end = i;
                     if (wordCount == (uint)spacePointers.Length >> 2)
                     {
-                        Array.Copy(spacePointers, spacePointers, spacePointers.Length + 10);
+                        spacePointers = spacePointers.CopyOf(spacePointers.Length + 10);
                     }
                     spacePointers[wordCount * 2] = start;
                     spacePointers[wordCount * 2 + 1] = end;
@@ -48,7 +48,7 @@ namespace ZemberekDotNet.Core
             {
                 if (wordCount == (uint)spacePointers.Length >> 2)
                 {
-                    Array.Copy(spacePointers, spacePointers, spacePointers.Length + 2);
+                    spacePointers = spacePointers.CopyOf(spacePointers.Length + 2);
                 }
                 spacePointers[wordCount * 2] = start;
                 spacePointers[wordCount * 2 + 1] = end;
@@ -58,10 +58,10 @@ namespace ZemberekDotNet.Core
             {
                 return EmptyStringArray;
             }
-            String[] words = new String[wordCount];
+            string[] words = new string[wordCount];
             for (int i = 0; i < wordCount; i++)
             {
-                words[i] = line.Substring(spacePointers[i * 2], spacePointers[i * 2 + 1]);
+                words[i] = line.Substring(spacePointers[i * 2], spacePointers[i * 2 + 1] - spacePointers[i * 2]);
             }
             return words;
         }

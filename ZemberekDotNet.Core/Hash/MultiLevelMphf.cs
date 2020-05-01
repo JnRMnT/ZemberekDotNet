@@ -57,6 +57,10 @@ namespace ZemberekDotNet.Core.Hash
         {
             return Generate(new ByteGramProvider(binaryKeyFile));
         }
+        public static MultiLevelMphf Generate(string binaryKeyFile)
+        {
+            return Generate(File.OpenRead(binaryKeyFile));
+        }
 
         public static int Hash(byte[] data, int seed)
         {
