@@ -57,7 +57,6 @@ namespace ZemberekDotNet.LM.Compression
 
         private class LookupCalculator
         {
-
             int bitCount;
             int n;
             Histogram<double?> histogram;
@@ -65,7 +64,7 @@ namespace ZemberekDotNet.LM.Compression
             internal LookupCalculator(int bitCount)
             {
                 this.bitCount = bitCount;
-                this.n = (1 << bitCount).EnsureEndianness();
+                this.n = 1 << bitCount;
                 histogram = new Histogram<double?>(n / 2);
             }
 

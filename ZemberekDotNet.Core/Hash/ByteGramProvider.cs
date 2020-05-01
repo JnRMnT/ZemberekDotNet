@@ -17,17 +17,13 @@ namespace ZemberekDotNet.Core.Hash
             this.order = raf.ReadInt32().EnsureEndianness();
             this.ngramCount = raf.ReadInt32().EnsureEndianness();
             int byteAmount = order * ngramCount * 4;
-            List<byte> bytes = new List<byte>();
-            for (int i = 0; i < order * ngramCount; i++)
+            data = new byte[byteAmount];
+            int actual = raf.Read(data);
+            if (actual != byteAmount)
             {
-                byte[] value = BitConverter.GetBytes(raf.ReadInt32().EnsureEndianness());
-                if (BitConverter.IsLittleEndian)
-                {
-                    value = value.Reverse().ToArray();
-                }
-                bytes.AddRange(value);
+                throw new InvalidOperationException(
+                    "File suppose to have " + byteAmount + " bytes for " + ngramCount + " ngrams");
             }
-            data = bytes.ToArray();
             raf.Close();
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -322,7 +323,7 @@ namespace ZemberekDotNet.LM.Backoff
                         IEnumerator<string> it = SplitPattern.Split(clean).ToList().GetEnumerator();
                         // parse probabilty
                         it.MoveNext();
-                        float logProbability = (float)LogMath.Log10ToLog(double.Parse(it.Current));
+                        float logProbability = (float)LogMath.Log10ToLog(double.Parse(it.Current, CultureInfo.InvariantCulture));
                         if (unigramWeight < 1)
                         {
                             // apply uni-gram weight. This applies smoothing to unigrams. As lowering high probabilities and
@@ -342,7 +343,7 @@ namespace ZemberekDotNet.LM.Backoff
                         float logBackoff = 0;
                         if (it.MoveNext())
                         {
-                            logBackoff = (float)LogMath.Log10ToLog(double.Parse(it.Current));
+                            logBackoff = (float)LogMath.Log10ToLog(double.Parse(it.Current, CultureInfo.InvariantCulture));
                         }
                         int index = vocabularyBuilder.Add(word);
                         probabilities.Add(new NgramData(index), new NgramProb(logProbability, logBackoff));
@@ -374,7 +375,7 @@ namespace ZemberekDotNet.LM.Backoff
                         }
                         IEnumerator<string> it2 = SplitPattern.Split(clean).ToList().GetEnumerator();
                         it2.MoveNext();
-                        logProbability = (float)LogMath.Log10ToLog(double.Parse(it2.Current));
+                        logProbability = (float)LogMath.Log10ToLog(double.Parse(it2.Current, CultureInfo.InvariantCulture));
 
                         int[] ids = new int[_n];
                         for (int i = 0; i < _n; i++)
@@ -388,7 +389,7 @@ namespace ZemberekDotNet.LM.Backoff
                         {
                             if (it2.MoveNext())
                             {
-                                logBackoff = (float)LogMath.Log10ToLog(double.Parse(it2.Current));
+                                logBackoff = (float)LogMath.Log10ToLog(double.Parse(it2.Current, CultureInfo.InvariantCulture));
                             }
                         }
 

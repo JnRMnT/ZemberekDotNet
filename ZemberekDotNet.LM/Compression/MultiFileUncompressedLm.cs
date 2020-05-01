@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -372,13 +373,13 @@ namespace ZemberekDotNet.LM.Compression
                         }
                         string[] tokens = tokenizer.Split(clean);
                         // parse probabilty
-                        float logProbability = float.Parse(tokens[0]);
+                        float logProbability = float.Parse(tokens[0], CultureInfo.InvariantCulture);
 
                         String word = tokens[1];
                         float logBackoff = 0;
                         if (tokens.Length == 3)
                         {
-                            logBackoff = float.Parse(tokens[_n + 1]);
+                            logBackoff = float.Parse(tokens[_n + 1], CultureInfo.InvariantCulture);
                         }
                         // write unigram id, log-probability and log-backoff value.
                         int wordIndex = vocabularyBuilder.Add(word);

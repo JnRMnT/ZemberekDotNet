@@ -54,7 +54,7 @@ namespace ZemberekDotNet.Core.Collections
 
         public bool HasValidKey(int i)
         {
-            if (i >= keys.Length || i < 0)
+            if (i >= keys.Length)
             {
                 return false;
             }

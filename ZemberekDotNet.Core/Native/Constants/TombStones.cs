@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ZemberekDotNet.Core.Native.Constants
 {
@@ -16,7 +15,9 @@ namespace ZemberekDotNet.Core.Native.Constants
             { typeof(short?), short.MinValue },
             { typeof(ushort?), ushort.MinValue },
             { typeof(long?), long.MinValue },
-            { typeof(ulong?), ulong.MinValue }
+            { typeof(ulong?), ulong.MinValue},
+            { typeof(double?), double.MinValue },
+            { typeof(float?), float.MinValue }
         };
     }
 }

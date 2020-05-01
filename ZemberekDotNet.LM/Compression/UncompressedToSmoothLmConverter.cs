@@ -215,7 +215,7 @@ namespace ZemberekDotNet.LM.Compression
 
             // save vocabulary
             Log.Info("Saving vocabulary.");
-            dos.Write(lm.GetVocabularyFile());
+            dos.Write(File.ReadAllBytes(lm.GetVocabularyFile()));
 
             dos.Close();
         }

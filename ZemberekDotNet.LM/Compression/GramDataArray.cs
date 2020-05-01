@@ -5,7 +5,7 @@ namespace ZemberekDotNet.LM.Compression
 {
     public class GramDataArray
     {
-        private static readonly int MAX_BUF = 0x3fffffff;
+        private static readonly int MaxBuf = 0x3fffffff;
         internal readonly int pageShift; // for getting the page index value this amount of left shift is used. page index value resides on higher bits.
         internal readonly int indexMask; // used for obtaining the actual index of the key block.
         internal readonly int fpSize; // length of fingerprint in bytes
@@ -33,9 +33,9 @@ namespace ZemberekDotNet.LM.Compression
             }
 
             blockSize = fpSize + probSize + backoffSize;
-            int pageLength = GetPowerOf2(MAX_BUF / blockSize, MAX_BUF / blockSize);
+            int pageLength = GetPowerOf2(MaxBuf / blockSize, MaxBuf / blockSize);
             pageShift = 32 - (pageLength - 1).NumberOfLeadingZeros();
-            indexMask = (1 << pageShift - 1).EnsureEndianness() - 1;
+            indexMask = (1 << pageShift - 1) - 1;
             long l = 0;
             int pageCounter = 0;
             while (l < (long)count * blockSize)

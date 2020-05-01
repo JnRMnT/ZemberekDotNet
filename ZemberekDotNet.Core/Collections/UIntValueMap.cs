@@ -179,11 +179,6 @@ namespace ZemberekDotNet.Core.Collections
             return res;
         }
 
-        public IEnumerator<T> GetEnumerator()
-        {
-            return new EntryIterator(this);
-        }
-
         /// <summary>
         /// counts the items those values are smaller than amount
         /// </summary>
@@ -297,27 +292,27 @@ namespace ZemberekDotNet.Core.Collections
 
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
         {
-            return (IEnumerator<T>)new EntryIterator(this);
+            return new EntryIterator(this);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return new EntryIterator(this);
+            return GetEnumerator();
         }
 
-        public class Entry<X> : IComparable<IntValueMap<X>.Entry<X>>
+        public class Entry : IComparable<IntValueMap<T>.Entry<T>>
         {
 
-            public readonly X key;
+            public readonly T key;
             public readonly int count;
 
-            public Entry(X key, int count)
+            public Entry(T key, int count)
             {
                 this.key = key;
                 this.count = count;
             }
 
-            public int CompareTo(Collections.IntValueMap<X>.Entry<X> other)
+            public int CompareTo(IntValueMap<T>.Entry<T> other)
             {
                 return other.count.CompareTo(count);
             }

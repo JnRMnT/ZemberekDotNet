@@ -25,7 +25,7 @@ public static class FloatExtensions
             tmp = data[1];
             data[1] = data[2];
             data[2] = tmp;
-            return BitConverter.ToSingle(data, 0);
+            return BitConverter.ToSingle(data);
         }
         else
         {
