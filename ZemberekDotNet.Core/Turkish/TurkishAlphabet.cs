@@ -615,12 +615,23 @@ namespace ZemberekDotNet.Core.Turkish
                     (!source.rounded && !target.rounded));
         }
 
+
         /// <summary>
         /// Returns true if input contains a vowel.
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
-        public bool ContainsVowel(char[] s)
+        public bool ContainsVowel(string text)
+        {
+            return ContainsVowel(text.ToCharArray());
+        }
+
+            /// <summary>
+            /// Returns true if input contains a vowel.
+            /// </summary>
+            /// <param name="s"></param>
+            /// <returns></returns>
+            public bool ContainsVowel(char[] s)
         {
             if (s.Length == 0)
             {
