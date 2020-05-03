@@ -37,7 +37,7 @@ namespace ZemberekDotNet.Core.Data
             return data.Size();
         }
 
-        public static Weights loadFromFile(string file)
+        public static Weights LoadFromFile(string file)
         {
             List<string> all = TextIO.LoadLines(file);
             return LoadFromLines(all);

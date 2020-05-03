@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Text;
 
 namespace ZemberekDotNet.Core.Native
 {
@@ -21,6 +22,15 @@ namespace ZemberekDotNet.Core.Native
                     return b.Append(']').ToString();
                 b.Append(", ");
             }
+        }
+
+        public static List<T> AsList<T>(IEnumerable<T> states)
+        {
+            return new List<T>(states);
+        }
+        public static List<T> AsList<T>(params T[] parameters)
+        {
+            return new List<T>(parameters);
         }
     }
 }

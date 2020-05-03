@@ -8,7 +8,7 @@ public static class CollectionExtensions
         return collection == null || collection.Count == 0;
     }
 
-    public static void AddRange<T>(this ICollection<T> collection, ICollection<T> collectionToAdd)
+    public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> collectionToAdd)
     {
         foreach (T item in collectionToAdd)
         {
@@ -40,7 +40,7 @@ public static class CollectionExtensions
         {
             foreach(T itemToRemove in itemsToRemove)
             {
-                collection.Remove(itemsToRemove);
+                collection.Remove(itemToRemove);
             }
         }
     }

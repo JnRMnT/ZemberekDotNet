@@ -83,9 +83,9 @@ namespace ZemberekDotNet.Core.Collections
             this.managed = managed;
         }
 
-        public static IntMap<X> CreateManaged<X>()
+        public static IntMap<T> CreateManaged()
         {
-            return new IntMap<X>(DefaultInitialCapacity, true);
+            return new IntMap<T>(DefaultInitialCapacity, true);
         }
 
         private int AdjustInitialCapacity(int capacity)

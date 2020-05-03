@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using ZemberekDotNet.Core.Logging;
 
 namespace ZemberekDotNet.Core.Enums
 {
-    public class EnumConverter<E, P> where E : Enum where P : Enum
+    public class EnumConverter<E, P>
     {
-        Dictionary<string, P> conversionFromEToP;
-        Dictionary<string, E> conversionFromPToE;
+        readonly Dictionary<string, P> conversionFromEToP;
+        readonly Dictionary<string, E> conversionFromPToE;
 
         private EnumConverter(
             Dictionary<string, P> conversionFromEToP,
@@ -17,10 +18,10 @@ namespace ZemberekDotNet.Core.Enums
             this.conversionFromPToE = conversionFromPToE;
         }
 
-        public static EnumConverter<E, P> CreateConverter(Type enumType, Type otherEnumType)
+        public static EnumConverter<E, P> CreateConverter()
         {
-            Dictionary<string, E> namesMapE = CreateEnumNameMap<E>(enumType);
-            Dictionary<string, P> namesMapP = CreateEnumNameMap<P>(otherEnumType);
+            Dictionary<string, E> namesMapE = CreateEnumNameMap<E>();
+            Dictionary<string, P> namesMapP = CreateEnumNameMap<P>();
 
             Dictionary<string, P> conversionFromEToP = new Dictionary<string, P>();
             Dictionary<string, E> conversionFromPToE = new Dictionary<string, E>();
@@ -41,13 +42,29 @@ namespace ZemberekDotNet.Core.Enums
             return new EnumConverter<E, P>(conversionFromEToP, conversionFromPToE);
         }
 
-        private static Dictionary<string, T> CreateEnumNameMap<T>(Type enumType)
+        private static Dictionary<string, T> CreateEnumNameMap<T>()
         {
+            Type type = typeof(T);
             Dictionary<string, T> nameToEnum = new Dictionary<string, T>();
-            // put Enums in map by name
-            foreach (string enumElement in Enum.GetNames(typeof(T)))
+            if (type.IsEnum)
             {
-                nameToEnum.Add(enumElement, (T)Enum.Parse(enumType, enumElement));
+                // put Enums in map by name
+                foreach (string enumElement in Enum.GetNames(type))
+                {
+                    nameToEnum.Add(enumElement, (T)Enum.Parse(type, enumElement));
+                }
+            }
+            else if (typeof(IStringEnum).IsAssignableFrom(type))
+            {
+                FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Static);
+                foreach (FieldInfo field in fields)
+                {
+                    nameToEnum.Add(field.Name, (T)field.GetValue(null));
+                }
+            }
+            else
+            {
+                throw new NotSupportedException();
             }
             return nameToEnum;
         }
@@ -57,7 +74,7 @@ namespace ZemberekDotNet.Core.Enums
             P pEnum = conversionFromEToP.GetValueOrDefault(en.ToString());
             if (pEnum == null)
             {
-                Log.Warn("Could not map from Enum %s Returning default", en);
+                Log.Warn("Could not map from Enum {0} Returning default", en);
                 return defaultEnum;
             }
             return pEnum;
@@ -68,7 +85,7 @@ namespace ZemberekDotNet.Core.Enums
             E eEnum = conversionFromPToE.GetValueOrDefault(en.ToString());
             if (eEnum == null)
             {
-                Log.Warn("Could not map from Enum %s Returning default", en);
+                Log.Warn("Could not map from Enum {0} Returning default", en);
                 return defaultEnum;
             }
             return eEnum;

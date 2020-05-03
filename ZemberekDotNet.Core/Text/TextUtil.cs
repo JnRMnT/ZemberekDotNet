@@ -175,7 +175,7 @@ namespace ZemberekDotNet.Core.Text
         public static string NormalizeApostrophes(string input)
         {
             // rdquo, ldquo, laquo, raquo, Prime sybols in unicode.
-            return input.Replace("[\u0091\u0092\u2032´`’‘]", "'");
+            return Regex.Replace(input, "[\u0091\u0092\u2032´`’‘]", "'");
         }
 
         public static int CountChars(string s, char c)

@@ -41,22 +41,22 @@ namespace ZemberekDotNet.Tokenization
             return lexer;
         }
 
-        public bool isTypeAccepted(Token.Type i)
+        public bool IsTypeAccepted(Token.Type i)
         {
-            return !typeAccepted(i);
+            return !TypeAccepted(i);
         }
 
-        public bool isTypeIgnored(Token.Type i)
+        public bool IsTypeIgnored(Token.Type i)
         {
-            return !typeAccepted(i);
+            return !TypeAccepted(i);
         }
 
-        private bool typeAccepted(Token.Type i)
+        private bool TypeAccepted(Token.Type i)
         {
             return (acceptedTypeBits & (1L << (int)i)) != 0;
         }
 
-        private bool typeIgnored(Token.Type i)
+        private bool TypeIgnored(Token.Type i)
         {
             return (acceptedTypeBits & (1L << (int)i)) == 0;
         }
@@ -101,7 +101,7 @@ namespace ZemberekDotNet.Tokenization
                 token = lexer.NextToken())
             {
                 Token.Type type = ConvertType(token);
-                if (typeIgnored(type))
+                if (TypeIgnored(type))
                 {
                     continue;
                 }
@@ -244,7 +244,7 @@ namespace ZemberekDotNet.Tokenization
                     return false;
                 }
                 type = ConvertType(token);
-                while (tokenizer.typeIgnored(type))
+                while (tokenizer.TypeIgnored(type))
                 {
                     token = lexer.NextToken();
                     if (token.Type == TokenConstants.EOF)

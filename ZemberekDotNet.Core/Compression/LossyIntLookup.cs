@@ -105,7 +105,7 @@ namespace ZemberekDotNet.Core.Compression
             {
                 return false;
             }
-            int magic = (int)Bytes.ToInt(fourBytes, true);
+            uint magic = (Bytes.ToInt(fourBytes, true));
             dis.BaseStream.Seek(-4, SeekOrigin.Current);
             return magic == Magic;
         }
@@ -117,7 +117,7 @@ namespace ZemberekDotNet.Core.Compression
         /// <returns></returns>
         public static LossyIntLookup Deserialize(BinaryReader dis)
         {
-            long magic = dis.ReadInt32().EnsureEndianness();
+            uint magic = dis.ReadUInt32().EnsureEndianness();
             if (magic != Magic)
             {
                 throw new InvalidOperationException("File does not carry expected value in the beginning.");

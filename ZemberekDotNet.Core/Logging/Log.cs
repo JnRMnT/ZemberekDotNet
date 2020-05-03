@@ -1,5 +1,4 @@
 ﻿using log4net;
-using System;
 
 namespace ZemberekDotNet.Core.Logging
 {
@@ -38,6 +37,15 @@ namespace ZemberekDotNet.Core.Logging
         public static void Info(string message, params object[] parameters)
         {
             logger.Info(string.Format(message, parameters));
+        }
+
+        public static void Error(string message)
+        {
+            logger.Error(message);
+        }
+        public static void Error(string message, params object[] parameters)
+        {
+            logger.Error(string.Format(message, parameters));
         }
     }
 }

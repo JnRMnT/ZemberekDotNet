@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using ZemberekDotNet.Core.IO;
 
@@ -27,12 +28,12 @@ namespace ZemberekDotNet.Core.Enums
         {
             this.clazz = clazz;
             Dictionary<String, T> mapBuilder = new Dictionary<string, T>();
-            foreach (T senum in Enum.GetValues(clazz))
+            foreach (T senum in (IEnumerable<T>)clazz.GetProperty("Values", BindingFlags.Public | BindingFlags.Static).GetValue(null))
             {
                 mapBuilder.Add(senum.GetStringForm(), senum);
                 if (ignoreCase)
                 {
-                    String lowerCase = senum.GetStringForm().ToLowerInvariant();
+                    string lowerCase = senum.GetStringForm().ToLowerInvariant();
                     if (!lowerCase.Equals(senum.GetStringForm()))
                     {
                         mapBuilder.Add(lowerCase, senum);
@@ -76,7 +77,7 @@ namespace ZemberekDotNet.Core.Enums
             }
             else
             {
-                return new Collection<T>(strings.Select(e=> GetEnum(e)).ToList());
+                return new Collection<T>(strings.Select(e => GetEnum(e)).ToList());
             }
         }
 

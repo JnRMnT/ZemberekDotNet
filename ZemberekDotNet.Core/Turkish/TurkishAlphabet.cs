@@ -343,7 +343,7 @@ namespace ZemberekDotNet.Core.Turkish
             }
             return sb.ToString();
         }
-        
+
         public string NormalizeApostrophe(string s)
         {
             if (!ContainsApostrophe(s))
@@ -490,6 +490,17 @@ namespace ZemberekDotNet.Core.Turkish
         /// <returns></returns>
         public TurkicLetter GetLastVowel(string s)
         {
+            return GetLastVowel(s.ToCharArray());
+        }
+
+        /// <summary>
+        /// Returns the last vowel of the input as "TurkicLetter". If input is empty or there is no vowel,
+        /// returns TurkicLetter.Undefined.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public TurkicLetter GetLastVowel(char[] s)
+        {
             if (s.Length == 0)
             {
                 return TurkicLetter.Undefined;
@@ -626,12 +637,12 @@ namespace ZemberekDotNet.Core.Turkish
             return ContainsVowel(text.ToCharArray());
         }
 
-            /// <summary>
-            /// Returns true if input contains a vowel.
-            /// </summary>
-            /// <param name="s"></param>
-            /// <returns></returns>
-            public bool ContainsVowel(char[] s)
+        /// <summary>
+        /// Returns true if input contains a vowel.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public bool ContainsVowel(char[] s)
         {
             if (s.Length == 0)
             {

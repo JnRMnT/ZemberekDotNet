@@ -29,5 +29,18 @@ namespace ZemberekDotNet.Core.Native.Helpers
                 }
             }
         }
+
+
+        /// <summary>
+        /// Reads all lines and processes them with given line processor to build the final result object of type T
+        /// </summary>
+        /// <typeparam name="T">Type of the resulting object</typeparam>
+        /// <param name="filePath">Path of the file</param>
+        /// <param name="lineProcessor">Line Processor instance</param>
+        /// <returns></returns>
+        public static T ReadAllLines<T>(string filePath, ILineProcessor<T> lineProcessor)
+        {
+            return ReadAllLines(filePath, Encoding.Default, lineProcessor);
+        }
     }
 }
