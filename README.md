@@ -18,7 +18,7 @@ This library will be kept in sync with Zemberek-NLP and same module structure wi
 |  Module    | Package Name |  Description       |    Status      |
 |------------|----------|---------|---------|
 | [Core](ZemberekDotNet.Core)                    | ZemberekDotNet.Core           | Special Collections, Hash functions and helpers. | Completed  |
-| [Morphology](ZemberekDotNet.Morphology)        | ZemberekDotNet.Morphology     | Turkish morphological analysis, disambiguation and word generation. | Pending |
+| [Morphology](ZemberekDotNet.Morphology)        | ZemberekDotNet.Morphology     | Turkish morphological analysis, disambiguation and word generation. | Completed   |
 | [Tokenization](ZemberekDotNet.Tokenization)    | ZemberekDotNet.Tokenization         | Turkish Tokenization and sentence boundary detection. | Completed |
 | [Normalization](ZemberekDotNet.Normalization)  | ZemberekDotNet.Normalization        | Basic spell checker, word suggestion. Noisy text normalization. |  Pending |
 | [NER](NER)                      | ZemberekDotNet.NER                  | Turkish Named Entity Recognition. | Active Development |
