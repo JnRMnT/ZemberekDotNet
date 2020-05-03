@@ -9,7 +9,7 @@ ZemberekDotNet
 
 
 
-ZemberekDotNet is/will be the .NET Port of [Zemberek-NLP](https://github.com/ahmetaa/zemberek-nlp) (Natural Language Processing tools for Turkish).
+ZemberekDotNet is/will be the C#/.NET Port of [Zemberek-NLP](https://github.com/ahmetaa/zemberek-nlp) (Natural Language Processing tools for Turkish).
 
 This library will be kept in sync with Zemberek-NLP and same module structure will be maintained in .NET platform using NuGet packages under seperate projects.
 
@@ -19,7 +19,7 @@ This library will be kept in sync with Zemberek-NLP and same module structure wi
 |------------|----------|---------|---------|
 | [Core](ZemberekDotNet.Core)                    | ZemberekDotNet.Core           | Special Collections, Hash functions and helpers. | Completed  |
 | [Morphology](ZemberekDotNet.Morphology)        | ZemberekDotNet.Morphology     | Turkish morphological analysis, disambiguation and word generation. | Pending |
-| [Tokenization](ZemberekDotNet.Tokenization)    | ZemberekDotNet.Tokenization         | Turkish Tokenization and sentence boundary detection. | Pending |
+| [Tokenization](ZemberekDotNet.Tokenization)    | ZemberekDotNet.Tokenization         | Turkish Tokenization and sentence boundary detection. | Completed |
 | [Normalization](ZemberekDotNet.Normalization)  | ZemberekDotNet.Normalization        | Basic spell checker, word suggestion. Noisy text normalization. |  Pending |
 | [NER](NER)                      | ZemberekDotNet.NER                  | Turkish Named Entity Recognition. | Active Development |
 | [Classification](ZemberekDotNet.Classification)| ZemberekDotNet.Classification       | Text classification based on Java port of fastText project. |  Completed |
