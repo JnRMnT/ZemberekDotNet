@@ -19,7 +19,7 @@ steps:
   inputs:
     command: 'test'
     projects: '**/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+    arguments: '--collect "Code coverage"'
   displayName: Run Tests
 - task: CopyFiles@2
   inputs:
