@@ -78,7 +78,7 @@ namespace ZemberekDotNet.Morphology.Lexicon.TR
             {
                 lemma = dictionaryLine.Substring(0, dictionaryLine.IndexOf(" "));
             }
-            return Load(dictionaryLine).GetMatchingItems(lemma)[0];
+            return Load(new string[] { dictionaryLine }).GetMatchingItems(lemma)[0];
         }
 
         public static RootLexicon Load(params string[] dictionaryLines)

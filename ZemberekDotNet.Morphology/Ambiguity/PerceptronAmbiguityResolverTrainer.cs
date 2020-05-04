@@ -164,23 +164,23 @@ namespace ZemberekDotNet.Morphology.Ambiguity
                 Sentences = new List<SentenceAnalysis>();
             }
 
-            internal DataSet(List<SentenceAnalysis> sentences)
+            public DataSet(List<SentenceAnalysis> sentences)
             {
                 this.Sentences = sentences;
             }
 
-            internal void Add(DataSet other)
+            public void Add(DataSet other)
             {
                 this.Sentences.AddRange(other.Sentences);
             }
 
-            internal static DataSet Load(string path, TurkishMorphology analyzer)
+            public static DataSet Load(string path, TurkishMorphology analyzer)
             {
                 List<SentenceDataStr> sentencesFromTextFile = DataSet.LoadTrainingDataText(path);
                 return new DataSet(DataSet.Convert(sentencesFromTextFile, analyzer));
             }
 
-            static List<SentenceAnalysis> Convert(
+            public static List<SentenceAnalysis> Convert(
                 List<SentenceDataStr> set,
                 TurkishMorphology analyzer)
             {
@@ -364,13 +364,13 @@ namespace ZemberekDotNet.Morphology.Ambiguity
             internal List<WordDataStr> WordList { get => wordList; set => wordList = value; }
         }
 
-        internal class WordDataStr
+        public class WordDataStr
         {
             string word;
             string correctAnalysis;
             List<string> wordAnalysis;
 
-            internal WordDataStr(string word, string correctAnalysis,
+            public WordDataStr(string word, string correctAnalysis,
                 List<string> wordAnalysis)
             {
                 this.Word = word;

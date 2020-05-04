@@ -94,6 +94,17 @@ namespace ZemberekDotNet.Core.IO
         /// creates a one shot writer, meaning that writer will be closed automatically after any wrte
         /// method call.
         /// </summary>
+        /// <param name="file">file to write</param>
+        /// <returns>a SimpleTextWriter</returns>
+        public static SimpleTextWriter OneShotUTF8Writer(string file)
+        {
+            return new Builder(file).Encoding("utf-8").Build();
+        }
+
+        /// <summary>
+        /// creates a one shot writer, meaning that writer will be closed automatically after any wrte
+        /// method call.
+        /// </summary>
         /// <param name="os">output stream</param>
         /// <param name="encoding">encoding</param>
         /// <returns></returns>

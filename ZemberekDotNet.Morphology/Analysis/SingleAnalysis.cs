@@ -127,7 +127,7 @@ namespace ZemberekDotNet.Morphology.Analysis
             return GetMorphemes().Any(e => e.Informal);
         }
 
-        internal int GetMorphemeGroupCount()
+        public int GetMorphemeGroupCount()
         {
             return groupBoundaries.Length;
         }
@@ -233,7 +233,7 @@ namespace ZemberekDotNet.Morphology.Analysis
             int endIndex = groupIndex == groupBoundaries.Length - 1 ?
                 morphemeDataList.Count : groupBoundaries[groupIndex + 1];
 
-            return new MorphemeGroup(morphemeDataList.GetRange(groupBoundaries[groupIndex], endIndex));
+            return new MorphemeGroup(morphemeDataList.GetRange(groupBoundaries[groupIndex], endIndex - groupBoundaries[groupIndex]));
         }
 
         // container for Morphemes and their surface forms.

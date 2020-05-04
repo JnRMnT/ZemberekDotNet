@@ -112,7 +112,7 @@ namespace ZemberekDotNet.Morphology.Generator
                 {
                     if (morphemes[0].Equals(searchPath.GetCurrentState().morpheme))
                     {
-                        morphemesInPath = morphemes.GetRange(1, morphemes.Count);
+                        morphemesInPath = morphemes.GetRange(1, morphemes.Count - 1);
                     }
                     else
                     {
@@ -355,7 +355,7 @@ namespace ZemberekDotNet.Morphology.Generator
                     }
                     if (m.Equals(Morphemes[0]))
                     {
-                        return new GenerationPath(path, Morphemes.GetRange(1, Morphemes.Count));
+                        return new GenerationPath(path, Morphemes.GetRange(1, Morphemes.Count - 1));
                     }
                     else
                     {
@@ -368,7 +368,7 @@ namespace ZemberekDotNet.Morphology.Generator
                         "Cannot generate Generation copy because transition morpheme and first morpheme to consume"
                             + " does not match.");
                 }
-                return new GenerationPath(path, Morphemes.GetRange(1, Morphemes.Count));
+                return new GenerationPath(path, Morphemes.GetRange(1, Morphemes.Count - 1));
 
             }
 

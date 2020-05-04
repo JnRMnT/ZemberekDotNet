@@ -82,7 +82,7 @@ namespace ZemberekDotNet.LangID.Train
             }
             List<string> allAsList = new List<string>(all);
             allAsList.Shuffle();
-            List<String> train = allAsList.GetRange(1000, all.Count - 1);
+            List<String> train = allAsList.GetRange(1000, all.Count - 1 - 1000);
             List<String> test = allAsList.GetRange(0, 1000);
 
             Console.WriteLine("Lang:" + name + " Train:" + train.Count + " Test:" + test.Count);

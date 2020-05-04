@@ -200,7 +200,7 @@ namespace ZemberekDotNet.NER
 
         public NerDataSet GetSubSet(int from, int to)
         {
-            return new NerDataSet(sentences.GetRange(from, to).ToList());
+            return new NerDataSet(sentences.GetRange(from, to - from).ToList());
         }
 
         /// <summary>

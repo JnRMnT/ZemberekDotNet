@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using ZemberekDotNet.Core.Logging;
@@ -24,7 +25,7 @@ namespace ZemberekDotNet.Morphology.Analysis
         private static readonly int DefaultMaxDynamicCacheCapacity = 10000;
         private static readonly int DynamicCacheCapacityLimit = 1_000_000;
 
-        private static readonly string MOST_USED_WORDS_FILE = "Resources/tr/first-10K";
+        private static readonly string MostUsedWordsFile = "Resources/tr/first-10K";
         private ConcurrentDictionary<string, WordAnalysis> staticCache;
         private bool staticCacheInitialized = false;
         private long staticCacheHits;
@@ -40,7 +41,8 @@ namespace ZemberekDotNet.Morphology.Analysis
 
             dynamicCache = dynamicCacheDisabled ? null : new MemoryCache(new MemoryCacheOptions
             {
-                SizeLimit = builder.DynamicCacheMaxSize
+                //TODO: Check
+                //SizeLimit = builder.DynamicCacheMaxSize
             });
             staticCache = staticCacheDisabled ? null : new ConcurrentDictionary<string, WordAnalysis>();
         }
@@ -124,7 +126,7 @@ namespace ZemberekDotNet.Morphology.Analysis
                 try
                 {
                     Stopwatch stopwatch = Stopwatch.StartNew();
-                    List<string> words = TextIO.LoadLines(MOST_USED_WORDS_FILE);
+                    List<string> words = TextIO.LoadLines(MostUsedWordsFile);
                     Log.Debug("File read in {0} ms.", stopwatch.ElapsedMilliseconds);
                     int size = Math.Min(StaticCacheCapacity, words.Count);
                     for (int i = 0; i < size; i++)
@@ -140,7 +142,7 @@ namespace ZemberekDotNet.Morphology.Analysis
                     Log.Error("Could not read most frequent words list, static cache is disabled.");
                     Console.Error.WriteLine(e);
                 }
-            });
+            }).Wait();
             staticCacheInitialized = true;
         }
 
@@ -160,7 +162,7 @@ namespace ZemberekDotNet.Morphology.Analysis
             }
             else
             {
-                return analysisProvider(dynamicCache.Get<string>(input));
+                return analysisProvider(dynamicCache.Get<string>(input).ToStringOrEmpty());
             }
         }
 

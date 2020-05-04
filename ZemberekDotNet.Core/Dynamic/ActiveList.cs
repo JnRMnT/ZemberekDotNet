@@ -31,7 +31,7 @@ namespace ZemberekDotNet.Core.Dynamic
             {
                 k <<= 1;
             }
-            items = new IScorable[k] as T[];
+            items = new T[k];
             expandLimit = (int)(k * DefaultLoadFactor);
             modulo = k - 1;
         }
@@ -172,7 +172,14 @@ namespace ZemberekDotNet.Core.Dynamic
 
             public bool MoveNext()
             {
-                return true;
+                if (HasNext())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
 
             public void Reset()

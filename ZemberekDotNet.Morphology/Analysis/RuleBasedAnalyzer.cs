@@ -184,7 +184,7 @@ namespace ZemberekDotNet.Morphology.Analysis
                     {
                         if (newPaths.IsEmpty())
                         {
-                            debugData.failedPaths.Add(path, "No Transition");
+                            debugData.failedPaths[path] = "No Transition";
                         }
                         debugData.paths.AddRange(newPaths);
                     }
