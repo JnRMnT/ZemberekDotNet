@@ -56,7 +56,7 @@ namespace ZemberekDotNet.NER
             return position;
         }
 
-        static NerToken FromTypePositionString(int index, string word, string normalized, string id)
+        public static NerToken FromTypePositionString(int index, string word, string normalized, string id)
         {
             if (id.Equals("O"))
             {

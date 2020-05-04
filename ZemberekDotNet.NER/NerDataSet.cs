@@ -30,27 +30,27 @@ namespace ZemberekDotNet.NER
             "((<START:)(?<TYPE>.+?)(>)(?<CONTENT>.+?)(<END>))|([^ ]+)", RegexOptions.IgnoreCase);
 
 
-        internal ISet<string> types = new HashSet<string>();
-        internal ISet<string> typeIds = new HashSet<string>();
-        internal List<NerSentence> sentences;
+        private ISet<string> types = new HashSet<string>();
+        private ISet<string> typeIds = new HashSet<string>();
+        private List<NerSentence> sentences;
 
         public NerDataSet(List<NerSentence> sentences)
         {
-            this.sentences = sentences;
+            this.Sentences = sentences;
 
             foreach (NerSentence sentence in sentences)
             {
                 foreach (NerToken token in sentence.tokens)
                 {
-                    types.Add(token.type);
-                    typeIds.Add(token.tokenId);
+                    Types.Add(token.type);
+                    TypeIds.Add(token.tokenId);
                 }
             }
         }
 
         public List<NerSentence> GetSentences()
         {
-            return sentences;
+            return Sentences;
         }
 
         public enum AnnotationStyle
@@ -62,9 +62,13 @@ namespace ZemberekDotNet.NER
 
         static readonly Random rnd = new Random(0xcafe);
 
+        public ISet<string> Types { get => types; set => types = value; }
+        public ISet<string> TypeIds { get => typeIds; set => typeIds = value; }
+        public List<NerSentence> Sentences { get => sentences; set => sentences = value; }
+
         public void Shuffle()
         {
-            sentences.Shuffle(rnd);
+            Sentences.Shuffle(rnd);
         }
 
         public static NerDataSet Load(string path, AnnotationStyle style)
@@ -193,14 +197,14 @@ namespace ZemberekDotNet.NER
 
         public void AddSet(NerDataSet set)
         {
-            this.sentences.AddRange(set.sentences);
-            types.AddRange(set.types);
-            typeIds.AddRange(set.typeIds);
+            this.Sentences.AddRange(set.Sentences);
+            Types.AddRange(set.Types);
+            TypeIds.AddRange(set.TypeIds);
         }
 
         public NerDataSet GetSubSet(int from, int to)
         {
-            return new NerDataSet(sentences.GetRange(from, to - from).ToList());
+            return new NerDataSet(Sentences.GetRange(from, to - from).ToList());
         }
 
         /// <summary>
@@ -222,9 +226,9 @@ namespace ZemberekDotNet.NER
 
             public DataSetInfo(NerDataSet set)
             {
-                this.types = set.types;
-                this.numberOfSentences = set.sentences.Count;
-                foreach (NerSentence sentence in set.sentences)
+                this.types = set.Types;
+                this.numberOfSentences = set.Sentences.Count;
+                foreach (NerSentence sentence in set.Sentences)
                 {
                     numberOfTokens += sentence.tokens.Count;
                     foreach (NerToken token in sentence.tokens)
