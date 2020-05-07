@@ -3,7 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.17.1.1</Version>
+    <Version>0.17.1.2</Version>
+    <Product>ZemberekDotNet</Product>
+    <Authors>JnRMnT</Authors>
+    <PackageProjectUrl>https://github.com/JnRMnT/ZemberekDotNet</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JnRMnT/ZemberekDotNet</RepositoryUrl>
+    <Description>Fast identification of text language.</Description>
   </PropertyGroup>
 
   <ItemGroup>

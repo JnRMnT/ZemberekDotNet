@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Version>0.17.1.2</Version>
+    <Authors>JnRMnT</Authors>
+    <Product>ZemberekDotNet</Product>
+    <Description>ZemberekDotNet is the .NET Port of Zemberek-NLP (Natural Language Processing tools for Turkish).</Description>
+    <PackageProjectUrl>https://github.com/JnRMnT/ZemberekDotNet</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JnRMnT/ZemberekDotNet</RepositoryUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ZemberekDotNet.Classification\ZemberekDotNet.Classification.csproj" />
+    <ProjectReference Include="..\ZemberekDotNet.Core\ZemberekDotNet.Core.csproj" />
+    <ProjectReference Include="..\ZemberekDotNet.LangID\ZemberekDotNet.LangID.csproj" />
+    <ProjectReference Include="..\ZemberekDotNet.LM\ZemberekDotNet.LM.csproj" />
+    <ProjectReference Include="..\ZemberekDotNet.Morphology\ZemberekDotNet.Morphology.csproj" />
+    <ProjectReference Include="..\ZemberekDotNet.NER\ZemberekDotNet.NER.csproj" />
+    <ProjectReference Include="..\ZemberekDotNet.Normalization\ZemberekDotNet.Normalization.csproj" />
+    <ProjectReference Include="..\ZemberekDotNet.Tokenization\ZemberekDotNet.Tokenization.csproj" />
+  </ItemGroup>
+
+</Project>

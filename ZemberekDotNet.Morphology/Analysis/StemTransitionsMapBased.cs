@@ -243,7 +243,7 @@ namespace ZemberekDotNet.Morphology.Analysis
                     }
                     if (differentStemItems.ContainsKey(item))
                     {
-                        differentStemItems.Remove(item);
+                        differentStemItems.RemoveAll(item);
                     }
                 }
                 catch (Exception e)

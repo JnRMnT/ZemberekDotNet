@@ -34,6 +34,14 @@ namespace ZemberekDotNet.Core.Native.Collections
             }
         }
 
+        public void Add(MultiMap<X,V> multiMap)
+        {
+            foreach(X key in multiMap.Keys)
+            {
+                Add(key, multiMap[key]);
+            }
+        }
+
         public void Add(X key, IEnumerable<V> values)
         {
             // Add a key.
@@ -110,7 +118,7 @@ namespace ZemberekDotNet.Core.Native.Collections
             }
         }
 
-        public void Remove(X key)
+        public void RemoveAll(X key)
         {
             _dictionary.Remove(key);
         }

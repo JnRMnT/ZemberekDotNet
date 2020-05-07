@@ -2,12 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <Version>0.17.1.1</Version>
+    <Version>0.17.1.2</Version>
     <Description>Contains specialized data structures and helper classes.</Description>
     <PackageProjectUrl>https://github.com/JnRMnT/ZemberekDotNet</PackageProjectUrl>
     <RepositoryUrl>https://github.com/JnRMnT/ZemberekDotNet</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Authors>JnRMnT</Authors>
+    <Product>ZemberekDotNet</Product>
   </PropertyGroup>
 
   <ItemGroup>

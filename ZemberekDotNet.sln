@@ -33,7 +33,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZemberekDotNet.LangID.Tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZemberekDotNet.LM", "ZemberekDotNet.LM\ZemberekDotNet.LM.csproj", "{1645972C-3F67-49EF-8986-64561E3EB162}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZemberekDotNet.LM.Tests", "ZemberekDotNet.LM.Tests\ZemberekDotNet.LM.Tests.csproj", "{8F14C186-E862-4AB9-9CB9-36D3169487B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZemberekDotNet.LM.Tests", "ZemberekDotNet.LM.Tests\ZemberekDotNet.LM.Tests.csproj", "{8F14C186-E862-4AB9-9CB9-36D3169487B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZemberekDotNet.All", "ZemberekDotNet.All\ZemberekDotNet.All.csproj", "{91313744-F5DF-44D0-8A18-50E1EABC182E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,6 +107,10 @@ Global
 		{8F14C186-E862-4AB9-9CB9-36D3169487B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F14C186-E862-4AB9-9CB9-36D3169487B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F14C186-E862-4AB9-9CB9-36D3169487B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91313744-F5DF-44D0-8A18-50E1EABC182E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91313744-F5DF-44D0-8A18-50E1EABC182E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91313744-F5DF-44D0-8A18-50E1EABC182E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91313744-F5DF-44D0-8A18-50E1EABC182E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

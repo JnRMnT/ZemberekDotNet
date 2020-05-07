@@ -13,4 +13,16 @@
     <PackageReference Include="coverlet.collector" Version="1.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ZemberekDotNet.Normalization\ZemberekDotNet.Normalization.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Resources\" />
+    <Content Include="Resources\**\*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

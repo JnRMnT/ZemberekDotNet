@@ -16,7 +16,7 @@ namespace ZemberekDotNet.Core.Text
         List<string> corpusPaths;
         int blockSize;
 
-        public List<string> getCorpusPaths()
+        public List<string> GetCorpusPaths()
         {
             // defensive copy.
             return new List<string>(corpusPaths);

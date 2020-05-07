@@ -2,8 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <Version>0.17.1.1</Version>
+    <Version>0.17.1.2</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>Turkish Named Entity Recognition.</Description>
+    <Product>ZemberekDotNet</Product>
+    <Authors>JnRMnT</Authors>
+    <PackageProjectUrl>https://github.com/JnRMnT/ZemberekDotNet</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JnRMnT/ZemberekDotNet</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

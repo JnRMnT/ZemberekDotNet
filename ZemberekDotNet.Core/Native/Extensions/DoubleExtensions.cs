@@ -22,4 +22,9 @@ public static class DoubleExtensions
             return value;
         }
     }
+
+    public static long ToLongBits(this double value)
+    {
+        return BitConverter.DoubleToInt64Bits(value);
+    }
 }

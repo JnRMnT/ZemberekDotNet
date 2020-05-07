@@ -3,7 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.17.1.1</Version>
+    <Version>0.17.1.2</Version>
+    <Authors>JnRMnT</Authors>
+    <Description>Turkish morphological analysis, disambiguation and word generation.</Description>
+    <PackageProjectUrl>https://github.com/JnRMnT/ZemberekDotNet</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JnRMnT/ZemberekDotNet</RepositoryUrl>
+    <Product>ZemberekDotNet</Product>
   </PropertyGroup>
 
   <ItemGroup>

@@ -10,9 +10,8 @@ namespace ZemberekDotNet.Core
     /// <typeparam name="T">Type of the object</typeparam>
     public class ScoredItem<T> : IComparable<double>
     {
-        //TODO:Check
-        // public static readonly Comparer<ScoredItem<string>> StringCompDescending = new Comparer<ScoredItem<string>> = { (a, b) => { return Float.compare(b.Score, a.Score); };
-        //public static readonly Comparer<ScoredItem<string>> StringCompAscending = (a, b) => return float.Compare(a.Score, b.Score);
+        public static readonly Comparison<ScoredItem<T>> StringCompDescending = (a, b) => { return b.Score.CompareTo(a.Score); };
+        public static readonly Comparison<ScoredItem<T>> StringCompAscending = (a, b) => { return a.Score.CompareTo(b.Score); };
 
         public readonly T Item;
         public readonly float Score;

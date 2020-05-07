@@ -20,7 +20,7 @@ namespace ZemberekDotNet.Morphology.Analysis
     /// </summary>
     public class AnalysisCache
     {
-        private static readonly int StaticCacheCapacity = 3000;
+        private static readonly int StaticCacheCapacity = 5000;
         private static readonly int DefaultInitialDynamicCacheCapacity = 1000;
         private static readonly int DefaultMaxDynamicCacheCapacity = 10000;
         private static readonly int DynamicCacheCapacityLimit = 1_000_000;

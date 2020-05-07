@@ -2,8 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <Version>0.17.1.1</Version>
+    <Version>0.17.1.2</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>JnRMnT</Authors>
+    <Product>ZemberekDotNet</Product>
+    <PackageProjectUrl>https://github.com/JnRMnT/ZemberekDotNet</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JnRMnT/ZemberekDotNet</RepositoryUrl>
+    <Description>Provides a language model compression algorithm.</Description>
   </PropertyGroup>
 
   <ItemGroup>
