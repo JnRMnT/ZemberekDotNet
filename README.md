@@ -9,7 +9,7 @@ ZemberekDotNet
 
 
 
-ZemberekDotNet is/will be the C#/.NET Port of [Zemberek-NLP](https://github.com/ahmetaa/zemberek-nlp) (Natural Language Processing tools for Turkish).
+ZemberekDotNet is the C#/.NET Port of [Zemberek-NLP](https://github.com/ahmetaa/zemberek-nlp) (Natural Language Processing tools for Turkish).
 
 This library will be kept in sync with Zemberek-NLP and same module structure will be maintained in .NET platform using NuGet packages under seperate projects.
 
@@ -17,7 +17,7 @@ This library will be kept in sync with Zemberek-NLP and same module structure wi
 
 |  Module    | Package Name |  Description       |    Status      |
 |------------|----------|---------|---------|
-| [All](ZemberekDotNet.All)                    | ZemberekDotNet.Core           | Special Collections, Hash functions and helpers. | [![NuGet](https://img.shields.io/nuget/v/ZemberekDotNet.All)](https://www.nuget.org/packages/ZemberekDotNet.All/)[![NuGet](https://img.shields.io/nuget/dt/ZemberekDotNet.All)](https://www.nuget.org/packages/ZemberekDotNet.All/)  |
+| [All](ZemberekDotNet.All)                    | ZemberekDotNet.All           | Wrapper Package that includes all the modules. | [![NuGet](https://img.shields.io/nuget/v/ZemberekDotNet.All)](https://www.nuget.org/packages/ZemberekDotNet.All/)[![NuGet](https://img.shields.io/nuget/dt/ZemberekDotNet.All)](https://www.nuget.org/packages/ZemberekDotNet.All/)  |
 | [Core](ZemberekDotNet.Core)                    | ZemberekDotNet.Core           | Special Collections, Hash functions and helpers. | [![NuGet](https://img.shields.io/nuget/v/ZemberekDotNet.Core)](https://www.nuget.org/packages/ZemberekDotNet.Core/) [![NuGet](https://img.shields.io/nuget/dt/ZemberekDotNet.Core)](https://www.nuget.org/packages/ZemberekDotNet.Core/) |
 | [Morphology](ZemberekDotNet.Morphology)        | ZemberekDotNet.Morphology     | Turkish morphological analysis, disambiguation and word generation. | [![NuGet](https://img.shields.io/nuget/v/ZemberekDotNet.Morphology)](https://www.nuget.org/packages/ZemberekDotNet.Morphology/) [![NuGet](https://img.shields.io/nuget/dt/ZemberekDotNet.Morphology)](https://www.nuget.org/packages/ZemberekDotNet.Morphology/)  |
 | [Tokenization](ZemberekDotNet.Tokenization)    | ZemberekDotNet.Tokenization         | Turkish Tokenization and sentence boundary detection. | [![NuGet](https://img.shields.io/nuget/v/ZemberekDotNet.Tokenization)](https://www.nuget.org/packages/ZemberekDotNet.Tokenization/) [![NuGet](https://img.shields.io/nuget/dt/ZemberekDotNet.Tokenization)](https://www.nuget.org/packages/ZemberekDotNet.Tokenization/) |
