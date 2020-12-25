@@ -10,6 +10,13 @@ pool:
   vmImage: 'windows-latest'
 
 steps:
+- task: NuGetCommand@2
+  displayName: Restore NuGet Packages
+  inputs:
+    command: 'restore'
+    restoreSolution: '**/*.sln'
+    feedsToUse: 'select'
+    vstsFeed: 'dbf777b3-aa03-4952-92dc-55f20eba6724/5d5f458d-6d34-429b-97f8-2d53fc2c2c95'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
