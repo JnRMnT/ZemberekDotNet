@@ -1,42 +1,44 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <Version>0.17.1.2</Version>
-    <Description>Contains specialized data structures and helper classes.</Description>
-    <PackageProjectUrl>https://github.com/JnRMnT/ZemberekDotNet</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/JnRMnT/ZemberekDotNet</RepositoryUrl>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Authors>JnRMnT</Authors>
-    <Product>ZemberekDotNet</Product>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<Version>0.17.2</Version>
+		<Description>Contains specialized data structures and helper classes.</Description>
+		<PackageProjectUrl>https://github.com/JnRMnT/ZemberekDotNet</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/JnRMnT/ZemberekDotNet</RepositoryUrl>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<Authors>JnRMnT</Authors>
+		<Product>ZemberekDotNet</Product>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageTags>nlp machine-learning natural-language-processing turkish morphology language zemberek-nlp zemberek csharp nuget</PackageTags>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="log4net" Version="2.0.8" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="log4net" Version="2.0.8" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Include="Resources\Syllable\accepted-syllable-prefixes">
-      <Pack>true</Pack>
-      <PackagePath>\</PackagePath>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Text\html-char-map-common.txt">
-      <Pack>true</Pack>
-      <PackagePath>\</PackagePath>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Text\html-char-map-full.txt">
-      <Pack>true</Pack>
-      <PackagePath>\</PackagePath>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Text\special-char-to-simple-char.txt">
-      <Pack>true</Pack>
-      <PackagePath>\</PackagePath>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="Resources\Syllable\accepted-syllable-prefixes">
+			<Pack>true</Pack>
+			<PackagePath>content\</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Text\html-char-map-common.txt">
+			<Pack>true</Pack>
+			<PackagePath>content\</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Text\html-char-map-full.txt">
+			<Pack>true</Pack>
+			<PackagePath>content\</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Text\special-char-to-simple-char.txt">
+			<Pack>true</Pack>
+			<PackagePath>content\</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
 </Project>

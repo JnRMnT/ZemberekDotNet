@@ -1,28 +1,30 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.17.1.2</Version>
-    <PackageProjectUrl>https://github.com/JnRMnT/ZemberekDotNet</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/JnRMnT/ZemberekDotNet</RepositoryUrl>
-    <Product>ZemberekDotNet</Product>
-    <Authors>JnRMnT</Authors>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Version>0.17.2</Version>
+		<PackageProjectUrl>https://github.com/JnRMnT/ZemberekDotNet</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/JnRMnT/ZemberekDotNet</RepositoryUrl>
+		<Product>ZemberekDotNet</Product>
+		<Authors>JnRMnT</Authors>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageTags>nlp machine-learning natural-language-processing turkish morphology language zemberek-nlp zemberek csharp nuget</PackageTags>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ZemberekDotNet.Core\ZemberekDotNet.Core.csproj" />
-    <ProjectReference Include="..\ZemberekDotNet.LM\ZemberekDotNet.LM.csproj" />
-    <ProjectReference Include="..\ZemberekDotNet.Morphology\ZemberekDotNet.Morphology.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\ZemberekDotNet.Core\ZemberekDotNet.Core.csproj" />
+		<ProjectReference Include="..\ZemberekDotNet.LM\ZemberekDotNet.LM.csproj" />
+		<ProjectReference Include="..\ZemberekDotNet.Morphology\ZemberekDotNet.Morphology.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Resources\" />
-    <Content Include="Resources\**\*">
-      <Pack>true</Pack>
-      <PackagePath>\Resources\</PackagePath>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Resources\" />
+		<Content Include="Resources\**\*">
+			<Pack>true</Pack>
+			<PackagePath>content\Resources\</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
 </Project>
