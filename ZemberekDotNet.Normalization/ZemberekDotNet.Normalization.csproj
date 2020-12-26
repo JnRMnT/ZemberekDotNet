@@ -1,15 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>0.17.2</Version>
+		<Version>0.17.3</Version>
 		<PackageProjectUrl>https://github.com/JnRMnT/ZemberekDotNet</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/JnRMnT/ZemberekDotNet</RepositoryUrl>
 		<Product>ZemberekDotNet</Product>
 		<Authors>JnRMnT</Authors>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageTags>nlp machine-learning natural-language-processing turkish morphology language zemberek-nlp zemberek csharp nuget</PackageTags>
+		<IncludeSymbols>true</IncludeSymbols>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -22,7 +23,7 @@
 		<Folder Include="Resources\" />
 		<Content Include="Resources\**\*">
 			<Pack>true</Pack>
-			<PackagePath>content\Resources\</PackagePath>
+			<PackagePath>contentFiles\any\any\Resources;content\Resources</PackagePath>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>

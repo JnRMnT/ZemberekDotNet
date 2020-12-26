@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>0.17.2</Version>
+		<Version>0.17.3</Version>
 		<Product>ZemberekDotNet</Product>
 		<Authors>JnRMnT</Authors>
 		<PackageProjectUrl>https://github.com/JnRMnT/ZemberekDotNet</PackageProjectUrl>
@@ -11,6 +11,7 @@
 		<Description>Text classification based on Java port of fastText project.</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageTags>nlp machine-learning natural-language-processing turkish morphology language zemberek-nlp zemberek csharp nuget</PackageTags>
+		<IncludeSymbols>true</IncludeSymbols>
 	</PropertyGroup>
 
 	<ItemGroup>

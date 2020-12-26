@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
-		<Version>0.17.2</Version>
+		<Version>0.17.3</Version>
 		<Authors>JnRMnT</Authors>
 		<Product>ZemberekDotNet</Product>
 		<Description>ZemberekDotNet is the .NET Port of Zemberek-NLP (Natural Language Processing tools for Turkish).</Description>
@@ -12,6 +12,7 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/JnRMnT/ZemberekDotNet</PackageProjectUrl>
 		<PackageTags>nlp machine-learning natural-language-processing turkish morphology language zemberek-nlp zemberek csharp nuget</PackageTags>
+		<IncludeSymbols>true</IncludeSymbols>
 	</PropertyGroup>
 
 	<ItemGroup>
