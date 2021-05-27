@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>0.17.3</Version>
+		<Version>0.17.4</Version>
 		<PackageVersion>$(Version)</PackageVersion>
 		<Product>ZemberekDotNet</Product>
 		<Authors>JnRMnT</Authors>
@@ -16,16 +16,16 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Remove="Proto\LexiconProto.proto" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="Google.Protobuf" Version="3.14.0" />
 		<PackageReference Include="Grpc.Tools" Version="2.34.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="5.0.0" />
+		<PackageReference Include="MSBuildTasks" Version="1.5.0.235">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -41,7 +41,7 @@
 		<Folder Include="Resources\" />
 		<Content Include="Resources\**\*">
 			<Pack>true</Pack>
-			<PackagePath>contentFiles\any\any\Resources;content\Resources</PackagePath>
+			<PackagePath>contentFiles\any\any\Resources</PackagePath>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>

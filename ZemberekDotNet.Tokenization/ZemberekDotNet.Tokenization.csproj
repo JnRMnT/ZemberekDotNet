@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
-		<Version>0.17.3</Version>
+		<Version>0.17.4</Version>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>JnRMnT</Authors>
 		<Product>ZemberekDotNet</Product>
@@ -53,6 +53,10 @@
 	<ItemGroup>
 		<PackageReference Include="Antlr4.Runtime.Standard" Version="4.9.0" />
 		<PackageReference Include="Antlr4BuildTasks" Version="3.0.0" />
+		<PackageReference Include="MSBuildTasks" Version="1.5.0.235">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 	</ItemGroup>
 
 	<ItemGroup>

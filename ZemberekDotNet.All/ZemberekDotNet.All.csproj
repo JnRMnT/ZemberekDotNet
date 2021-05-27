@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
-		<Version>0.17.3</Version>
+		<Version>0.17.4</Version>
 		<Authors>JnRMnT</Authors>
 		<Product>ZemberekDotNet</Product>
 		<Description>ZemberekDotNet is the .NET Port of Zemberek-NLP (Natural Language Processing tools for Turkish).</Description>
@@ -16,14 +16,109 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\ZemberekDotNet.Classification\ZemberekDotNet.Classification.csproj" />
-		<ProjectReference Include="..\ZemberekDotNet.Core\ZemberekDotNet.Core.csproj" />
-		<ProjectReference Include="..\ZemberekDotNet.LangID\ZemberekDotNet.LangID.csproj" />
-		<ProjectReference Include="..\ZemberekDotNet.LM\ZemberekDotNet.LM.csproj" />
-		<ProjectReference Include="..\ZemberekDotNet.Morphology\ZemberekDotNet.Morphology.csproj" />
-		<ProjectReference Include="..\ZemberekDotNet.NER\ZemberekDotNet.NER.csproj" />
-		<ProjectReference Include="..\ZemberekDotNet.Normalization\ZemberekDotNet.Normalization.csproj" />
-		<ProjectReference Include="..\ZemberekDotNet.Tokenization\ZemberekDotNet.Tokenization.csproj" />
+		<ProjectReference Include="..\ZemberekDotNet.Classification\ZemberekDotNet.Classification.csproj">
+			<IncludeAssets>all</IncludeAssets>
+			<PrivateAssets>analyzers;build</PrivateAssets>
+			<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+		</ProjectReference>
+		<ProjectReference Include="..\ZemberekDotNet.Core\ZemberekDotNet.Core.csproj">
+			<IncludeAssets>all</IncludeAssets>
+			<PrivateAssets>analyzers;build</PrivateAssets>
+			<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+		</ProjectReference>
+		<ProjectReference Include="..\ZemberekDotNet.LangID\ZemberekDotNet.LangID.csproj">
+			<IncludeAssets>all</IncludeAssets>
+			<PrivateAssets>analyzers;build</PrivateAssets>
+			<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+		</ProjectReference>
+		<ProjectReference Include="..\ZemberekDotNet.LM\ZemberekDotNet.LM.csproj">
+			<IncludeAssets>all</IncludeAssets>
+			<PrivateAssets>analyzers;build</PrivateAssets>
+			<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+		</ProjectReference>
+		<ProjectReference Include="..\ZemberekDotNet.Morphology\ZemberekDotNet.Morphology.csproj">
+			<IncludeAssets>all</IncludeAssets>
+			<PrivateAssets>analyzers;build</PrivateAssets>
+			<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+		</ProjectReference>
+		<ProjectReference Include="..\ZemberekDotNet.NER\ZemberekDotNet.NER.csproj">
+			<IncludeAssets>all</IncludeAssets>
+			<PrivateAssets>analyzers;build</PrivateAssets>
+			<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+		</ProjectReference>
+		<ProjectReference Include="..\ZemberekDotNet.Normalization\ZemberekDotNet.Normalization.csproj">
+			<IncludeAssets>all</IncludeAssets>
+			<PrivateAssets>analyzers;build</PrivateAssets>
+			<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+		</ProjectReference>
+		<ProjectReference Include="..\ZemberekDotNet.Tokenization\ZemberekDotNet.Tokenization.csproj">
+			<IncludeAssets>all</IncludeAssets>
+			<PrivateAssets>analyzers;build</PrivateAssets>
+			<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+		</ProjectReference>
 	</ItemGroup>
 
+	<ItemGroup>
+		<Content Include="..\ZemberekDotNet.Classification\Resources\**\*">
+			<Pack>true</Pack>
+			<PackagePath>contentFiles\any\any\Resources</PackagePath>
+			<CopyToOutputDirectory>false</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="..\ZemberekDotNet.Classification\Resources\**\*">
+			<Pack>true</Pack>
+			<PackagePath>contentFiles\any\any\Resources</PackagePath>
+			<CopyToOutputDirectory>false</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="..\ZemberekDotNet.Core\Resources\**\*">
+			<Pack>true</Pack>
+			<PackagePath>contentFiles\any\any\Resources</PackagePath>
+			<CopyToOutputDirectory>false</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="..\ZemberekDotNet.LangID\Resources\**\*">
+			<Pack>true</Pack>
+			<PackagePath>contentFiles\any\any\Resources</PackagePath>
+			<CopyToOutputDirectory>false</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="..\ZemberekDotNet.LM\Resources\**\*">
+			<Pack>true</Pack>
+			<PackagePath>contentFiles\any\any\Resources</PackagePath>
+			<CopyToOutputDirectory>false</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="..\ZemberekDotNet.Morphology\Resources\**\*">
+			<Pack>true</Pack>
+			<PackagePath>contentFiles\any\any\Resources</PackagePath>
+			<CopyToOutputDirectory>false</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="..\ZemberekDotNet.NER\Resources\**\*">
+			<Pack>true</Pack>
+			<PackagePath>contentFiles\any\any\Resources</PackagePath>
+			<CopyToOutputDirectory>false</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="..\ZemberekDotNet.Normalization\Resources\**\*">
+			<Pack>true</Pack>
+			<PackagePath>contentFiles\any\any\Resources</PackagePath>
+			<CopyToOutputDirectory>false</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="..\ZemberekDotNet.NER\Tokenization\**\*">
+			<Pack>true</Pack>
+			<PackagePath>contentFiles\any\any\Resources</PackagePath>
+			<CopyToOutputDirectory>false</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 </Project>

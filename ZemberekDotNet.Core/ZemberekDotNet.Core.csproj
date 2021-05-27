@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
-		<Version>0.17.3</Version>
+		<Version>0.17.4</Version>
 		<Description>Contains specialized data structures and helper classes.</Description>
 		<PackageProjectUrl>https://github.com/JnRMnT/ZemberekDotNet</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/JnRMnT/ZemberekDotNet</RepositoryUrl>
@@ -17,12 +17,16 @@
 
 	<ItemGroup>
 		<PackageReference Include="log4net" Version="2.0.12" />
+		<PackageReference Include="MSBuildTasks" Version="1.5.0.235">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 	</ItemGroup>
 
 	<ItemGroup>
 		<Content Include="Resources\Syllable\accepted-syllable-prefixes">
 			<Pack>true</Pack>
-			<PackagePath>contentFiles\any\any;content</PackagePath>
+			<PackagePath>contentFiles\any\any</PackagePath>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Text\html-char-map-common.txt">
@@ -32,14 +36,13 @@
 		</Content>
 		<Content Include="Resources\Text\html-char-map-full.txt">
 			<Pack>true</Pack>
-			<PackagePath>contentFiles\any\any;content</PackagePath>
+			<PackagePath>contentFiles\any\any</PackagePath>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Text\special-char-to-simple-char.txt">
 			<Pack>true</Pack>
-			<PackagePath>contentFiles\any\any;content</PackagePath>
+			<PackagePath>contentFiles\any\any</PackagePath>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
-
 </Project>
