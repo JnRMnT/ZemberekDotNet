@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
-		<Version>0.17.4</Version>
+		<Version>0.17.5</Version>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>JnRMnT</Authors>
 		<Product>ZemberekDotNet</Product>
@@ -16,12 +16,5 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\ZemberekDotNet.Core\ZemberekDotNet.Core.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <PackageReference Include="MSBuildTasks" Version="1.5.0.235">
-	    <PrivateAssets>all</PrivateAssets>
-	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	  </PackageReference>
 	</ItemGroup>
 </Project>

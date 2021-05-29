@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
-		<Version>0.17.4</Version>
+		<Version>0.17.5</Version>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>JnRMnT</Authors>
 		<Product>ZemberekDotNet</Product>
@@ -28,24 +28,10 @@
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 			<Pack>true</Pack>
 		</Antlr4>
-		<Content Include="Resources\tokenization\abbreviations-long.txt">
+		<Folder Include="Resources\" />
+		<Content Include="Resources\**\*">
 			<Pack>true</Pack>
-			<PackagePath>contentFiles\any\any;content</PackagePath>
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Include="Resources\tokenization\abbreviations.txt">
-			<Pack>true</Pack>
-			<PackagePath>contentFiles\any\any;content</PackagePath>
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Include="Resources\tokenization\sentence-boundary-model.bin">
-			<Pack>true</Pack>
-			<PackagePath>contentFiles\any\any;content</PackagePath>
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Include="Resources\tokenization\TurkishLexer.tokens">
-			<Pack>true</Pack>
-			<PackagePath>contentFiles\any\any;content</PackagePath>
+			<PackagePath>contentFiles\any\any\Resources</PackagePath>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
@@ -53,10 +39,6 @@
 	<ItemGroup>
 		<PackageReference Include="Antlr4.Runtime.Standard" Version="4.9.0" />
 		<PackageReference Include="Antlr4BuildTasks" Version="3.0.0" />
-		<PackageReference Include="MSBuildTasks" Version="1.5.0.235">
-		  <PrivateAssets>all</PrivateAssets>
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
 	</ItemGroup>
 
 	<ItemGroup>

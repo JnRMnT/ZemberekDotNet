@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
-		<Version>0.17.4</Version>
+		<Version>0.17.5</Version>
 		<Authors>JnRMnT</Authors>
 		<Product>ZemberekDotNet</Product>
 		<Description>ZemberekDotNet is the .NET Port of Zemberek-NLP (Natural Language Processing tools for Turkish).</Description>
@@ -59,66 +59,75 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="..\ZemberekDotNet.Classification\Resources\**\*">
+		<None Include="..\ZemberekDotNet.Classification\Resources\**\*">
 			<Pack>true</Pack>
 			<PackagePath>contentFiles\any\any\Resources</PackagePath>
-			<CopyToOutputDirectory>false</CopyToOutputDirectory>
-		</Content>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+		</None>
 	</ItemGroup>
 	<ItemGroup>
-		<Content Include="..\ZemberekDotNet.Classification\Resources\**\*">
+		<None Include="..\ZemberekDotNet.Classification\Resources\**\*">
 			<Pack>true</Pack>
 			<PackagePath>contentFiles\any\any\Resources</PackagePath>
-			<CopyToOutputDirectory>false</CopyToOutputDirectory>
-		</Content>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+		</None>
 	</ItemGroup>
 	<ItemGroup>
-		<Content Include="..\ZemberekDotNet.Core\Resources\**\*">
+		<None Include="..\ZemberekDotNet.Core\Resources\**\*">
 			<Pack>true</Pack>
 			<PackagePath>contentFiles\any\any\Resources</PackagePath>
-			<CopyToOutputDirectory>false</CopyToOutputDirectory>
-		</Content>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+		</None>
 	</ItemGroup>
 	<ItemGroup>
-		<Content Include="..\ZemberekDotNet.LangID\Resources\**\*">
+		<None Include="..\ZemberekDotNet.LangID\Resources\**\*">
 			<Pack>true</Pack>
 			<PackagePath>contentFiles\any\any\Resources</PackagePath>
-			<CopyToOutputDirectory>false</CopyToOutputDirectory>
-		</Content>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+		</None>
 	</ItemGroup>
 	<ItemGroup>
-		<Content Include="..\ZemberekDotNet.LM\Resources\**\*">
+		<None Include="..\ZemberekDotNet.LM\Resources\**\*">
 			<Pack>true</Pack>
 			<PackagePath>contentFiles\any\any\Resources</PackagePath>
-			<CopyToOutputDirectory>false</CopyToOutputDirectory>
-		</Content>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+		</None>
 	</ItemGroup>
 	<ItemGroup>
-		<Content Include="..\ZemberekDotNet.Morphology\Resources\**\*">
+		<None Include="..\ZemberekDotNet.Morphology\Resources\**\*">
 			<Pack>true</Pack>
 			<PackagePath>contentFiles\any\any\Resources</PackagePath>
-			<CopyToOutputDirectory>false</CopyToOutputDirectory>
-		</Content>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+		</None>
 	</ItemGroup>
 	<ItemGroup>
-		<Content Include="..\ZemberekDotNet.NER\Resources\**\*">
+		<None Include="..\ZemberekDotNet.NER\Resources\**\*">
 			<Pack>true</Pack>
 			<PackagePath>contentFiles\any\any\Resources</PackagePath>
-			<CopyToOutputDirectory>false</CopyToOutputDirectory>
-		</Content>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+		</None>
 	</ItemGroup>
 	<ItemGroup>
-		<Content Include="..\ZemberekDotNet.Normalization\Resources\**\*">
+		<None Include="..\ZemberekDotNet.Normalization\Resources\**\*">
 			<Pack>true</Pack>
 			<PackagePath>contentFiles\any\any\Resources</PackagePath>
-			<CopyToOutputDirectory>false</CopyToOutputDirectory>
-		</Content>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+		</None>
 	</ItemGroup>
 	<ItemGroup>
-		<Content Include="..\ZemberekDotNet.NER\Tokenization\**\*">
+		<None Include="..\ZemberekDotNet.Tokenization\Resources\**\*">
 			<Pack>true</Pack>
 			<PackagePath>contentFiles\any\any\Resources</PackagePath>
-			<CopyToOutputDirectory>false</CopyToOutputDirectory>
-		</Content>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+		</None>
 	</ItemGroup>
 </Project>
