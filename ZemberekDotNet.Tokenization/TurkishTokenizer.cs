@@ -126,8 +126,6 @@ namespace ZemberekDotNet.Tokenization
             {
                 case TurkishLexer.SpaceTab:
                     return Token.Type.SpaceTab;
-                //case TurkishLexer.Question:
-                //    return Token.Type.Question;
                 case TurkishLexer.Word:
                     return Token.Type.Word;
                 case TurkishLexer.Number:
