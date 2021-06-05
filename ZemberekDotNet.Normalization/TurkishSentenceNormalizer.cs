@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using ZemberekDotNet.Core.Dynamic;
 using ZemberekDotNet.Core.Logging;
 using ZemberekDotNet.Core.Native;
@@ -152,7 +151,7 @@ namespace ZemberekDotNet.Normalization
 
         public string Normalize(string sentence)
         {
-            if (Regex.IsMatch(sentence, "^\\P{L}*$"))
+            if (sentence.Trim().Length == 0)
             {
                 return sentence;
             }
