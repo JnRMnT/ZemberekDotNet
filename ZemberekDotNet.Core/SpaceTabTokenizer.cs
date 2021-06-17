@@ -34,7 +34,7 @@ namespace ZemberekDotNet.Core
                         spacePointers = spacePointers.CopyOf(spacePointers.Length + 10);
                     }
                     spacePointers[wordCount * 2] = start;
-                    spacePointers[wordCount * 2 + 1] = end;
+                    spacePointers[wordCount * 2 + 1] = end - start;
                     end++;
                     start = end;
                     wordCount++;
@@ -51,7 +51,7 @@ namespace ZemberekDotNet.Core
                     spacePointers = spacePointers.CopyOf(spacePointers.Length + 2);
                 }
                 spacePointers[wordCount * 2] = start;
-                spacePointers[wordCount * 2 + 1] = end;
+                spacePointers[wordCount * 2 + 1] = end - start;
                 wordCount++;
             }
             if (wordCount == 0)
@@ -90,7 +90,7 @@ namespace ZemberekDotNet.Core
                         Array.Copy(spaces, spaces, spaces.Length + 10);
                     }
                     spaces[wordCount * 2] = start;
-                    spaces[wordCount * 2 + 1] = end;
+                    spaces[wordCount * 2 + 1] = end - start;
                     end++;
                     start = end;
                     wordCount++;
@@ -107,7 +107,7 @@ namespace ZemberekDotNet.Core
                     Array.Copy(spaces, spaces, spaces.Length + 2);
                 }
                 spaces[wordCount * 2] = start;
-                spaces[wordCount * 2 + 1] = end;
+                spaces[wordCount * 2 + 1] = end - start;
                 wordCount++;
             }
             if (wordCount == 0)
