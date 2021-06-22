@@ -289,7 +289,7 @@ namespace ZemberekDotNet.Morphology.Lexicon
             {
                 Stopwatch stopwatch = Stopwatch.StartNew();
                 RootLexicon lexicon = DictionarySerializer.Load("Resources/tr/lexicon.bin");
-                Log.Info("Dictionary generated in %d ms", stopwatch.ElapsedMilliseconds);
+                Log.Info("Dictionary generated in {0} ms", stopwatch.ElapsedMilliseconds);
                 return lexicon;
             }
             catch (IOException e)

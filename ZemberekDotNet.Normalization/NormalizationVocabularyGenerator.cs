@@ -183,7 +183,7 @@ namespace ZemberekDotNet.Normalization
                 MaxDegreeOfParallelism = threadCount
             }, (TextChunk chunk) =>
             {
-                Log.Info("Processing %s", chunk);
+                Log.Info("Processing {0}", chunk);
                 new WordCollectorTask(chunk, result, this).Call();
             });
             return result;

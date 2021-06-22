@@ -57,9 +57,9 @@ namespace ZemberekDotNet.Morphology.Tests.Analysis
             double seconds = sw.ElapsedMilliseconds / 1000d;
             double speed = tokenCount / seconds;
             double parseRatio = 100 - (noAnalysis * 100d / tokenCount);
-            Log.Info("%nElapsed = %.2f seconds", seconds);
-            Log.Info("%nToken Count (No Punc) = %d %nParse Ratio = %.4f%nSpeed = %.2f tokens/sec%n",
-                tokenCount, parseRatio, speed);
+            Log.Info("{0}Elapsed = {1:N2} seconds", Environment.NewLine, seconds);
+            Log.Info("{0}Token Count (No Punc) = {1} {2}Parse Ratio = {3:N4}{4}Speed = {5:N2} tokens/sec{6}",
+               Environment.NewLine, tokenCount, Environment.NewLine, parseRatio, Environment.NewLine, speed, Environment.NewLine);
             Log.Info("Saving Unknown Tokens");
             failedWords.SaveSortedByCounts("unk.freq", " ");
             failedWords.SaveSortedByKeys("unk", " ", Turkish.StringComparatorAsc);

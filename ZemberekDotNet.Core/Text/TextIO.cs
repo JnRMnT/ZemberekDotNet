@@ -68,20 +68,25 @@ namespace ZemberekDotNet.Core.Text
 
         public static long CharCount(string path, Encoding charset)
         {
-            BinaryReader reader = new BinaryReader(File.OpenRead(path), charset);
-            char[]
-            buf = new char[4096];
-            long count = 0;
-            while (true)
+            using (FileStream fileStream = File.OpenRead(path))
             {
-                int k = reader.Read(buf);
-                if (k == -1)
+                using (BinaryReader reader = new BinaryReader(fileStream, charset))
                 {
-                    break;
+                    char[]
+                    buf = new char[4096];
+                    long count = 0;
+                    while (reader.BaseStream.Position != fileStream.Length)
+                    {
+                        int k = reader.Read(buf);
+                        if (k == -1)
+                        {
+                            break;
+                        }
+                        count += k;
+                    }
+                    return count;
                 }
-                count += k;
             }
-            return count;
         }
 
         public static string CreateTempFile(string content)

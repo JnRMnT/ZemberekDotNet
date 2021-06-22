@@ -57,7 +57,7 @@ namespace ZemberekDotNet.Morphology.Lexicon
             }
 
             long end = DateTime.Now.Ticks;
-            Log.Info("Root lexicon created in %d ms.", new TimeSpan(end - start).TotalMilliseconds);
+            Log.Info("Root lexicon created in {0} ms.", new TimeSpan(end - start).TotalMilliseconds);
 
             return loadedLexicon;
         }

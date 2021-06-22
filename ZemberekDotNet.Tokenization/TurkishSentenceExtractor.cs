@@ -391,7 +391,7 @@ namespace ZemberekDotNet.Tokenization
 
                 for (int i = 0; i < builder.iterationCount; i++)
                 {
-                    Log.Info("Iteration = %d", i + 1);
+                    Log.Info("Iteration = {0}", i + 1);
 
                     UIntSet indexSet = new UIntSet();
                     StringBuilder sb = new StringBuilder();

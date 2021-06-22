@@ -688,7 +688,7 @@ namespace ZemberekDotNet.Normalization
             Log.Info("Context hash count before pruning (no singletons) = " + graph.ContextHashCount());
             graph.PruneContextNodes();
             Log.Info("Context hash count after pruning  = " + graph.ContextHashCount());
-            Log.Info("Edge count = %d", graph.EdgeCount());
+            Log.Info("Edge count = {0}", graph.EdgeCount());
             Log.Info("Creating Words -> Context counts.");
             return graph;
         }

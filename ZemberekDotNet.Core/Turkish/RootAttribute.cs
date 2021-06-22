@@ -204,8 +204,8 @@ namespace ZemberekDotNet.Core.Turkish
         public static readonly RootAttribute Unknown = new RootAttribute(29, Constants.Unknown);
 
         private static StringEnumMap<RootAttribute> shortFormToPosMap = StringEnumMap<RootAttribute>.Get();
-        int index;
-        string name;
+        readonly int index;
+        readonly string name;
 
         RootAttribute(int index, string name)
         {

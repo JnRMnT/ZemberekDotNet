@@ -37,6 +37,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZemberekDotNet.LM.Tests", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZemberekDotNet.All", "ZemberekDotNet.All\ZemberekDotNet.All.csproj", "{91313744-F5DF-44D0-8A18-50E1EABC182E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZemberekDotNet.Examples.Classification", "ZemberekDotNet.Examples.Classification\ZemberekDotNet.Examples.Classification.csproj", "{06452F27-AB6C-48D8-9223-F4D3AEBD01CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZemberekDotNet.Apps", "ZemberekDotNet.Apps\ZemberekDotNet.Apps.csproj", "{CA2B6C59-36AB-4E6B-8CF5-C643079ECFF9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +115,14 @@ Global
 		{91313744-F5DF-44D0-8A18-50E1EABC182E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91313744-F5DF-44D0-8A18-50E1EABC182E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91313744-F5DF-44D0-8A18-50E1EABC182E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06452F27-AB6C-48D8-9223-F4D3AEBD01CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06452F27-AB6C-48D8-9223-F4D3AEBD01CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06452F27-AB6C-48D8-9223-F4D3AEBD01CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06452F27-AB6C-48D8-9223-F4D3AEBD01CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA2B6C59-36AB-4E6B-8CF5-C643079ECFF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA2B6C59-36AB-4E6B-8CF5-C643079ECFF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA2B6C59-36AB-4E6B-8CF5-C643079ECFF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA2B6C59-36AB-4E6B-8CF5-C643079ECFF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -104,11 +104,11 @@ namespace ZemberekDotNet.Core.Embeddings
                         dictionary.Add(word);
                     }
                 }
-                Log.Info("Lines read: %d (thousands) ", blockCounter * 100);
+                Log.Info("Lines read: {0} (thousands) ", blockCounter * 100);
                 blockCounter++;
             }
-            Log.Info("Word + Label count = %d", dictionary.words_.Count);
-            Log.Info("Removing word and labels with small counts. Min word = %d, Min Label = %d",
+            Log.Info("Word + Label count = {0}", dictionary.words_.Count);
+            Log.Info("Removing word and labels with small counts. Min word = {0}, Min Label = {1}",
                 args.minCount, args.minCountLabel);
             // now we have the histograms. Remove based on count.
             dictionary.words_.Sort((e1, e2) =>
@@ -150,7 +150,7 @@ namespace ZemberekDotNet.Core.Embeddings
                     dictionary.nlabels_++;
                 }
             }
-            Log.Info("Word count = %d , Label count = %d", dictionary.NWords(), dictionary.NLabels());
+            Log.Info("Word count = {0} , Label count = {1}", dictionary.NWords(), dictionary.NLabels());
             dictionary.InitTableDiscard();
             dictionary.InitNGrams();
             return dictionary;

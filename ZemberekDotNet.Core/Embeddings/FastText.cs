@@ -152,39 +152,43 @@ namespace ZemberekDotNet.Core.Embeddings
 
         public void SaveModel(string outFilePath)
         {
-            BinaryWriter dos = IOUtil.GetDataOutputStream(outFilePath);
-            SignModel(dos);
-            args_.Save(dos);
-            dict_.Save(dos);
-            dos.Write(model_.quant_);
-            if (model_.quant_)
+            using (BinaryWriter dos = IOUtil.GetDataOutputStream(outFilePath))
             {
-                model_.qwi_.Save(dos);
-            }
-            else
-            {
-                model_.wi_.Save(dos);
-            }
-            dos.Write(args_.qout);
-            if (model_.quant_ && args_.qout)
-            {
-                model_.qwo_.Save(dos);
-            }
-            else
-            {
-                model_.wo_.Save(dos);
+                SignModel(dos);
+                args_.Save(dos);
+                dict_.Save(dos);
+                dos.Write(model_.quant_);
+                if (model_.quant_)
+                {
+                    model_.qwi_.Save(dos);
+                }
+                else
+                {
+                    model_.wi_.Save(dos);
+                }
+                dos.Write(args_.qout);
+                if (model_.quant_ && args_.qout)
+                {
+                    model_.qwo_.Save(dos);
+                }
+                else
+                {
+                    model_.wo_.Save(dos);
+                }
             }
         }
 
 
         public static FastText Load(string path)
         {
-            BinaryReader dis = IOUtil.GetDataInputStream(path);
-            if (!CheckModel(dis))
+            using (BinaryReader dis = IOUtil.GetDataInputStream(path))
             {
-                throw new InvalidOperationException("Model file has wrong file format.");
+                if (!CheckModel(dis))
+                {
+                    throw new InvalidOperationException("Model file has wrong file format.");
+                }
+                return Load(dis);
             }
-            return Load(dis);
         }
 
         public static FastText Load(BinaryReader dis)
@@ -342,7 +346,7 @@ namespace ZemberekDotNet.Core.Embeddings
             public override string ToString()
             {
                 return string.Format(
-                    "P@%d: %.3f  R@%d: %.3f F@%d %.3f  Number of examples = %d",
+                    "P@{0}: {1:F3}  R@{2}: {3:F3} F@{4} {5:F3}  Number of examples = {6}",
                     k, precision,
                     k, recall,
                     k, (2 * precision * recall) / (precision + recall),

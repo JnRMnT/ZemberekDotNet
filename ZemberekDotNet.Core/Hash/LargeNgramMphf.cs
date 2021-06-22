@@ -83,7 +83,7 @@ namespace ZemberekDotNet.Core.Hash
                 Log.Debug("Segment bucket ratio: " + ((double)keySegment.KeyAmount() / (1 << bucketBits)));
                 total += keySegment.KeyAmount();
                 MultiLevelMphf mphf = MultiLevelMphf.Generate(keySegment);
-                Log.Info("MPHF is generated for segment %d with %d keys. Average bits per key: %.3f",
+                Log.Info("MPHF is generated for segment {0} with {1} keys. Average bits per key: {2:N3}",
                           i,
                           mphf.Size(),
                           mphf.AverageBitsPerKey());

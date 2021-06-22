@@ -92,7 +92,7 @@ enum RootAttribute {
   PronunciationGuessed = 27;
   Informal = 28;
 }
-
+ 
 message DictionaryItem {
   string lemma = 1;
   string root = 2;

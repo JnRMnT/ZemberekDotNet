@@ -79,7 +79,7 @@ namespace ZemberekDotNet.Core.Text
             }
 
             corpora = corpora.OrderBy(e => Path.GetFullPath(e)).ToList();
-            Log.Info("There are %d corpus files.", corpora.Count);
+            Log.Info("There are {0} corpus files.", corpora.Count);
             return new BlockTextLoader(corpora, blockSize);
         }
 

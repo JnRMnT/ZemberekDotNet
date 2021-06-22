@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using ZemberekDotNet.Core.Logging;
 
@@ -7,6 +8,32 @@ namespace ZemberekDotNet.Core.Enums
 {
     public class EnumConverter<E, P>
     {
+        private static Type _originalNameAttributeType;
+        private static Type originalNameAttributeType
+        {
+            get
+            {
+                if (_originalNameAttributeType == null)
+                {
+                    _originalNameAttributeType = Type.GetType("Google.Protobuf.Reflection.OriginalNameAttribute, Google.Protobuf");
+                }
+                return _originalNameAttributeType;
+            }
+        }
+
+        private static PropertyInfo _originalNamePropertyInfo;
+        private static PropertyInfo originalNamePropertyInfo
+        {
+            get
+            {
+                if (_originalNamePropertyInfo == null)
+                {
+                    _originalNamePropertyInfo = originalNameAttributeType.GetProperty("Name");
+                }
+                return _originalNamePropertyInfo;
+            }
+        }
+
         readonly Dictionary<string, P> conversionFromEToP;
         readonly Dictionary<string, E> conversionFromPToE;
 
@@ -49,9 +76,11 @@ namespace ZemberekDotNet.Core.Enums
             if (type.IsEnum)
             {
                 // put Enums in map by name
-                foreach (string enumElement in Enum.GetNames(type))
+                foreach (FieldInfo field in type.GetFields(BindingFlags.Static | BindingFlags.Public))
                 {
-                    nameToEnum.Add(enumElement, (T)Enum.Parse(type, enumElement));
+                    Attribute originalNameAttribute = field.GetCustomAttribute(originalNameAttributeType);
+                    string originalName = (string)originalNamePropertyInfo.GetValue(originalNameAttribute);
+                    nameToEnum.Add(originalName, (T)field.GetValue(null));
                 }
             }
             else if (typeof(IStringEnum).IsAssignableFrom(type))
@@ -71,7 +100,7 @@ namespace ZemberekDotNet.Core.Enums
 
         public P ConvertTo(E en, P defaultEnum)
         {
-            P pEnum = conversionFromEToP.GetValueOrDefault(en.ToString());
+            P pEnum = conversionFromEToP.GetValueOrDefault(GetName(en));
             if (pEnum == null)
             {
                 Log.Warn("Could not map from Enum {0} Returning default", en);
@@ -82,13 +111,33 @@ namespace ZemberekDotNet.Core.Enums
 
         public E ConvertBack(P en, E defaultEnum)
         {
-            E eEnum = conversionFromPToE.GetValueOrDefault(en.ToString());
+            E eEnum = conversionFromPToE.GetValueOrDefault(GetName(en));
             if (eEnum == null)
             {
                 Log.Warn("Could not map from Enum {0} Returning default", en);
                 return defaultEnum;
             }
             return eEnum;
+        }
+
+        private string GetName<T>(T enumValue)
+        {
+            Type type = typeof(T);
+            if (type.IsEnum)
+            {
+                FieldInfo declaredField = type.GetFields(BindingFlags.Static | BindingFlags.Public).FirstOrDefault(e => EqualityComparer<T>.Default.Equals((T)e.GetValue(null), enumValue));
+                Attribute originalNameAttribute = declaredField.GetCustomAttribute(originalNameAttributeType);
+                string originalName = (string)originalNamePropertyInfo.GetValue(originalNameAttribute);
+                return originalName;
+            }
+            else if (typeof(IStringEnum).IsAssignableFrom(type))
+            {
+                return ((IStringEnum)enumValue).GetStringForm();
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
         }
     }
 }

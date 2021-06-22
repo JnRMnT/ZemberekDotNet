@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ZemberekDotNet.Core.Native;
 
 namespace ZemberekDotNet.Core
 {
@@ -87,7 +88,7 @@ namespace ZemberekDotNet.Core
                     end = i;
                     if (wordCount == (uint)spaces.Length >> 2)
                     {
-                        Array.Copy(spaces, spaces, spaces.Length + 10);
+                        spaces = spaces.CopyOf(spaces.Length + 10);
                     }
                     spaces[wordCount * 2] = start;
                     spaces[wordCount * 2 + 1] = end;
@@ -104,7 +105,7 @@ namespace ZemberekDotNet.Core
             {
                 if (wordCount == (uint)spaces.Length >> 2)
                 {
-                    Array.Copy(spaces, spaces, spaces.Length + 2);
+                    spaces = spaces.CopyOf(spaces.Length + 2);
                 }
                 spaces[wordCount * 2] = start;
                 spaces[wordCount * 2 + 1] = end;
@@ -117,7 +118,7 @@ namespace ZemberekDotNet.Core
             List<String> words = new List<string>(wordCount + 1);
             for (int i = 0; i < wordCount; i++)
             {
-                words.Add(line.Substring(spaces[i * 2], spaces[i * 2 + 1]));
+                words.Add(line.Substring(spaces[i * 2], spaces[i * 2 + 1] - spaces[i * 2]));
             }
             return words;
         }

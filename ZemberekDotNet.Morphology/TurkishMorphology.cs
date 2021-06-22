@@ -101,7 +101,7 @@ namespace ZemberekDotNet.Morphology
         {
             Stopwatch sw = Stopwatch.StartNew();
             TurkishMorphology instance = new TurkishMorphologyBuilder().SetLexicon(RootLexicon.GetDefault()).Build();
-            Log.Info("Initialized in %d ms.", sw.ElapsedMilliseconds);
+            Log.Info("Initialized in {0} ms.", sw.ElapsedMilliseconds);
             return instance;
         }
 

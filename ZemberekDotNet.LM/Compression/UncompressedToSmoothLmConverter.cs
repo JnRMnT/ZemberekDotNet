@@ -75,7 +75,7 @@ namespace ZemberekDotNet.LM.Compression
                     {
                         mphf = MultiLevelMphf.Generate(lm.GetGramFile(i));
                     }
-                    Log.Info("MPHF is generated for order %d with %d keys. Average bits per key: %.3f",
+                    Log.Info("MPHF is generated for order {0} with {1} keys. Average bits per key: {2:N3}",
                         i,
                         mphf.Size(),
                         mphf.AverageBitsPerKey());
@@ -159,7 +159,7 @@ namespace ZemberekDotNet.LM.Compression
                         reorderData = ReorderIndexes(block, lm, i, MultiLevelMphf.Deserialize(phfstrings[i]));
                     }
                 }
-                Log.Info("Validating reordered index array for order: %d", i);
+                Log.Info("Validating reordered index array for order: {0}", i);
 
                 ValidateIndexArray(reorderData.reorderedKeyIndexes);
 
