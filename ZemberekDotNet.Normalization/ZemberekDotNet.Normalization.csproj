@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>0.18.0</Version>
+		<Version>0.18.1</Version>
 		<PackageProjectUrl>https://github.com/JnRMnT/ZemberekDotNet</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/JnRMnT/ZemberekDotNet</RepositoryUrl>
 		<Product>ZemberekDotNet</Product>

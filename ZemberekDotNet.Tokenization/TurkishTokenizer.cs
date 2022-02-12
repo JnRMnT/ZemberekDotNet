@@ -69,7 +69,7 @@ namespace ZemberekDotNet.Tokenization
 
         public List<Token> Tokenize(string input)
         {
-            return GetAllTokens(LexerInstance(CharStreams.fromstring(input)));
+            return GetAllTokens(LexerInstance(CharStreams.fromString(input)));
         }
 
         public List<string> TokenizeToStrings(string input)
@@ -85,7 +85,7 @@ namespace ZemberekDotNet.Tokenization
 
         public IEnumerator<Token> GetTokenIterator(string input)
         {
-            return new TokenIterator(this, LexerInstance(CharStreams.fromstring(input)));
+            return new TokenIterator(this, LexerInstance(CharStreams.fromString(input)));
         }
 
         public IEnumerator<Token> GetTokenIterator(FileStream file)

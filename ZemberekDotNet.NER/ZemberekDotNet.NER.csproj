@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
-		<Version>0.18.0</Version>
+		<Version>0.18.1</Version>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Description>Turkish Named Entity Recognition.</Description>
 		<Product>ZemberekDotNet</Product>
