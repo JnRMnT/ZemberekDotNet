@@ -162,7 +162,13 @@ namespace ZemberekDotNet.Morphology.Analysis
             }
             else
             {
-                return analysisProvider(dynamicCache.Get<string>(input).ToStringOrEmpty());
+                WordAnalysis adHocAnalysis = dynamicCache.Get<WordAnalysis>(input);
+                if (adHocAnalysis == null)
+                {
+                    adHocAnalysis = analysisProvider(input);
+                    dynamicCache.Set(input, adHocAnalysis);
+                }
+                return adHocAnalysis;
             }
         }
 
@@ -181,13 +187,13 @@ namespace ZemberekDotNet.Morphology.Analysis
             }
             else
             {
-                WordAnalysis a = dynamicCache.Get<WordAnalysis>(input.GetText());
-                if (a == null)
+                WordAnalysis adhocAnalysis = dynamicCache.Get<WordAnalysis>(input.GetText());
+                if (adhocAnalysis == null)
                 {
-                    a = analysisProvider(input);
-                    dynamicCache.Set(input.GetText(), a);
+                    adhocAnalysis = analysisProvider(input);
+                    dynamicCache.Set(input.GetText(), adhocAnalysis);
                 }
-                return a;
+                return adhocAnalysis;
             }
         }
 
