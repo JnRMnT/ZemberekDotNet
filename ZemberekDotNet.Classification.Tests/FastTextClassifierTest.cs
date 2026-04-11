@@ -86,12 +86,23 @@ namespace ZemberekDotNet.Classification.Tests
         }
 
         [TestMethod]
-        [Ignore("Requires external test file.")]
         public void EvaluateRequiresTestFile()
         {
-            string testFile = @"test.txt";
-            var result = classifier.Evaluate(testFile, 1);
-            Assert.IsNotNull(result);
+            string testFile = Path.Combine(Path.GetTempPath(), "ft_eval_" + Guid.NewGuid() + ".txt");
+            try
+            {
+                using (StreamWriter sw = new StreamWriter(testFile))
+                {
+                    sw.WriteLine("__label__positive good great excellent");
+                    sw.WriteLine("__label__negative bad terrible horrible");
+                }
+                var result = classifier.Evaluate(testFile, 1);
+                Assert.IsNotNull(result);
+            }
+            finally
+            {
+                if (File.Exists(testFile)) File.Delete(testFile);
+            }
         }
     }
 }
