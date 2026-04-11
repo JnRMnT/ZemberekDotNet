@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics;
 using ZemberekDotNet.Core.Collections;
@@ -9,17 +9,15 @@ namespace ZemberekDotNet.Core.Tests.Collections
     public class LongBitVectorTest
     {
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void InitializationNegative()
         {
-            new LongBitVector(-1);
+            Assert.Throws<ArgumentException>(() => new LongBitVector(-1));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void InitializationOutOfBOund()
         {
-            new LongBitVector(int.MaxValue * 64L + 1L);
+            Assert.Throws<ArgumentException>(() => new LongBitVector(int.MaxValue * 64L + 1L));
         }
 
         [TestMethod]
@@ -165,7 +163,7 @@ namespace ZemberekDotNet.Core.Tests.Collections
                 Assert.IsTrue(!vector.Get(i));
             }
 
-            // check filling with 1 does not effect the overflow smoothnlp.core.bits of the last long.
+            // check filling with 1 does not effect the overflow bits of the last long.
             vector = new LongBitVector(3);
             vector.Add(3, false);
             vector.Fill(true);

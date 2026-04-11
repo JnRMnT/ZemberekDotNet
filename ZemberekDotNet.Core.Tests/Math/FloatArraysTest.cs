@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -79,11 +79,10 @@ namespace ZemberekDotNet.Core.Tests.Math
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestAppendZerosExc()
         {
             float[] da = { 1, 2, 0, -1, -3 };
-            FloatArrays.AppendZeros(da, -10);
+            Assert.Throws<ArgumentException>(() => FloatArrays.AppendZeros(da, -10));
         }
 
         [TestMethod]
@@ -378,37 +377,33 @@ namespace ZemberekDotNet.Core.Tests.Math
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestValidateArrayExc()
         {
             float[] da1 = new float[0];
-            FloatArrays.ValidateArray(da1);
+            Assert.Throws<ArgumentException>(() => FloatArrays.ValidateArray(da1));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
         public void TestValidateArraysNullExc()
         {
             float[] da1 = null;
             float[] da2 = null;
-            FloatArrays.ValidateArrays(da1, da2);
+            Assert.Throws<NullReferenceException>(() => FloatArrays.ValidateArrays(da1, da2));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestValidateArraysArgExc()
         {
             float[] da1 = new float[2];
             float[] da2 = new float[3];
-            FloatArrays.ValidateArrays(da1, da2);
+            Assert.Throws<ArgumentException>(() => FloatArrays.ValidateArrays(da1, da2));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestNormalize16bitExc()
         {
             byte[] ba = { 255 - 10, 45, 120 };
-            FloatArrays.Normalize16bitLittleEndian(ba);
+            Assert.Throws<ArgumentException>(() => FloatArrays.Normalize16bitLittleEndian(ba));
         }
 
         [TestMethod]

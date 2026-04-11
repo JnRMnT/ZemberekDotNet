@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -79,11 +79,10 @@ namespace ZemberekDotNet.Core.Tests.Math
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestAppendZerosExc()
         {
             double[] da = { 1, 2, 0, -1, -3 };
-            DoubleArrays.AppendZeros(da, -10);
+            Assert.Throws<ArgumentException>(() => DoubleArrays.AppendZeros(da, -10));
         }
 
         [TestMethod]
@@ -378,37 +377,33 @@ namespace ZemberekDotNet.Core.Tests.Math
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestValidateArrayExc()
         {
             double[] da1 = new double[0];
-            DoubleArrays.ValidateArray(da1);
+            Assert.Throws<ArgumentException>(() => DoubleArrays.ValidateArray(da1));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
         public void testValidateArraysNullExc()
         {
             double[] da1 = null;
             double[] da2 = null;
-            DoubleArrays.ValidateArrays(da1, da2);
+            Assert.Throws<NullReferenceException>(() => DoubleArrays.ValidateArrays(da1, da2));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestValidateArraysArgExc()
         {
             double[] da1 = new double[2];
             double[] da2 = new double[3];
-            DoubleArrays.ValidateArrays(da1, da2);
+            Assert.Throws<ArgumentException>(() => DoubleArrays.ValidateArrays(da1, da2));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestNormalize16bitExc()
         {
             byte[] ba = { (-10 + 255), 45, 120 };
-            DoubleArrays.Normalize16bitLittleEndian(ba);
+            Assert.Throws<ArgumentException>(() => DoubleArrays.Normalize16bitLittleEndian(ba));
         }
 
         [TestMethod]

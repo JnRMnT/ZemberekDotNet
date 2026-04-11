@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 using ZemberekDotNet.Core.IO;
@@ -27,10 +27,9 @@ namespace ZemberekDotNet.Core.Tests.IO
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestToByteArrayLargeNumberException()
         {
-            Assert.IsTrue(Enumerable.SequenceEqual(Bytes.ToByteArray(256, 0xac, 0x8a, 0x93), ba));
+            Assert.Throws<ArgumentException>(() => Assert.IsTrue(Enumerable.SequenceEqual(Bytes.ToByteArray(256, 0xac, 0x8a, 0x93), ba)));
         }
 
 
@@ -185,10 +184,9 @@ namespace ZemberekDotNet.Core.Tests.IO
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
         public void ToHexExceptionTest()
         {
-            Bytes.ToHex(null);
+            Assert.Throws<NullReferenceException>(() => Bytes.ToHex(null));
         }
 
         //    ~~~~~~~~~~~ Bytes.ToHexWithZerosWithZeros ~~~~~~~~~~~~~~
@@ -210,10 +208,9 @@ namespace ZemberekDotNet.Core.Tests.IO
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
         public void ToHexWithZerosExceptionTest()
         {
-            Bytes.ToHexWithZeros(null);
+            Assert.Throws<NullReferenceException>(() => Bytes.ToHexWithZeros(null));
         }
 
         [TestMethod]

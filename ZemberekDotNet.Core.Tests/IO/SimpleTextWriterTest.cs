@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -58,14 +58,16 @@ namespace ZemberekDotNet.Core.Tests.IO
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ObjectDisposedException))]
         public void KeepOpenExcepionTest()
         {
-            SimpleTextWriter sfw = new SimpleTextWriter
-                .Builder(tmpFile)
-                .Build();
-            sfw.Write("Hello");
-            sfw.Write("Now it will throw an exception..");
+            Assert.Throws<ObjectDisposedException>(() =>
+            {
+                SimpleTextWriter sfw = new SimpleTextWriter
+                    .Builder(tmpFile)
+                    .Build();
+                sfw.Write("Hello");
+                sfw.Write("Now it will throw an exception..");
+            });
         }
 
         [TestMethod]

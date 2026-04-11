@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics;
 using ZemberekDotNet.Core.Collections;
@@ -91,27 +91,24 @@ namespace ZemberekDotNet.Core.Tests.Collections
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void SafeGet()
         {
             FixedBitVector vector = new FixedBitVector(10);
-            vector.SafeGet(10);
+            Assert.Throws<ArgumentException>(() => vector.SafeGet(10));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void SafeSet()
         {
             FixedBitVector vector = new FixedBitVector(10);
-            vector.SafeSet(10);
+            Assert.Throws<ArgumentException>(() => vector.SafeSet(10));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void SafeClear()
         {
             FixedBitVector vector = new FixedBitVector(10);
-            vector.SafeClear(10);
+            Assert.Throws<ArgumentException>(() => vector.SafeClear(10));
         }
 
         [TestMethod]

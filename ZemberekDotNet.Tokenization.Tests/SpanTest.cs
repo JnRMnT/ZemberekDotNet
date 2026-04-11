@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,24 +25,21 @@ namespace ZemberekDotNet.Tokenization.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void BadInitialization1()
         {
-            new Span(-1, 0);
+            Assert.Throws<ArgumentException>(() => new Span(-1, 0));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void BadInitialization2()
         {
-            new Span(0, -1);
+            Assert.Throws<ArgumentException>(() => new Span(0, -1));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void BadInitialization3()
         {
-            new Span(1, 0);
+            Assert.Throws<ArgumentException>(() => new Span(1, 0));
         }
 
         [TestMethod]

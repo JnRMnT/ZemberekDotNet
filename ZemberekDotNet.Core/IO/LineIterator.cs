@@ -136,7 +136,16 @@ namespace ZemberekDotNet.Core.IO
 
         public void Reset()
         {
-            throw new NotImplementedException();
+            if (!BufferedReader.BaseStream.CanSeek)
+            {
+                throw new NotSupportedException("Underlying stream does not support seeking.");
+            }
+
+            BufferedReader.DiscardBufferedData();
+            BufferedReader.BaseStream.Seek(0, SeekOrigin.Begin);
+            cachedLine = null;
+            Current = null;
+            finished = false;
         }
     }
 }

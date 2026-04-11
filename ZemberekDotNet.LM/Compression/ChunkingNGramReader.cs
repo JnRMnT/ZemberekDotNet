@@ -112,7 +112,15 @@ namespace ZemberekDotNet.LM.Compression
 
             public void Reset()
             {
-                throw new NotImplementedException();
+                if (raf == null)
+                {
+                    raf = System.IO.File.OpenRead(owner.file);
+                }
+
+                raf.Seek(8, SeekOrigin.Begin);
+                data = new byte[owner.chunkByteSize];
+                readByteAmount = 0;
+                Current = null;
             }
         }
     }

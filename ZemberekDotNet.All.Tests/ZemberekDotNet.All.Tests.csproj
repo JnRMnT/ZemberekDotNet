@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -17,15 +16,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ZemberekDotNet.Core\ZemberekDotNet.Core.csproj" />
+    <ProjectReference Include="..\ZemberekDotNet.Morphology\ZemberekDotNet.Morphology.csproj" />
+    <ProjectReference Include="..\ZemberekDotNet.Tokenization\ZemberekDotNet.Tokenization.csproj" />
     <ProjectReference Include="..\ZemberekDotNet.Normalization\ZemberekDotNet.Normalization.csproj" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="Resources\" />
-    <Content Include="Resources\**\*">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <ProjectReference Include="..\ZemberekDotNet.NER\ZemberekDotNet.NER.csproj" />
+    <ProjectReference Include="..\ZemberekDotNet.Classification\ZemberekDotNet.Classification.csproj" />
+    <ProjectReference Include="..\ZemberekDotNet.LangID\ZemberekDotNet.LangID.csproj" />
+    <ProjectReference Include="..\ZemberekDotNet.LM\ZemberekDotNet.LM.csproj" />
   </ItemGroup>
 
 </Project>

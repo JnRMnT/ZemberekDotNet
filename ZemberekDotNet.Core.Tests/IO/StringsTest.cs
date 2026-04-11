@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,10 +51,9 @@ namespace ZemberekDotNet.Core.Tests.IO
 
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestIfAllHasTextExceptionIAE()
         {
-            Strings.AllHasText();
+            Assert.Throws<ArgumentException>(() => Strings.AllHasText());
         }
 
         [TestMethod]
@@ -66,10 +65,9 @@ namespace ZemberekDotNet.Core.Tests.IO
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestAllEmptyExceptionIAE()
         {
-            Strings.AllNullOrEmpty();
+            Assert.Throws<ArgumentException>(() => Strings.AllNullOrEmpty());
         }
 
         //    ~~~~~~~~~~~ Strings.LeftTrim ~~~~~~~~~~~~~~
@@ -154,10 +152,9 @@ namespace ZemberekDotNet.Core.Tests.IO
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void InsertFromLeftExceptionTest2()
         {
-            Strings.InsertFromLeft("123", -1, "-");
+            Assert.Throws<ArgumentException>(() => Strings.InsertFromLeft("123", -1, "-"));
         }
 
         //    ~~~~~~~~~~~ Strings.InsertFromRight ~~~~~~~~~~~~~~
@@ -180,10 +177,9 @@ namespace ZemberekDotNet.Core.Tests.IO
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void InsertFromRightExceptionTest2()
         {
-            Strings.InsertFromRight("123", -1, "-");
+            Assert.Throws<ArgumentException>(() => Strings.InsertFromRight("123", -1, "-"));
         }
 
         // ------------ Tests below is taken from commons logging ---------------------------
@@ -350,10 +346,9 @@ namespace ZemberekDotNet.Core.Tests.IO
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void Gram0sizeExceptionTest()
         {
-            Strings.SeparateGrams("123", 0);
+            Assert.Throws<ArgumentException>(() => Strings.SeparateGrams("123", 0));
         }
     }
 }

@@ -231,7 +231,14 @@ namespace ZemberekDotNet.Tokenization
 
             public void Dispose()
             {
-                throw new NotImplementedException();
+                if (lexer?.InputStream is IDisposable disposable)
+                {
+                    disposable.Dispose();
+                }
+
+                lexer = null;
+                token = null;
+                Current = null;
             }
 
             public bool HasNext()
@@ -257,7 +264,14 @@ namespace ZemberekDotNet.Tokenization
 
             public bool MoveNext()
             {
-                return HasNext();
+                if (!HasNext())
+                {
+                    Current = null;
+                    return false;
+                }
+
+                Current = Next();
+                return true;
             }
 
             public Token Next()

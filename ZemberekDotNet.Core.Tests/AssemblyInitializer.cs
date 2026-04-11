@@ -17,7 +17,7 @@ namespace ZemberekDotNet.Core.Tests
         private static void ContractFailed(object sender, ContractFailedEventArgs e)
         {
             e.SetHandled();
-            Assert.Fail("{0}: {1} {2}", e.FailureKind, e.Message, e.Condition);
+            Assert.Fail($"{e.FailureKind}: {e.Message} {e.Condition}");
         }
     }
 }

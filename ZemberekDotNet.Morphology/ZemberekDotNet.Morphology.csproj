@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>0.18.2</Version>
+		<Version>0.18.3</Version>
 		<PackageVersion>$(Version)</PackageVersion>
 		<Product>ZemberekDotNet</Product>
 		<Authors>JnRMnT</Authors>
@@ -16,12 +16,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Google.Protobuf" Version="3.19.4" />
-		<PackageReference Include="Grpc.Tools" Version="2.43.0">
+		<PackageReference Include="Google.Protobuf" Version="3.34.1" />
+		<PackageReference Include="Grpc.Tools" Version="2.80.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="10.0.5" />
 	</ItemGroup>
 
 	<ItemGroup>
