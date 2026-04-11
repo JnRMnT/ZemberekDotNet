@@ -316,6 +316,15 @@ namespace ZemberekDotNet.Core.IO
         }
 
         /// <summary>
+        /// Flushes any buffered content to the underlying stream without closing it.
+        /// Only meaningful when the writer was constructed with KeepOpen().
+        /// </summary>
+        public void Flush()
+        {
+            writer.Flush();
+        }
+
+        /// <summary>
         /// This class provides a flexible way of constructing a SimpleFileWriter instance.Caller can set
         /// the encoding, if write operations will append to the file or if the underlying output stream
         /// needs to be kept open after operations.build() method will create a SimpleFileWriter with the

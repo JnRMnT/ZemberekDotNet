@@ -263,8 +263,6 @@ namespace ZemberekDotNet.Core.Tests.Collections
         }
 
         [TestMethod]
-        [Ignore]
-        //TODO:check
         public void KeyIteratorStressTest()
         {
             Random rand = new Random(1);
@@ -295,18 +293,8 @@ namespace ZemberekDotNet.Core.Tests.Collections
                     readValues.Add(siv.Get(key) - 1);
                     readKeys.Add(key);
                 }
-                Assert.IsTrue(Enumerable.SequenceEqual(uniqueKeys, readValues));
-                Assert.IsTrue(Enumerable.SequenceEqual(uniqueKeys, readKeys));
-
-                int j = 0;
-                foreach (int ke in uniqueKeys)
-                {
-                    if (j > 50_000)
-                    {
-                        break;
-                    }
-                }
-
+                Assert.IsTrue(new HashSet<int?>(uniqueKeys).SetEquals(readValues));
+                Assert.IsTrue(new HashSet<int?>(uniqueKeys).SetEquals(readKeys));
             }
         }
 

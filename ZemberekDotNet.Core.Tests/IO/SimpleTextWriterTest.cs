@@ -40,10 +40,8 @@ namespace ZemberekDotNet.Core.Tests.IO
         }
 
         [TestMethod]
-        [Ignore]
         public void WriteStringKeepOpenTest()
         {
-            //TODO:Check
             SimpleTextWriter sfw = new SimpleTextWriter
                 .Builder(tmpFile)
                 .KeepOpen()
@@ -53,6 +51,8 @@ namespace ZemberekDotNet.Core.Tests.IO
             sfw.Write("Merhaba");
             sfw.Write("");
             sfw.Write(null);
+            sfw.Flush();
+            sfw.GetFileStream().Seek(0, SeekOrigin.Begin);
 
             Assert.AreEqual("HelloMerhaba", new SimpleTextReader(sfw.GetFileStream()).AsString());
         }
