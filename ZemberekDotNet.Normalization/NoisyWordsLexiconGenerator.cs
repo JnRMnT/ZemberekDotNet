@@ -594,6 +594,26 @@ namespace ZemberekDotNet.Normalization
             int maybeIncorrectWordStart;
 
             internal NormalizationVocabulary(
+                Histogram<string> correct,
+                Histogram<string> incorrect,
+                int correctMinCount,
+                int incorrectMinCount)
+            {
+                correct.RemoveSmaller(correctMinCount);
+                incorrect.RemoveSmaller(incorrectMinCount);
+                this.noisyWordStart = correct.Size();
+                this.words = new List<string>(correct.GetSortedList());
+                words.AddRange(incorrect.GetSortedList());
+                this.maybeIncorrectWordStart = words.Count;
+                int idx = 0;
+                foreach (string word in words)
+                {
+                    indexes.Put(word, idx);
+                    idx++;
+                }
+            }
+
+            internal NormalizationVocabulary(
                 string correct,
                 string incorrect,
                 string maybeIncorrect,
@@ -703,6 +723,8 @@ namespace ZemberekDotNet.Normalization
             // values are words and their counts for context hash keys.
             UIntMap<IntIntMap> contextHashToWordCounts = new UIntMap<IntIntMap>(5_000_000);
 
+            internal UIntMap<IntIntMap> ContextHashToWordCounts => contextHashToWordCounts;
+
             // This is for memory optimization. It holds <hash, wordIndex> values.
             // Context occurs only once and with count 1 stays in this.
             // This may be discarded during pruning.
@@ -789,8 +811,6 @@ namespace ZemberekDotNet.Normalization
                                 IntIntMap wordCounts = localContextCounts.Get(hash);
                                 if (wordCounts != null)
                                 {
-                                    wordCounts = new IntIntMap(1);
-                                    localContextCounts.Put(hash, wordCounts);
                                     wordCounts.Increment(wordIndex, 1);
                                 }
                                 else
@@ -1047,6 +1067,10 @@ namespace ZemberekDotNet.Normalization
         private static string LongestCommonSubstring(string a, string b, bool asciiTolerant)
         {
             int[][] lengths = new int[a.Length + 1][];
+            for (int i = 0; i <= a.Length; i++)
+            {
+                lengths[i] = new int[b.Length + 1];
+            }
 
             // row 0 and column 0 are initialized to 0 already
 

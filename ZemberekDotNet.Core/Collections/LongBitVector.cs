@@ -449,18 +449,18 @@ namespace ZemberekDotNet.Core.Collections
 
 
         //TODO:Check
-        /**
-         * Custom serializer. Method does not closes the output stream.
-         *
-         * @param dos data output stream to write.
-         */
-        //        public void serialize(DataOutputStream dos) throws IOException
-        //        {
-        //            dos.writeInt(words.length);
-        //    dos.writeLong(size);
-        //    for (long word : words) {
-        //        dos.writeLong(word);
-        //    }
-        //}
+        /// <summary>
+        /// Custom serializer. Method does not close the output stream.
+        /// </summary>
+        /// <param name="dos">data output stream to write.</param>
+        public void Serialize(BinaryWriter dos)
+        {
+            dos.Write(words.Length.EnsureEndianness());
+            dos.Write(size.EnsureEndianness());
+            foreach (long word in words)
+            {
+                dos.Write(word.EnsureEndianness());
+            }
+        }
     }
 }
