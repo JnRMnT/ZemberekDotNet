@@ -123,33 +123,7 @@ namespace ZemberekDotNet.Core.Embeddings
                 }
             });
 
-            //TODO: add threshold method.
-            LinkedHashSet<Entry> all = new LinkedHashSet<Entry>(dictionary.words_);
-            List<Entry> toRemove = dictionary.words_.Where(s => (s.type == TypeWord && s.count < args.minCount ||
-                    s.type == TypeLabel && s.count < args.minCountLabel)).ToList();
-            foreach (Entry toBeRemoved in toRemove)
-            {
-                all.Remove(toBeRemoved);
-            }
-
-            dictionary.words_ = new List<Entry>(all);
-            dictionary.size_ = 0;
-            dictionary.nwords_ = 0;
-            dictionary.nlabels_ = 0;
-            Array.Fill(dictionary.word2int_, -1);
-            foreach (Entry e in dictionary.words_)
-            {
-                int i = dictionary.Find(e.word);
-                dictionary.word2int_[i] = dictionary.size_++;
-                if (e.type == TypeWord)
-                {
-                    dictionary.nwords_++;
-                }
-                if (e.type == TypeLabel)
-                {
-                    dictionary.nlabels_++;
-                }
-            }
+            dictionary.Threshold(args.minCount, args.minCountLabel);
             Log.Info("Word count = {0} , Label count = {1}", dictionary.NWords(), dictionary.NLabels());
             dictionary.InitTableDiscard();
             dictionary.InitNGrams();
@@ -195,6 +169,47 @@ namespace ZemberekDotNet.Core.Embeddings
         {
             InitTableDiscard();
             InitNGrams();
+        }
+
+        internal void Threshold(int minWordCount, int minLabelCount)
+        {
+            words_.Sort((e1, e2) =>
+            {
+                if (e1.type != e2.type)
+                {
+                    return e1.type.CompareTo(e2.type);
+                }
+                else
+                {
+                    return e2.count.CompareTo(e1.count);
+                }
+            });
+            LinkedHashSet<Entry> all = new LinkedHashSet<Entry>(words_);
+            List<Entry> toRemove = words_.Where(s =>
+                (s.type == TypeWord && s.count < minWordCount) ||
+                (s.type == TypeLabel && s.count < minLabelCount)).ToList();
+            foreach (Entry toBeRemoved in toRemove)
+            {
+                all.Remove(toBeRemoved);
+            }
+            words_ = new List<Entry>(all);
+            size_ = 0;
+            nwords_ = 0;
+            nlabels_ = 0;
+            Array.Fill(word2int_, -1);
+            foreach (Entry e in words_)
+            {
+                int i = Find(e.word);
+                word2int_[i] = size_++;
+                if (e.type == TypeWord)
+                {
+                    nwords_++;
+                }
+                if (e.type == TypeLabel)
+                {
+                    nlabels_++;
+                }
+            }
         }
 
         /// <summary>

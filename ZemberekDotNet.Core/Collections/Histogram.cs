@@ -577,12 +577,6 @@ namespace ZemberekDotNet.Core.Collections
             return map.GetEnumerator();
         }
 
-        //TODO:Check
-        //private class CountComparator: IComparer<Dictionary<T, int>> {
-        //    public int compare(Dictionary<T, int> o1, Dictionary<T, int> o2)
-        //    {
-        //        return (o2.getValue() < o1.getValue()) ? -1 : ((o2.getValue() > o1.getValue()) ? 1 : 0);
-        //    }
-        //}
+
     }
 }

@@ -356,7 +356,6 @@ namespace ZemberekDotNet.Core.Text
         /// <returns>cleaned input.</returns>
         public static string RemoveAmpresandStrings(string input)
         {
-            // TODO: Check
             // remove rest.
             return ampersandPattern.Replace(input, (match) =>
             {

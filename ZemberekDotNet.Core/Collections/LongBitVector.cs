@@ -448,7 +448,6 @@ namespace ZemberekDotNet.Core.Collections
         }
 
 
-        //TODO:Check
         /// <summary>
         /// Custom serializer. Method does not close the output stream.
         /// </summary>

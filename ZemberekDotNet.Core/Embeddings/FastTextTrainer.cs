@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
+using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,8 +36,7 @@ namespace ZemberekDotNet.Core.Embeddings
             Matrix input_ = null;
             if (args_.pretrainedVectors.Length != 0)
             {
-                //TODO: implement this.
-                //loadVectors(args_->pretrainedVectors);
+                input_ = LoadVectors(dict_, args_.pretrainedVectors);
             }
             else
             {
@@ -97,6 +98,73 @@ namespace ZemberekDotNet.Core.Embeddings
                     Interlocked.Add(ref tokenCount, localTokenCount);
                 });
             return new FastText(args_, dict_, model_);
+        }
+
+        private Matrix LoadVectors(Dictionary dict_, string vectorFile)
+        {
+            using (StreamReader reader = new StreamReader(vectorFile, Encoding.UTF8))
+            {
+                string header = reader.ReadLine();
+                if (header == null)
+                {
+                    throw new InvalidOperationException("Pretrained vectors file is empty: " + vectorFile);
+                }
+                string[] headerParts = header.Trim().Split(' ');
+                if (headerParts.Length != 2
+                    || !int.TryParse(headerParts[0], out int n)
+                    || !int.TryParse(headerParts[1], out int dim))
+                {
+                    throw new InvalidOperationException("Pretrained vectors file has wrong format: " + vectorFile);
+                }
+                if (dim != args_.dim)
+                {
+                    throw new InvalidOperationException(
+                        $"Dimension of pretrained vectors ({dim}) does not match dimension ({args_.dim})!");
+                }
+
+                List<string> words = new List<string>(n);
+                float[][] vecs = new float[n][];
+                for (int i = 0; i < n; i++)
+                {
+                    string line = reader.ReadLine();
+                    if (line == null)
+                    {
+                        throw new InvalidOperationException(
+                            $"Pretrained vectors file has fewer entries than expected ({i} of {n}).");
+                    }
+                    string[] tokens = line.TrimEnd().Split(' ');
+                    string word = tokens[0];
+                    words.Add(word);
+                    dict_.Add(word);
+                    float[] vec = new float[dim];
+                    for (int j = 0; j < dim; j++)
+                    {
+                        vec[j] = float.Parse(tokens[j + 1], CultureInfo.InvariantCulture);
+                    }
+                    vecs[i] = vec;
+                }
+
+                dict_.Threshold(1, 0);
+                dict_.Init();
+
+                Matrix input_ = new Matrix(dict_.NWords() + args_.bucket, args_.dim);
+                input_.Uniform(1.0f / args_.dim);
+
+                for (int i = 0; i < n; i++)
+                {
+                    int idx = dict_.GetId(words[i]);
+                    if (idx < 0 || idx >= dict_.NWords())
+                    {
+                        continue;
+                    }
+                    for (int j = 0; j < dim; j++)
+                    {
+                        input_.Set(idx, j, vecs[i][j]);
+                    }
+                }
+
+                return input_;
+            }
         }
 
         public class Progress
