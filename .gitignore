@@ -35,3 +35,12 @@ msbuild.wrn
 
 # Visual Studio 2015
 .vs/
+/ZemberekDotNet.All.Tests/TestResults
+/ZemberekDotNet.Classification.Tests/TestResults
+/ZemberekDotNet.Core.Tests/TestResults
+/ZemberekDotNet.LangID.Tests/TestResults
+/ZemberekDotNet.LM.Tests/TestResults
+/ZemberekDotNet.Morphology.Tests/TestResults
+/ZemberekDotNet.NER.Tests/TestResults
+/ZemberekDotNet.Normalization.Tests/TestResults
+/ZemberekDotNet.Tokenization.Tests/TestResults
