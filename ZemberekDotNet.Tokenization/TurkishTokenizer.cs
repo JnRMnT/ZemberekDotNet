@@ -1,4 +1,4 @@
-﻿using Antlr4.Runtime;
+using Antlr4.Runtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -97,17 +97,120 @@ namespace ZemberekDotNet.Tokenization
         {
             List<Token> tokens = new List<Token>();
             for (IToken token = lexer.NextToken();
-                token.Type != Antlr4.Runtime.TokenConstants.EOF;
-                token = lexer.NextToken())
+                token.Type != TokenConstants.EOF;)
             {
-                Token.Type type = ConvertType(token);
-                if (TypeIgnored(type))
+                if (CanMergeApostropheWord(token) && ContainsApostrophe(token.Text))
                 {
+                    IToken right = lexer.NextToken();
+                    if (CanMergeApostropheWord(right) && right.StartIndex == token.StopIndex + 1)
+                    {
+                        int mergedStop = right.StopIndex;
+                        string mergedText = token.Text + right.Text;
+                        IToken next = lexer.NextToken();
+                        while ((next.Type == TurkishLexer.UnknownWord ||
+                                next.Type == TurkishLexer.Unknown ||
+                                next.Type == TurkishLexer.Word ||
+                                next.Type == TurkishLexer.WordAlphanumerical) &&
+                               next.StartIndex == mergedStop + 1)
+                        {
+                            mergedText += next.Text;
+                            mergedStop = next.StopIndex;
+                            next = lexer.NextToken();
+                        }
+
+                        CommonToken merged = new CommonToken(TurkishLexer.UnknownWord, mergedText)
+                        {
+                            StartIndex = token.StartIndex,
+                            StopIndex = mergedStop
+                        };
+                        AddIfAccepted(tokens, merged);
+                        token = next;
+                        continue;
+                    }
+
+                    AddIfAccepted(tokens, token);
+                    token = right;
                     continue;
                 }
-                tokens.Add(Convert(token));
+
+                if (CanMergeApostropheWord(token))
+                {
+                    IToken apostrophe = lexer.NextToken();
+                    if (IsApostrophePunctuation(apostrophe))
+                    {
+                        IToken right = lexer.NextToken();
+                        if (CanMergeApostropheWord(right))
+                        {
+                            int mergedStop = right.StopIndex;
+                            string mergedText = token.Text + apostrophe.Text + right.Text;
+                            IToken next = lexer.NextToken();
+                            while ((next.Type == TurkishLexer.UnknownWord ||
+                                    next.Type == TurkishLexer.Unknown ||
+                                    next.Type == TurkishLexer.Word ||
+                                    next.Type == TurkishLexer.WordAlphanumerical ||
+                                    next.Type == TurkishLexer.RomanNumeral) &&
+                                   next.StartIndex == mergedStop + 1)
+                            {
+                                mergedText += next.Text;
+                                mergedStop = next.StopIndex;
+                                next = lexer.NextToken();
+                            }
+
+                            CommonToken merged = new CommonToken(TurkishLexer.UnknownWord, mergedText)
+                            {
+                                StartIndex = token.StartIndex,
+                                StopIndex = mergedStop
+                            };
+                            AddIfAccepted(tokens, merged);
+                            token = next;
+                            continue;
+                        }
+
+                        AddIfAccepted(tokens, token);
+                        AddIfAccepted(tokens, apostrophe);
+                        token = right;
+                        continue;
+                    }
+
+                    AddIfAccepted(tokens, token);
+                    token = apostrophe;
+                    continue;
+                }
+
+                AddIfAccepted(tokens, token);
+                token = lexer.NextToken();
             }
             return tokens;
+        }
+
+        private void AddIfAccepted(List<Token> tokens, IToken token)
+        {
+            Token.Type type = ConvertType(token);
+            if (TypeIgnored(type))
+            {
+                return;
+            }
+            tokens.Add(Convert(token));
+        }
+
+        private static bool IsApostrophePunctuation(IToken token)
+        {
+            return token != null && token.Type == TurkishLexer.Punctuation && (token.Text == "'" || token.Text == "�");
+        }
+
+        private static bool ContainsApostrophe(string text)
+        {
+            return !string.IsNullOrEmpty(text) && (text.Contains("'") || text.Contains("’"));
+        }
+
+        private static bool CanMergeApostropheWord(IToken token)
+        {
+            return token != null &&
+                (token.Type == TurkishLexer.Word ||
+                 token.Type == TurkishLexer.WordAlphanumerical ||
+                 token.Type == TurkishLexer.UnknownWord ||
+                 token.Type == TurkishLexer.Unknown ||
+                 token.Type == TurkishLexer.RomanNumeral);
         }
 
         public static Token Convert(IToken token)

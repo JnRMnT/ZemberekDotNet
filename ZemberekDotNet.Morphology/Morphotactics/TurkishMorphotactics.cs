@@ -2005,11 +2005,8 @@ namespace ZemberekDotNet.Morphology.Morphotactics
             vNotState_S.AddEmpty(noun_S);
 
             // reciprocal
-            // TODO: for reducing ambiguity for now remove reciprocal
-            /*
-                verbRoot_S.Add(vRecip_S, "Iş", notHaveAny(RootAttribute.Reciprocal, RootAttribute.NonReciprocal)
-                    .AndNot(new Conditions.ContainsMorpheme(recip)));
-            */
+            verbRoot_S.Add(vRecip_S, "Iş", Conditions.NotHaveAny(RootAttribute.Reciprocal, RootAttribute.NonReciprocal)
+                .AndNot(new Conditions.ContainsMorpheme(recip)));
             vRecip_S.AddEmpty(verbRoot_S);
             vImplicitRecipRoot_S.AddEmpty(vRecip_S);
 

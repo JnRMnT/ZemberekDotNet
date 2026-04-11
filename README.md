@@ -9,9 +9,17 @@ ZemberekDotNet
 
 
 
-ZemberekDotNet is the C#/.NET Port of [Zemberek-NLP](https://github.com/ahmetaa/zemberek-nlp) (Natural Language Processing tools for Turkish).
+ZemberekDotNet started as a C#/.NET port of [Zemberek-NLP](https://github.com/ahmetaa/zemberek-nlp) (Natural Language Processing tools for Turkish) and has since evolved into an actively improved library. While it maintains compatibility with the original Java library's module structure and core algorithms, it is no longer a strict port — new features, correctness fixes, and .NET-specific improvements are introduced where needed for production use.
 
-This library will be kept in sync with Zemberek-NLP and same module structure will be maintained in .NET platform using NuGet packages under seperate projects.
+The goal is to provide a high-quality, production-ready Turkish NLP library for the .NET ecosystem, not merely to replicate the Java implementation.
+
+### Improvements over the original Java port
+
+- **Reciprocal verb morphology**: Re-enabled the reciprocal suffix (`Iş`) transition in the morphotactics engine, which was disabled in the port. Verbs such as `kaçış`, `dövüşmek` are now correctly analyzed.
+- **Smart apostrophe tokenization**: Added dual-path merge logic in the tokenizer to correctly handle foreign brand names containing apostrophes (e.g., `L'Oréal` is emitted as a single token), while preserving Turkish morphological suffix boundaries (e.g., `Ankara'ya` remains split for downstream analysis).
+- **ANTLR runtime upgrade**: Upgraded from ANTLR 4.9.3 to 4.13.1, replacing a fragile 460-line custom ATN deserializer with the standard runtime implementation.
+
+This library will maintain the same module structure as Zemberek-NLP using NuGet packages under separate projects, and will continue to track the original library where relevant.
 
 ## Modules
 

@@ -745,7 +745,6 @@ namespace ZemberekDotNet.Morphology.Tests.Analysis
         }
 
         [TestMethod]
-        [Ignore]
         // Reciprocal suffix is not included for now.
         public void ReciprocalTest()
         {

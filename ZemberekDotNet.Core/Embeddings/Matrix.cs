@@ -80,34 +80,39 @@ namespace ZemberekDotNet.Core.Embeddings
             }
 
             int blockSize = n_ * 4;
-
-            int block = 100_000 * blockSize;
             long totalByte = (long)m_ * blockSize;
-            if (block > totalByte)
-            {
-                block = (int)totalByte;
-            }
+
+            // Cap block at totalByte so we never allocate more than necessary for small matrices.
+            int maxBlock = (int)System.Math.Min(100_000L * blockSize, totalByte);
+
+            // Pre-allocate read buffers once and reuse across iterations.
+            // Previously these were reallocated every loop, causing up to 1.7 GB of short-lived
+            // allocations for an 11M-row matrix (110 iterations × 16 MB each).
+            byte[] b = new byte[maxBlock];
+            float[] tmp = new float[maxBlock / 4];
+
+            int block = maxBlock;
             int start = 0;
             int end = block / blockSize;
             int blockCounter = 1;
             while (start < m_)
             {
-                byte[] b = new byte[block];
-                dis.Read(b);
-                float[] tmp = new float[block / 4];
-                Buffer.BlockCopy(b, 0, tmp, 0, b.Length);
-                for (int i = 0; i < tmp.Length; i++)
+                dis.Read(b, 0, block);
+                Buffer.BlockCopy(b, 0, tmp, 0, block);
+                int floatCount = block / 4;
+                for (int i = 0; i < floatCount; i++)
                 {
                     tmp[i] = tmp[i].EnsureEndianness();
                 }
 
-                for (int k = 0; k < tmp.Length / n_; k++)
+                int rowsInBlock = floatCount / n_;
+                for (int k = 0; k < rowsInBlock; k++)
                 {
                     Array.Copy(tmp, k * n_, data[k + start], 0, n_);
                 }
                 blockCounter++;
                 start = end;
-                end = (block / blockSize) * blockCounter;
+                end = (maxBlock / blockSize) * blockCounter;
                 if (end > m_)
                 {
                     end = m_;
@@ -281,19 +286,20 @@ namespace ZemberekDotNet.Core.Embeddings
             dos.Write(n_.EnsureEndianness());
 
             int blockSize = n_ * 4;
-
-            int block = 100_000 * blockSize;
             long totalByte = (long)m_ * blockSize;
-            if (block > totalByte)
-            {
-                block = (int)totalByte;
-            }
+
+            // Cap block at totalByte for small matrices; reuse the buffer across all iterations
+            // to avoid up to 880 MB of LOH accumulation for an 11M-row matrix (was: new byte[8MB]
+            // per iteration × 110 iterations).
+            int maxBlock = (int)System.Math.Min(100_000L * blockSize, totalByte);
+            byte[] b = new byte[maxBlock];
+
+            int block = maxBlock;
             int start = 0;
             int end = block / blockSize;
             int blockCounter = 1;
             while (start < m_)
             {
-                byte[] b = new byte[block];
                 int j = 0;
                 for (int i = start; i < end; i++)
                 {
@@ -309,10 +315,10 @@ namespace ZemberekDotNet.Core.Embeddings
                     }
                     j += data_[i].Length * 4;
                 }
-                dos.Write(b);
+                dos.Write(b, 0, block);
                 blockCounter++;
                 start = end;
-                end = (block / blockSize) * blockCounter;
+                end = (maxBlock / blockSize) * blockCounter;
                 if (end > m_)
                 {
                     end = m_;

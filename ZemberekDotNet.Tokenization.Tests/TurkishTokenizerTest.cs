@@ -277,9 +277,7 @@ namespace ZemberekDotNet.Tokenization.Tests
                 "\n");
         }
 
-        //TODO: failing.
         [TestMethod]
-        [Ignore]
         public void TestUnknownWord()
         {
             TurkishTokenizer tokenizer = TurkishTokenizer.Default;
