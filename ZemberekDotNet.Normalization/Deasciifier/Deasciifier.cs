@@ -402,6 +402,8 @@ namespace ZemberekDotNet.Normalization.Deasciifier
             {
                 try
                 {
+                    // net8+ disables BinaryFormatter by default. Enable it for this legacy table.
+                    AppContext.SetSwitch("System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization", true);
                     BinaryFormatter binaryFormatter = new BinaryFormatter();
                     turkishPatternTable = (Dictionary<string, Dictionary<string, int>>)binaryFormatter.Deserialize(fileStream);
                 }

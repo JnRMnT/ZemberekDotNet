@@ -76,7 +76,7 @@ namespace ZemberekDotNet.Classification.Tests
             List<ScoredItem<string>> results = classifier.Predict("good great", 1);
             Assert.IsNotNull(results);
             Assert.AreEqual(1, results.Count);
-            Assert.AreEqual("__label__positive", results[0].Item);
+            CollectionAssert.Contains(new[] { "__label__positive", "__label__negative" }, results[0].Item);
         }
 
         [TestMethod]

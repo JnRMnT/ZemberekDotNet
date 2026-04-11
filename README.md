@@ -31,7 +31,16 @@ This library will be kept in sync with Zemberek-NLP and same module structure wi
 | [Examples](ZemberekDotNet.Examples)            | ZemberekDotNet.Examples             | Usage examples. |  Pending |
 
 ## Target Platforms
-Packages are targeting .NET Standart 2.1 Framework so that it can be used within .Net Core and .Net Framework projects. Examples/console applications will also be prepared with .Net Core aiming that the whole library can be used cross platform.
+Current targets are:
+
+- Library packages target `netstandard2.1` (cross-platform for modern .NET runtimes).
+- Test projects target `net8.0`.
+- Apps and examples target `net8.0`.
+
+Compatibility notes:
+
+- `netstandard2.1` libraries can be consumed by .NET Core 3.0+ and .NET 5+.
+- .NET Framework is not supported by `netstandard2.1`.
 
 ## CI/CD
 Repository is configured to continuously trigger a build, test and release cycle using Azure DevOps. At the end of a successful release, it automatically publishes the artifacts to NuGet.org.
