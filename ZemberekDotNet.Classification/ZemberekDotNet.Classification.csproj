@@ -8,9 +8,9 @@
 		<Authors>JnRMnT</Authors>
 		<PackageProjectUrl>https://github.com/JnRMnT/ZemberekDotNet</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/JnRMnT/ZemberekDotNet</RepositoryUrl>
-		<Description>Text classification based on Java port of fastText project.</Description>
+		<Description>Native .NET Standard 2.1. No Java or JVM required. High-performance fastText-based Turkish text classification.</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageTags>nlp machine-learning natural-language-processing turkish morphology language zemberek-nlp zemberek csharp nuget</PackageTags>
+		<PackageTags>nlp machine-learning natural-language-processing turkish morphology language zemberek-nlp zemberek csharp nuget turkish-nlp dotnet-core csharp-nlp netstandard jvm-free text-classification fasttext sentence-classification</PackageTags>
 		<IncludeSymbols>true</IncludeSymbols>
 	</PropertyGroup>
 	

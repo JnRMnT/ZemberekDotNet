@@ -63,7 +63,6 @@ namespace ZemberekDotNet.Core.Tests.Collections
         }
 
         [TestMethod]
-        [Ignore("Not a test.")]
         public void TestMergePerformance()
         {
             Histogram<string> first = new Histogram<string>();
@@ -78,6 +77,7 @@ namespace ZemberekDotNet.Core.Tests.Collections
             sw.Restart();
             first.Add(second);
             Console.WriteLine("Elapsed:" + sw.ElapsedMilliseconds);
+            Assert.IsTrue(first.Size() > 0);
         }
 
         [TestMethod]

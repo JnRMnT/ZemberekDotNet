@@ -9,7 +9,8 @@
 		<Product>ZemberekDotNet</Product>
 		<Authors>JnRMnT</Authors>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageTags>nlp machine-learning natural-language-processing turkish morphology language zemberek-nlp zemberek csharp nuget</PackageTags>
+		<Description>Native .NET Standard 2.1. No Java or JVM required. Spell checker, word suggestion and noisy text normalization for Turkish.</Description>
+		<PackageTags>nlp machine-learning natural-language-processing turkish morphology language zemberek-nlp zemberek csharp nuget turkish-nlp dotnet-core csharp-nlp netstandard jvm-free spell-checker word-suggestion text-normalization</PackageTags>
 		<IncludeSymbols>true</IncludeSymbols>
 	</PropertyGroup>
 

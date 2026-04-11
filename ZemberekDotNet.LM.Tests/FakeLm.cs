@@ -133,6 +133,7 @@ namespace ZemberekDotNet.LM.Tests
             }
             sw.WriteLine();
             sw.WriteLine("\\end\\");
+            sw.Dispose();
         }
 
         public class FakeGram

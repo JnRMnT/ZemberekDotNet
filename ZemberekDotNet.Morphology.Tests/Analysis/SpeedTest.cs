@@ -18,7 +18,6 @@ namespace ZemberekDotNet.Morphology.Tests.Analysis
     public class SpeedTest
     {
         [TestMethod]
-        [Ignore("Speed Test.")]
         public void TestNewsCorpus()
         {
             string p = "Resources/corpora/cnn-turk-10k";
@@ -60,9 +59,7 @@ namespace ZemberekDotNet.Morphology.Tests.Analysis
             Log.Info("{0}Elapsed = {1:N2} seconds", Environment.NewLine, seconds);
             Log.Info("{0}Token Count (No Punc) = {1} {2}Parse Ratio = {3:N4}{4}Speed = {5:N2} tokens/sec{6}",
                Environment.NewLine, tokenCount, Environment.NewLine, parseRatio, Environment.NewLine, speed, Environment.NewLine);
-            Log.Info("Saving Unknown Tokens");
-            failedWords.SaveSortedByCounts("unk.freq", " ");
-            failedWords.SaveSortedByKeys("unk", " ", Turkish.StringComparatorAsc);
+            Assert.IsTrue(parseRatio > 80.0, $"Expected parse ratio > 80% but got {parseRatio:N2}%");
         }
 
 

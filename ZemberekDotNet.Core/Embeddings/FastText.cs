@@ -288,7 +288,10 @@ namespace ZemberekDotNet.Core.Embeddings
                     }
                 }
                 model_.wi_ = newInput;
-                // TODO: add retraining. It was hard because of the design differences
+                if (qargs.retrain && !string.IsNullOrEmpty(qargs.input))
+                {
+                    new FastTextTrainer(args_).Retrain(qargs.input, dict_, model_);
+                }
             }
 
             QMatrix qwi_ = new QMatrix(model_.wi_, qargs.dsub, qargs.qnorm);

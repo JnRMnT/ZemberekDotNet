@@ -11,7 +11,6 @@ namespace ZemberekDotNet.Core.Tests.Hash
     public class LargeNgramMphfTest
     {
         [TestMethod]
-        [Ignore("Contains File I/O, test manually.")]
         public void NgramFileMPHFTest()
         {
             int[] gramCounts = { 1, 2, 4, 8, 10, 100, 1000, 10000, 100000, 1000000 };

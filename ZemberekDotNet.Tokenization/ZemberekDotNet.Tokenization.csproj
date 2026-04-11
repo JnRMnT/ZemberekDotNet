@@ -8,9 +8,9 @@
 		<Product>ZemberekDotNet</Product>
 		<PackageProjectUrl>https://github.com/JnRMnT/ZemberekDotNet</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/JnRMnT/ZemberekDotNet</RepositoryUrl>
-		<Description>Turkish Tokenization and sentence boundary detection.</Description>
+		<Description>Native .NET Standard 2.1. No Java or JVM required. Turkish tokenization and sentence boundary detection.</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageTags>nlp machine-learning natural-language-processing turkish morphology language zemberek-nlp zemberek csharp nuget</PackageTags>
+		<PackageTags>nlp machine-learning natural-language-processing turkish morphology language zemberek-nlp zemberek csharp nuget turkish-nlp dotnet-core csharp-nlp netstandard jvm-free tokenizer sentence-boundary sentence-detection</PackageTags>
 		<IncludeSymbols>true</IncludeSymbols>
 	</PropertyGroup>
 

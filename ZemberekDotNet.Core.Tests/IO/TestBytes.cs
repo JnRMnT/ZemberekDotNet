@@ -214,7 +214,6 @@ namespace ZemberekDotNet.Core.Tests.IO
         }
 
         [TestMethod]
-        [Ignore("Not a test")]
         public void Dump()
         {
             Bytes.HexDump(new byte[] { 0x01 }, 20);

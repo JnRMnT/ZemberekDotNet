@@ -15,7 +15,6 @@ namespace ZemberekDotNet.Normalization.Tests
     {
 
         [TestMethod]
-        [Ignore("Not a test.")]
         public void CorrectWordFindingTest()
         {
             TurkishMorphology morphology = TurkishMorphology.CreateWithDefaults();
@@ -52,13 +51,8 @@ namespace ZemberekDotNet.Normalization.Tests
             Log.Info("Incorrect (total/unique) = {0} / {1}", incorrectFound.TotalCount(),
                 incorrectFound.Size());
             Log.Info("Correct (total/unique) = {0} / {1}", correctFound.TotalCount(), correctFound.Size());
-            incorrectFound.SaveSortedByCounts("incorrect.txt", " : ");
-            correctFound.SaveSortedByCounts("correct.txt", " : ");
-
-            /*
-                    Path lmPath = Paths.get(ClassLoader.getSystemResource("lm-bigram.slm").toURI());
-                    SmoothLm model = SmoothLm.builder(lmPath.toFile()).build();
-            */
+            Assert.IsTrue(correctFound.TotalCount() > incorrectFound.TotalCount(),
+                "Expected more correct words than incorrect in news text");
         }
     }
 }

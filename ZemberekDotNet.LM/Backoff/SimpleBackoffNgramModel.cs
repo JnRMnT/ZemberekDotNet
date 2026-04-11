@@ -208,7 +208,11 @@ namespace ZemberekDotNet.LM.Backoff
 
             public override int GetHashCode()
             {
-                return indexes != null ? indexes.GetHashCode() : 0;
+                if (indexes == null) return 0;
+                int result = 1;
+                foreach (int i in indexes)
+                    result = 31 * result + i;
+                return result;
             }
 
             public override string ToString()

@@ -94,6 +94,7 @@ namespace ZemberekDotNet.Normalization.Tests
             }
             Console.WriteLine("Elapsed: " + new TimeSpan(DateTime.Now.Ticks - start).TotalMilliseconds);
             Console.WriteLine("Solution count:" + solutionCount);
+            Assert.IsTrue(solutionCount > 0, "Spell checker should produce suggestions");
         }
 
         void AssertContainsAll(FloatValueMap<string> set, params string[] words)

@@ -112,7 +112,6 @@ namespace ZemberekDotNet.Core.Tests.Collections
         }
 
         [TestMethod]
-        [Ignore("Not a test.")]
         public void PerformanceTest()
         {
             int itCount = 5;
@@ -129,8 +128,6 @@ namespace ZemberekDotNet.Core.Tests.Collections
                 }
             }
             FixedBitVector vector = new FixedBitVector(size);
-            int[] copiedArray = null;
-            Array.Copy(oneIndexes, copiedArray, k);
             for (int i = 0; i < itCount; i++)
             {
                 Stopwatch sw = Stopwatch.StartNew();
@@ -145,6 +142,10 @@ namespace ZemberekDotNet.Core.Tests.Collections
                 Console.WriteLine(sw.ElapsedMilliseconds);
                 sw.Stop();
             }
+            vector.Set(42);
+            Assert.IsTrue(vector.Get(42));
+            vector.Clear(42);
+            Assert.IsFalse(vector.Get(42));
         }
     }
 }

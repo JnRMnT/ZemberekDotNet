@@ -60,12 +60,40 @@ namespace ZemberekDotNet.Classification.Tests
         }
 
         [TestMethod]
-        [Ignore("Requires external model file.")]
         public void LoadFromFileProducesClassifier()
         {
-            string modelPath = @"model.bin";
-            FastTextClassifier classifier = FastTextClassifier.Load(modelPath);
-            Assert.IsNotNull(classifier);
+            string corpusPath = Path.Combine(Path.GetTempPath(), "ft_load_test_" + Guid.NewGuid() + ".txt");
+            string modelPath = Path.Combine(Path.GetTempPath(), "ft_load_model_" + Guid.NewGuid() + ".bin");
+            try
+            {
+                using (StreamWriter sw = new StreamWriter(corpusPath))
+                {
+                    for (int i = 0; i < 50; i++)
+                    {
+                        sw.WriteLine("__label__positive good great excellent wonderful");
+                        sw.WriteLine("__label__negative bad terrible awful horrible");
+                    }
+                }
+
+                FastTextClassifierTrainer trainer = FastTextClassifierTrainer.Builder()
+                    .Dimension(10)
+                    .EpochCount(5)
+                    .LearningRate(0.2f)
+                    .ThreadCount(1)
+                    .Build();
+
+                FastTextClassifier trained = trainer.Train(corpusPath);
+                trained.GetFastText().SaveModel(modelPath);
+
+                FastTextClassifier loaded = FastTextClassifier.Load(modelPath);
+                Assert.IsNotNull(loaded);
+                Assert.IsTrue(loaded.GetLabels().Count > 0);
+            }
+            finally
+            {
+                if (File.Exists(corpusPath)) File.Delete(corpusPath);
+                if (File.Exists(modelPath)) File.Delete(modelPath);
+            }
         }
     }
 }

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <StartupObject>ZemberekDotNet.Examples.NER.NERExamples</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ZemberekDotNet.NER\ZemberekDotNet.NER.csproj" />
+    <ProjectReference Include="..\ZemberekDotNet.Morphology\ZemberekDotNet.Morphology.csproj" />
+    <ProjectReference Include="..\ZemberekDotNet.Core\ZemberekDotNet.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

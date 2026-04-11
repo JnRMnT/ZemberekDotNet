@@ -39,6 +39,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ZemberekDotNet.Morphology\ZemberekDotNet.Morphology.csproj" />
+    <ProjectReference Include="..\ZemberekDotNet.Tokenization\ZemberekDotNet.Tokenization.csproj" />
   </ItemGroup>
 
 </Project>

@@ -28,6 +28,7 @@ namespace ZemberekDotNet.Core.Embeddings
         public String pretrainedVectors;
         public ISubWordHashProvider subWordHashProvider;
 
+        public string input = "";
         public bool qout = false;
         public bool retrain = false;
         public bool qnorm = false;

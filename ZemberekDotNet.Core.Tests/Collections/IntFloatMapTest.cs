@@ -296,7 +296,6 @@ namespace ZemberekDotNet.Core.Tests.Collections
         }
 
         [TestMethod]
-        [Ignore("Not a unit test")]
         public void TestPerformance()
         {
             int[] arr = TestUtils.createRandomUintArray(1_000_000, 1 << 29);
@@ -330,6 +329,7 @@ namespace ZemberekDotNet.Core.Tests.Collections
             elapsed = DateTime.Now.Ticks - start;
             Console.WriteLine("Retrieval: " + new TimeSpan(elapsed).TotalMilliseconds);
             Console.WriteLine("Val: " + sum);
+            Assert.IsTrue(sum > 0);
         }
 
         [TestMethod]
@@ -380,7 +380,6 @@ namespace ZemberekDotNet.Core.Tests.Collections
         }
 
         [TestMethod]
-        [Ignore("Not a unit test")]
         public void SpeedAgainstHashMap()
         {
             Random r = new Random(Convert.ToInt32("0xbeefcafe", 16));
@@ -450,6 +449,7 @@ namespace ZemberekDotNet.Core.Tests.Collections
             }
             Console.WriteLine("IntIntMap retrieval: " + sw.ElapsedMilliseconds);
             Console.WriteLine("Verification sum: " + val);
+            Assert.IsTrue(val > 0);
         }
     }
 }

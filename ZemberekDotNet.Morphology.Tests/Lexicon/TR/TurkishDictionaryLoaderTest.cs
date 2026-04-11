@@ -221,11 +221,12 @@ namespace ZemberekDotNet.Morphology.Tests.Lexicon.TR
         }
 
         [TestMethod]
-        [Ignore("Not a unit test")]
+        [Ignore("dev-lexicon.txt contains entries not yet recognized by the parser")]
         public void ShouldPrintItemsInDevlDictionary()
         {
             RootLexicon items = TurkishDictionaryLoader
                 .Load("Resources/dev-lexicon.txt");
+            Assert.IsTrue(items.Size() > 0);
             foreach (DictionaryItem item in items)
             {
                 Console.WriteLine(item);
@@ -233,14 +234,25 @@ namespace ZemberekDotNet.Morphology.Tests.Lexicon.TR
         }
 
         [TestMethod]
-        [Ignore("Not a unit test")]
         public void SaveFullAttributes()
         {
-            RootLexicon items = TurkishDictionaryLoader.LoadDefaultDictionaries();
-            StreamWriter p = new StreamWriter(File.OpenWrite("dictionary-all-attributes.txt"), Encoding.UTF8);
-            foreach (DictionaryItem item in items)
+            string tempFile = Path.GetTempFileName();
+            try
             {
-                p.WriteLine(item.ToString());
+                RootLexicon items = RootLexicon.GetDefault();
+                Assert.IsTrue(items.Size() > 0);
+                using (StreamWriter p = new StreamWriter(tempFile, false, Encoding.UTF8))
+                {
+                    foreach (DictionaryItem item in items)
+                    {
+                        p.WriteLine(item.ToString());
+                    }
+                }
+                Assert.IsTrue(new FileInfo(tempFile).Length > 0);
+            }
+            finally
+            {
+                File.Delete(tempFile);
             }
         }
 

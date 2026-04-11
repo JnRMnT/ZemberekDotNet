@@ -6,7 +6,7 @@ ZemberekDotNet
 [![Build Status](https://dev.azure.com/jnrmnt/ZemberekDotNet/_apis/build/status/ZemberekDotNet?branchName=master)](https://dev.azure.com/jnrmnt/ZemberekDotNet/_build/latest?definitionId=13&branchName=master)
 [![Release Status](https://vsrm.dev.azure.com/jnrmnt/_apis/public/Release/badge/dbf777b3-aa03-4952-92dc-55f20eba6724/1/1)](https://vsrm.dev.azure.com/jnrmnt/_apis/public/Release/badge/dbf777b3-aa03-4952-92dc-55f20eba6724/1/1)
 
-
+> **No Java. No JVM. No sidecar.** Pure .NET Standard 2.1 — drop it into any .NET Core 3.0+ or .NET 5/6/7/8 project from NuGet and start processing Turkish text immediately.
 
 
 ZemberekDotNet started as a C#/.NET port of [Zemberek-NLP](https://github.com/ahmetaa/zemberek-nlp) (Natural Language Processing tools for Turkish) and has since evolved into an actively improved library. While it maintains compatibility with the original Java library's module structure and core algorithms, it is no longer a strict port — new features, correctness fixes, and .NET-specific improvements are introduced where needed for production use.
@@ -21,6 +21,39 @@ The goal is to provide a high-quality, production-ready Turkish NLP library for 
 
 This library will maintain the same module structure as Zemberek-NLP using NuGet packages under separate projects, and will continue to track the original library where relevant.
 
+## Quick Start
+
+Install the morphology module:
+
+```sh
+dotnet add package ZemberekDotNet.Morphology
+```
+
+Analyze and disambiguate a sentence:
+
+```csharp
+using ZemberekDotNet.Morphology;
+using ZemberekDotNet.Morphology.Analysis;
+
+// Loads the built-in lexicon and disambiguation model (one-time initialization)
+TurkishMorphology morphology = TurkishMorphology.CreateWithDefaults();
+
+SentenceAnalysis result = morphology.AnalyzeAndDisambiguate("Kitaplara gidiyorum.");
+foreach (SentenceWordAnalysis swa in result)
+{
+    SingleAnalysis best = swa.GetBestAnalysis();
+    Console.WriteLine($"{swa.GetWordAnalysis().GetInput()} → {best.GetLemmas()[0]}  [{best.FormatLexical()}]");
+}
+// Kitaplara → kitap  [kitap:Noun+A3pl+Dat]
+// gidiyorum → git    [git:Verb+Pres+A1sg]
+```
+
+Install all modules at once:
+
+```sh
+dotnet add package ZemberekDotNet.All
+```
+
 ## Modules
 
 |  Module    | Package Name |  Description       |    Status      |
@@ -31,14 +64,92 @@ This library will maintain the same module structure as Zemberek-NLP using NuGet
 | [Tokenization](ZemberekDotNet.Tokenization)    | ZemberekDotNet.Tokenization         | Turkish Tokenization and sentence boundary detection. | [![NuGet](https://img.shields.io/nuget/v/ZemberekDotNet.Tokenization)](https://www.nuget.org/packages/ZemberekDotNet.Tokenization/) [![NuGet](https://img.shields.io/nuget/dt/ZemberekDotNet.Tokenization)](https://www.nuget.org/packages/ZemberekDotNet.Tokenization/) |
 | [Normalization](ZemberekDotNet.Normalization)  | ZemberekDotNet.Normalization        | Basic spell checker, word suggestion. Noisy text normalization. |  [![NuGet](https://img.shields.io/nuget/v/ZemberekDotNet.Normalization)](https://www.nuget.org/packages/ZemberekDotNet.Normalization/) [![NuGet](https://img.shields.io/nuget/dt/ZemberekDotNet.Normalization)](https://www.nuget.org/packages/ZemberekDotNet.Normalization/) |
 | [NER](NER)                      | ZemberekDotNet.NER                  | Turkish Named Entity Recognition. |  [![NuGet](https://img.shields.io/nuget/v/ZemberekDotNet.NER)](https://www.nuget.org/packages/ZemberekDotNet.NER/) [![NuGet](https://img.shields.io/nuget/dt/ZemberekDotNet.NER)](https://www.nuget.org/packages/ZemberekDotNet.NER/) |
-| [Classification](ZemberekDotNet.Classification)| ZemberekDotNet.Classification       | Text classification based on Java port of fastText project. |  [![NuGet](https://img.shields.io/nuget/v/ZemberekDotNet.Classification)](https://www.nuget.org/packages/ZemberekDotNet.Classification/) [![NuGet](https://img.shields.io/nuget/dt/ZemberekDotNet.Classification)](https://www.nuget.org/packages/ZemberekDotNet.Classification/) |
+| [Classification](ZemberekDotNet.Classification)| ZemberekDotNet.Classification       | High-performance fastText-based text classification. |  [![NuGet](https://img.shields.io/nuget/v/ZemberekDotNet.Classification)](https://www.nuget.org/packages/ZemberekDotNet.Classification/) [![NuGet](https://img.shields.io/nuget/dt/ZemberekDotNet.Classification)](https://www.nuget.org/packages/ZemberekDotNet.Classification/) |
 | [Language Identification](ZemberekDotNet.LangID)| ZemberekDotNet.LangID            | Fast identification of text language. |  [![NuGet](https://img.shields.io/nuget/v/ZemberekDotNet.LangID)](https://www.nuget.org/packages/ZemberekDotNet.LangID/) [![NuGet](https://img.shields.io/nuget/dt/ZemberekDotNet.LangID)](https://www.nuget.org/packages/ZemberekDotNet.LangID/) |
 | [Language Modeling](ZemberekDotNet.LM)         | ZemberekDotNet.LM                   | Provides a language model compression algorithm. |  [![NuGet](https://img.shields.io/nuget/v/ZemberekDotNet.LM)](https://www.nuget.org/packages/ZemberekDotNet.LM/) [![NuGet](https://img.shields.io/nuget/dt/ZemberekDotNet.LM)](https://www.nuget.org/packages/ZemberekDotNet.LM/) |
-| [Applications](ZemberekDotNet.Apps)            | ZemberekDotNet.Apps                 | Console applications | Pending |
-| [gRPC Server](ZemberekDotNet.GRPC)             | ZemberekDotNet.GRPC                 | gRPC server for access from other languages. | Pending |
-| [Examples](ZemberekDotNet.Examples)            | ZemberekDotNet.Examples             | Usage examples. |  Pending |
+| [Applications](ZemberekDotNet.Apps)            | ZemberekDotNet.Apps                 | FastText CLI trainer and evaluator. | In Progress |
+| [gRPC Server](ZemberekDotNet.GRPC)             | ZemberekDotNet.GRPC                 | gRPC server for access from other languages. | Not Started |
+| [Examples: Classification](ZemberekDotNet.Examples.Classification) | — | News title category classification using fastText. | ✅ Available |
+| [Examples: Morphology](ZemberekDotNet.Examples.Morphology)         | — | Analysis, disambiguation, LINQ lemma extraction, word generation (conjugation + noun cases). | ✅ Available |
+| [Examples: Tokenization](ZemberekDotNet.Examples.Tokenization)     | — | Sentence splitting, token-type inspection, document processing. | ✅ Available |
+| [Examples: Language ID](ZemberekDotNet.Examples.LangID)            | — | Language ID, confidence scores, `ContainsLanguage`, sentence-level mixed-language scanner. | ✅ Available |
+| [Examples: NER](ZemberekDotNet.Examples.NER)                       | — | In-memory NER training and named-entity inference with PERSON/LOCATION/ORGANIZATION labels. | ✅ Available |
+| [Examples: Normalization](ZemberekDotNet.Examples.Normalization)   | — | Turkish spell check, word suggestions, sentence-level typo highlighting. | ✅ Available |
+| [Examples: Pipeline](ZemberekDotNet.Examples.Pipeline)             | — | End-to-end Tokenization → Morphology → LangID pipeline with POS fingerprinting. | ✅ Available |
 
-## Target Platforms
+## Examples
+
+Each example project is a self-contained runnable console app - clone the repo, `dotnet run`, and see real output.
+All examples below have dedicated automated tests in the related `*.Tests` projects.
+
+| Project | What it shows | Entry point |
+|---|---|---|
+| [Examples.Morphology](ZemberekDotNet.Examples.Morphology) | Single-word analysis, sentence disambiguation, LINQ lemma extraction, word generation | [MorphologyExamples.cs](ZemberekDotNet.Examples.Morphology/MorphologyExamples.cs) |
+| [Examples.Tokenization](ZemberekDotNet.Examples.Tokenization) | Sentence splitting, token-type inspection, document processing | [TokenizationExamples.cs](ZemberekDotNet.Examples.Tokenization/TokenizationExamples.cs) |
+| [Examples.LangID](ZemberekDotNet.Examples.LangID) | Language detection, confidence scores, `ContainsLanguage`, mixed-language sentence scanner | [LangIDExamples.cs](ZemberekDotNet.Examples.LangID/LangIDExamples.cs) |
+| [Examples.NER](ZemberekDotNet.Examples.NER) | Train a small NER model and run PERSON/LOCATION/ORGANIZATION extraction | [NERExamples.cs](ZemberekDotNet.Examples.NER/NERExamples.cs) |
+| [Examples.Normalization](ZemberekDotNet.Examples.Normalization) | Spell checking, ranked word suggestions, sentence typo highlighting | [NormalizationExamples.cs](ZemberekDotNet.Examples.Normalization/NormalizationExamples.cs) |
+| [Examples.Pipeline](ZemberekDotNet.Examples.Pipeline) | End-to-end Tokenization + Morphology + LangID workflow | [PipelineExamples.cs](ZemberekDotNet.Examples.Pipeline/PipelineExamples.cs) |
+| [Examples.Classification](ZemberekDotNet.Examples.Classification) | News title category classification (fastText, no model file needed to browse code) | [SimpleClassification.cs](ZemberekDotNet.Examples.Classification/SimpleClassification.cs) |
+
+## API at a Glance
+
+ZemberekDotNet uses idiomatic C# — no Java-style builder chains, no Guava dependencies. The table below shows the most common use cases side-by-side.
+
+### Morphological Analysis
+
+| Java (zemberek-nlp) | C# (ZemberekDotNet) |
+|---|---|
+| `TurkishMorphology m = TurkishMorphology.createWithDefaults();` | `TurkishMorphology m = TurkishMorphology.CreateWithDefaults();` |
+| `SentenceAnalysis a = m.analyzeAndDisambiguate(s);` | `SentenceAnalysis a = m.AnalyzeAndDisambiguate(s);` |
+| `a.forEach(e -> e.getBestAnalysis().getLemmas())` | `a.Select(e => e.GetBestAnalysis().GetLemmas())` |
+
+```csharp
+// LINQ-style: extract all root lemmas from a sentence
+TurkishMorphology morphology = TurkishMorphology.CreateWithDefaults();
+
+List<string> lemmas = morphology
+    .AnalyzeAndDisambiguate("Güzel bir gün bugün.")
+    .Where(swa => !swa.GetBestAnalysis().IsUnknown())
+    .Select(swa => swa.GetBestAnalysis().GetLemmas()[0])
+    .ToList();
+// ["güzel", "bir", "gün", "bu"]
+```
+
+### Tokenization & Sentence Splitting
+
+```csharp
+using ZemberekDotNet.Tokenization;
+
+// Split a paragraph into sentences
+List<string> sentences = TurkishSentenceExtractor.Default
+    .FromParagraph("Merhaba dünya. Bugün iyi bir gün.");
+// ["Merhaba dünya.", "Bugün iyi bir gün."]
+
+// Tokenize a sentence
+List<string> tokens = TurkishTokenizer.Default
+    .TokenizeToStrings(sentences[0]);
+// ["Merhaba", "dünya", "."]
+```
+
+### Language Identification
+
+```csharp
+using ZemberekDotNet.LangID;
+
+LanguageIdentifier lid = LanguageIdentifier.FromInternalModels();
+
+Console.WriteLine(lid.Identify("merhaba dünya ve tüm gezegenler")); // tr
+Console.WriteLine(lid.Identify("hello world and all the planets")); // en
+Console.WriteLine(lid.Identify("Hola mundo y todos los planetas")); // es
+
+// With confidence scores
+List<LanguageIdentifier.IdResult> scores =
+    lid.GetScores("merhaba dünya", maxSampleCount: -1);
+scores.ForEach(r => Console.WriteLine($"{r.id}: {r.score:F4}"));
+```
+
+
 Current targets are:
 
 - Library packages target `netstandard2.1` (cross-platform for modern .NET runtimes).

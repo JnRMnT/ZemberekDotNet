@@ -172,7 +172,6 @@ namespace ZemberekDotNet.Core.Tests.Collections
         }
 
         [TestMethod]
-        [Ignore("Not a test.")]
         public void PerformanceTest()
         {
             int itCount = 5;
@@ -204,6 +203,10 @@ namespace ZemberekDotNet.Core.Tests.Collections
                 }
                 Console.WriteLine(sw.ElapsedMilliseconds);
             }
+            vector.Set(42);
+            Assert.IsTrue(vector.Get(42));
+            vector.Clear(42);
+            Assert.IsFalse(vector.Get(42));
         }
 
         [TestMethod]

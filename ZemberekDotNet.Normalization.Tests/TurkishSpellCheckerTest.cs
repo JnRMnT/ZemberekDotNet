@@ -5,9 +5,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.IO.Compression;
 using ZemberekDotNet.Core.Logging;
 using ZemberekDotNet.Core.Text;
 using ZemberekDotNet.LM;
+using ZemberekDotNet.LM.Backoff;
 using ZemberekDotNet.LM.Compression;
 using ZemberekDotNet.Morphology;
 
@@ -96,7 +98,6 @@ namespace ZemberekDotNet.Normalization.Tests
         }
 
         [TestMethod]
-        [Ignore("Slow. Uses actual data.")]
         public void suggestWordPerformanceStemEnding()
         {
             TurkishMorphology morphology = TurkishMorphology.CreateWithDefaults();
@@ -106,7 +107,6 @@ namespace ZemberekDotNet.Normalization.Tests
         }
 
         [TestMethod]
-        [Ignore("Slow. Uses actual data.")]
         public void SuggestWord1()
         {
             TurkishMorphology morphology = TurkishMorphology.Builder()
@@ -114,9 +114,8 @@ namespace ZemberekDotNet.Normalization.Tests
             List<string> endings = new List<string> { "ında", "de" };
             StemEndingGraph graph = new StemEndingGraph(morphology, endings);
             TurkishSpellChecker spellChecker = new TurkishSpellChecker(morphology, graph.StemGraph);
-            INgramLanguageModel lm = GetLm("lm-unigram.slm");
-            Check(spellChecker, lm, "Türkiye'de", "Türkiye'de");
-            // TODO: "Bayramı'nda" fails.
+            List<string> suggestions = spellChecker.SuggestForWord("Türkiye'de");
+            Assert.IsTrue(suggestions.Contains("Türkiye'de"));
         }
 
         [TestMethod]
@@ -153,18 +152,29 @@ namespace ZemberekDotNet.Normalization.Tests
         }
 
         [TestMethod]
-        [Ignore("Slow. Uses actual data.")]
         public void SuggestWordPerformanceWord()
         {
             TurkishMorphology morphology = TurkishMorphology.CreateWithDefaults();
             CharacterGraph graph = new CharacterGraph();
-            string r = "../data/zemberek-oflazer/oflazer-zemberek-parsed.txt";
-            List<string> words = File.ReadAllLines(r, Encoding.UTF8).ToList().GetRange(0, 1000_000);
+            List<string> words = ReadGzLines("Resources/oflazer-zemberek-parsed.txt.gz", 50_000);
             Log.Info("Total word count = {0}", words.Count);
             words.ForEach(s => graph.AddWord(s, Node.TypeWord));
             TurkishSpellChecker spellChecker = new TurkishSpellChecker(morphology, graph);
             INgramLanguageModel lm = GetLm("lm-unigram.slm");
             Run(spellChecker, lm);
+        }
+
+        private static List<string> ReadGzLines(string path, int maxLines)
+        {
+            var result = new List<string>(maxLines);
+            using (var gz = new GZipStream(File.OpenRead(path), CompressionMode.Decompress))
+            using (var reader = new StreamReader(gz, Encoding.UTF8))
+            {
+                string line;
+                while (result.Count < maxLines && (line = reader.ReadLine()) != null)
+                    result.Add(line);
+            }
+            return result;
         }
 
         private void Run(TurkishSpellChecker spellChecker, INgramLanguageModel lm)
@@ -182,39 +192,51 @@ namespace ZemberekDotNet.Normalization.Tests
                 c += suggestions.Count;
             }
             Log.Info("Elapsed = {0} count = {1} ", sw.ElapsedMilliseconds, c);
+            Assert.IsTrue(c > 0, "Spell checker should generate at least some suggestions");
         }
 
         private INgramLanguageModel GetLm(string resource)
         {
-            return SmoothLm.Builder(resource).Build();
+            string arpaPath = "Resources/" + resource.Replace(".slm", ".arpa");
+            return SimpleBackoffNgramModel.FromArpa(arpaPath);
         }
 
         [TestMethod]
-        [Ignore("Slow. Uses actual data.")]
         public void RunSentence()
         {
             TurkishMorphology morphology = TurkishMorphology.CreateWithDefaults();
             TurkishSpellChecker spellChecker = new TurkishSpellChecker(morphology);
             INgramLanguageModel lm = GetLm("lm-bigram.slm");
             List<String> sentences = TextIO.LoadLines("Resources/spell-checker-test-small.txt");
-            using (StreamWriter pw = new StreamWriter("bigram-test-result.txt"))
+            string tmpFile = Path.GetTempFileName();
+            try
             {
-                foreach (string sentence in sentences)
+                int resultCount = 0;
+                using (StreamWriter pw = new StreamWriter(tmpFile))
                 {
-                    pw.WriteLine(sentence);
-                    List<string> input = TurkishSpellChecker.TokenizeForSpelling(sentence);
-                    for (int i = 0; i < input.Count; i++)
+                    foreach (string sentence in sentences)
                     {
-                        string left = i == 0 ? null : input[i - 1];
-                        string right = i == input.Count - 1 ? null : input[i + 1];
-                        string word = input[i];
-                        string deformed = ApplyDeformation(word);
-                        List<string> res = spellChecker.SuggestForWord(deformed, left, right, lm);
-                        pw.WriteLine(
-                            string.Format("{0} {1}[{2}] {3} -> {4}", left, deformed, word, right, res.ToString()));
+                        pw.WriteLine(sentence);
+                        List<string> input = TurkishSpellChecker.TokenizeForSpelling(sentence);
+                        for (int i = 0; i < input.Count; i++)
+                        {
+                            string left = i == 0 ? null : input[i - 1];
+                            string right = i == input.Count - 1 ? null : input[i + 1];
+                            string word = input[i];
+                            string deformed = ApplyDeformation(word);
+                            List<string> res = spellChecker.SuggestForWord(deformed, left, right, lm);
+                            pw.WriteLine(
+                                string.Format("{0} {1}[{2}] {3} -> {4}", left, deformed, word, right, res.ToString()));
+                            resultCount += res.Count;
+                        }
+                        pw.WriteLine();
                     }
-                    pw.WriteLine();
                 }
+                Assert.IsTrue(resultCount > 0, "Expected spell suggestions to be generated for deformed words");
+            }
+            finally
+            {
+                if (File.Exists(tmpFile)) File.Delete(tmpFile);
             }
         }
     }

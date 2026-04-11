@@ -85,7 +85,6 @@ namespace ZemberekDotNet.Core.Tests.Math
         }
 
         [TestMethod]
-        [Ignore("Not a unit test")]
         public void LogSumPerf()
         {
             double[]
@@ -119,6 +118,7 @@ namespace ZemberekDotNet.Core.Tests.Math
             }
             Console.WriteLine("Lookup: " + sw.ElapsedMilliseconds);
             sw.Stop();
+            Assert.AreEqual(LogMath.LogSum(loga[1000], logb[1000]), LogMath.LogSumL.Lookup(loga[1000], logb[1000]), 0.001);
         }
 
         [TestMethod]

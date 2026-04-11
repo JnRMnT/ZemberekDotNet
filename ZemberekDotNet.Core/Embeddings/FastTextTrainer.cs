@@ -64,11 +64,24 @@ namespace ZemberekDotNet.Core.Embeddings
                 model_.SetTargetCounts(dict_.GetCounts(Dictionary.TypeWord));
             }
 
-            Stopwatch stopwatch = Stopwatch.StartNew();
+            return TrainModel(input, dict_, model_);
+        }
+
+        /// <summary>
+        /// Retrains an existing model on the given corpus. Used after quantize cutoff to recover
+        /// embedding quality. The model's wi_ should already be set to the pruned matrix.
+        /// </summary>
+        internal FastText Retrain(string input, Dictionary dict_, Model model_)
+        {
+            return TrainModel(input, dict_, model_);
+        }
+
+        private FastText TrainModel(string input, Dictionary dict_, Model model_)
+        {
             long tokenCount = 0;
             long charCount = TextIO.CharCount(input, Encoding.UTF8);
             Log.Info("Training started.");
-            Stopwatch sw = Stopwatch.StartNew();
+            Stopwatch stopwatch = Stopwatch.StartNew();
 
             Parallel.For(0, args_.thread - 1,
                 () =>

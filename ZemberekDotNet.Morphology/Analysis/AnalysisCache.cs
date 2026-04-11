@@ -41,8 +41,7 @@ namespace ZemberekDotNet.Morphology.Analysis
 
             dynamicCache = dynamicCacheDisabled ? null : new MemoryCache(new MemoryCacheOptions
             {
-                //TODO: Check
-                //SizeLimit = builder.DynamicCacheMaxSize
+                SizeLimit = builder.DynamicCacheMaxSize
             });
             staticCache = staticCacheDisabled ? null : new ConcurrentDictionary<string, WordAnalysis>();
         }
@@ -166,7 +165,7 @@ namespace ZemberekDotNet.Morphology.Analysis
                 if (adHocAnalysis == null)
                 {
                     adHocAnalysis = analysisProvider(input);
-                    dynamicCache.Set(input, adHocAnalysis);
+                    dynamicCache.Set(input, adHocAnalysis, new MemoryCacheEntryOptions { Size = 1 });
                 }
                 return adHocAnalysis;
             }
@@ -191,7 +190,7 @@ namespace ZemberekDotNet.Morphology.Analysis
                 if (adhocAnalysis == null)
                 {
                     adhocAnalysis = analysisProvider(input);
-                    dynamicCache.Set(input.GetText(), adhocAnalysis);
+                    dynamicCache.Set(input.GetText(), adhocAnalysis, new MemoryCacheEntryOptions { Size = 1 });
                 }
                 return adhocAnalysis;
             }

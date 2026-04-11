@@ -44,3 +44,5 @@ msbuild.wrn
 /ZemberekDotNet.NER.Tests/TestResults
 /ZemberekDotNet.Normalization.Tests/TestResults
 /ZemberekDotNet.Tokenization.Tests/TestResults
+/Examples.Morphology.out
+/TestResults2

@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ZemberekDotNet.LangID\ZemberekDotNet.LangID.csproj" />
+    <ProjectReference Include="..\ZemberekDotNet.Tokenization\ZemberekDotNet.Tokenization.csproj" />
   </ItemGroup>
 
 </Project>

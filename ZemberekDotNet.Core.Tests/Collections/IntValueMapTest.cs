@@ -368,7 +368,6 @@ namespace ZemberekDotNet.Core.Tests.Collections
         }
 
         [TestMethod]
-        [Ignore("Not a unit test")]
         public void PerformanceAgainstMap()
         {
             Random r = new Random();
@@ -447,10 +446,10 @@ namespace ZemberekDotNet.Core.Tests.Collections
                 }
             }
             Console.WriteLine("Count Elapsed:" + sw.ElapsedMilliseconds);
+            Assert.IsTrue(countTable.Size() > 0);
         }
 
         [TestMethod]
-        [Ignore("Not a unit test")]
         public void PerfStrings()
         {
             for (int i = 0; i < 5; i++)
@@ -464,6 +463,7 @@ namespace ZemberekDotNet.Core.Tests.Collections
                 IntValueMap<string> cs = new IntValueMap<string>(strings.Count * 2);
                 cs.AddOrIncrementAll(strings);
                 Console.WriteLine("Count Add : " + sw.ElapsedMilliseconds);
+                Assert.IsTrue(cs.Size() > 0);
             }
         }
 

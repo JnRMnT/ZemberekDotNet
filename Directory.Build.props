@@ -1,0 +1,14 @@
+<Project>
+
+  <!-- Shared identity metadata — injected into every project in the repo.
+       Per-project properties (Version, Description, PackageTags, etc.)
+       are set in the individual .csproj files and take precedence over these. -->
+  <PropertyGroup>
+    <Authors>JnRMnT</Authors>
+    <Product>ZemberekDotNet</Product>
+    <PackageProjectUrl>https://github.com/JnRMnT/ZemberekDotNet</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JnRMnT/ZemberekDotNet</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+</Project>

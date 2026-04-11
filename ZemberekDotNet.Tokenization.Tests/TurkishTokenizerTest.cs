@@ -438,15 +438,14 @@ namespace ZemberekDotNet.Tokenization.Tests
         }
 
         [TestMethod]
-        [Ignore("Not an actual test. Requires external data.")]
         public void Performance()
         {
             TurkishTokenizer tokenizer = TurkishTokenizer.Default;
 
             // load a hundred thousand lines.
-            for (int it = 0; it < 5; it++)
+            for (int it = 0; it < 2; it++)
             {
-                string[] lines = File.ReadAllLines("/media/aaa/Data/aaa/corpora/dunya.100k");
+                string[] lines = File.ReadAllLines("Resources/dunya.100k");
                 Stopwatch clock = Stopwatch.StartNew();
                 long tokenCount = 0;
                 foreach (string line in lines)
@@ -457,6 +456,7 @@ namespace ZemberekDotNet.Tokenization.Tests
                 long elapsed = clock.ElapsedMilliseconds;
                 Log.Info("Token count = {0} ", tokenCount);
                 Log.Info("Speed (tps) = {0:F1}", tokenCount * 1000d / elapsed);
+                Assert.IsTrue(tokenCount > 0);
             }
         }
     }

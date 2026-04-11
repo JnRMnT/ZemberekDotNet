@@ -72,37 +72,38 @@ namespace ZemberekDotNet.LM.Tests.Compression
         }
 
         [TestMethod]
-        [Ignore("Requires external data")]
+        [Ignore("FakeLm generates synthetic positive log10 probabilities that don't round-trip through SmoothLm quantizer; requires realistic ARPA data")]
         public void TestBigFakeLm()
         {
-            int order = 4;
-            string lmFile = "/media/ahmetaa/depo/data/lm/fake/fake.slm";
-            FakeLm fakeLm;
-            if (!File.Exists(lmFile))
+            int order = 2;
+            string tempDir = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+            Directory.CreateDirectory(tempDir);
+            try
             {
-                string arpaFile = "/media/ahmetaa/depo/data/lm/fake/fake.arpa";
-                string tmp = "/tmp";
-                if (!File.Exists(arpaFile))
-                {
-                    fakeLm = new FakeLm(order);
-                    fakeLm.GenerateArpa(arpaFile);
-                }
-                UncompressedToSmoothLmConverter converter = new UncompressedToSmoothLmConverter(lmFile, tmp);
+                string lmFile = Path.Combine(tempDir, "fake.slm");
+                string arpaFile = Path.Combine(tempDir, "fake.arpa");
+                FakeLm fakeLm = new FakeLm(order);
+                fakeLm.GenerateArpa(arpaFile);
+                UncompressedToSmoothLmConverter converter = new UncompressedToSmoothLmConverter(lmFile, tempDir);
                 converter.ConvertSmall(
-                    MultiFileUncompressedLm.Generate(arpaFile, tmp, "utf-8", 4).dir,
-                          new UncompressedToSmoothLmConverter.NgramDataBlock(24, 24, 24));
-            }
-            SmoothLm lm = SmoothLm.Builder(lmFile).Build();
+                    MultiFileUncompressedLm.Generate(arpaFile, tempDir, "utf-8", 4).GetLmDir(),
+                          new UncompressedToSmoothLmConverter.NgramDataBlock(16, 16, 16));
+                SmoothLm lm = SmoothLm.Builder(lmFile).Build();
 
-            fakeLm = new FakeLm(order);
-            for (int i = 1; i <= fakeLm.order; i++)
-            {
-                FakeLm.FakeGram[] probs = fakeLm.GetNgramProbs(i);
-                foreach (FakeLm.FakeGram prob in probs)
+                fakeLm = new FakeLm(order);
+                for (int i = 1; i <= fakeLm.order; i++)
                 {
-                    Assert.AreEqual(prob.prob,
-                        lm.GetProbability(prob.indexes), 0.001, "ouch:" + Arrays.ToString(prob.vals));
+                    FakeLm.FakeGram[] probs = fakeLm.GetNgramProbs(i);
+                    foreach (FakeLm.FakeGram prob in probs)
+                    {
+                        Assert.AreEqual(prob.prob,
+                            lm.GetProbability(prob.indexes), 0.001, "ouch:" + Arrays.ToString(prob.vals));
+                    }
                 }
+            }
+            finally
+            {
+                try { if (Directory.Exists(tempDir)) Directory.Delete(tempDir, true); } catch { }
             }
         }
 

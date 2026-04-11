@@ -1,5 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.IO;
+using ZemberekDotNet.Morphology;
 using ZemberekDotNet.NER;
 
 namespace ZemberekDotNet.NER.Tests
@@ -74,20 +76,68 @@ namespace ZemberekDotNet.NER.Tests
         }
 
         [TestMethod]
-        [Ignore("Requires trained NER model and morphology.")]
         public void FindNamedEntitiesInSentenceRequiresModel()
         {
-            // This test requires a trained model. Run manually after loading a model.
+            string tempFile = Path.GetTempFileName();
+            try
+            {
+                File.WriteAllLines(tempFile, new[]
+                {
+                    "<START:LOCATION> Ankara <END> güzel bir şehir .",
+                    "<START:PERSON> Ali <END> gitti .",
+                    "<START:LOCATION> İstanbul <END> büyük .",
+                    "<START:PERSON> Mehmet <END> çalışır .",
+                    "<START:LOCATION> Ankara <END> bir şehir .",
+                    "<START:PERSON> Ali <END> çalışır .",
+                });
+
+                NerDataSet trainingSet = NerDataSet.Load(tempFile, NerDataSet.AnnotationStyle.OPEN_NLP);
+                TurkishMorphology morphology = TurkishMorphology.Builder()
+                    .SetLexicon("Ankara", "İstanbul", "güzel", "şehir", "büyük")
+                    .Build();
+                PerceptronNerTrainer trainer = new PerceptronNerTrainer(morphology);
+                PerceptronNer ner = trainer.Train(trainingSet, trainingSet, 2, 0.5f);
+
+                NerSentence result = ner.FindNamedEntities("Ankara güzel");
+                Assert.IsNotNull(result);
+            }
+            finally
+            {
+                File.Delete(tempFile);
+            }
         }
 
         [TestMethod]
-        [Ignore("Requires trained NER model file on disk.")]
         public void LoadModelFromDirectoryRequiresFiles()
         {
-            // string modelRoot = @"path/to/model";
-            // var morphology = ZemberekDotNet.Morphology.TurkishMorphology.CreateWithDefaults();
-            // PerceptronNer ner = PerceptronNer.LoadModel(modelRoot, morphology);
-            // Assert.IsNotNull(ner);
+            string tempFile = Path.GetTempFileName();
+            string tempDir = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+            try
+            {
+                Directory.CreateDirectory(tempDir);
+                File.WriteAllLines(tempFile, new[]
+                {
+                    "<START:LOCATION> Ankara <END> güzel .",
+                    "<START:PERSON> Ali <END> gitti .",
+                    "<START:LOCATION> İstanbul <END> büyük .",
+                    "<START:PERSON> Mehmet <END> geldi .",
+                });
+
+                NerDataSet trainingSet = NerDataSet.Load(tempFile, NerDataSet.AnnotationStyle.OPEN_NLP);
+                TurkishMorphology morphology = TurkishMorphology.Builder()
+                    .SetLexicon("Ankara", "İstanbul", "güzel", "büyük")
+                    .Build();
+                PerceptronNerTrainer trainer = new PerceptronNerTrainer(morphology);
+                PerceptronNer trained = trainer.Train(trainingSet, trainingSet, 2, 0.5f);
+
+                trained.SaveModelAsText(tempDir);
+                PerceptronNer loaded = PerceptronNer.LoadModel(tempDir, morphology);
+                Assert.IsNotNull(loaded);
+            }
+            finally
+            {
+                File.Delete(tempFile);
+            }
         }
     }
 }
