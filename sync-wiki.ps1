@@ -41,9 +41,9 @@ Get-ChildItem "$docsDir\*.md" | Where-Object { $_.Name -ne "README.md" } | ForEa
 $staleReadme = Join-Path $wikiDir "README.md"
 if (Test-Path $staleReadme) { Remove-Item $staleReadme -Force }
 
-# Root README.md becomes the wiki Home page (replaces any auto-generated content)
-$rootReadme = Join-Path $SolutionRoot "README.md"
-Copy-Item $rootReadme (Join-Path $wikiDir "Home.md") -Force
+# docs/wiki-home-port.md becomes the wiki Home page
+$wikiHome = Join-Path $docsDir "wiki-home-port.md"
+Copy-Item $wikiHome (Join-Path $wikiDir "Home.md") -Force
 
 # Commit and push only if something changed
 Push-Location $wikiDir

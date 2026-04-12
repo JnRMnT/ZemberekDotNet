@@ -1,26 +1,48 @@
-# Wiki Home (.NET Port)
+# ZemberekDotNet
 
-This page is the ZemberekDotNet equivalent of Java wiki `Home.md`.
+> **No Java. No JVM. No sidecar.**
+> Pure .NET Standard 2.1 Turkish NLP — morphology, tokenization, NER, classification, normalization, language ID and more.
 
-Use it as a landing page for all ported wiki content.
+ZemberekDotNet is a C#/.NET port of [Zemberek-NLP](https://github.com/ahmetaa/zemberek-nlp) that has evolved into an actively maintained library.
+It is no longer a strict port — correctness fixes and .NET-specific improvements are introduced where needed.
 
-## Ported Wiki Pages
+See the [repository README](https://github.com/JnRMnT/ZemberekDotNet#readme) for NuGet quick-start, module table, and code samples.
 
-- [FAQ](faq.md)
-- [Normalization Guide](normalization-guide.md)
-- [Morphemes Reference](morphemes-reference.md)
-- [Morphology Notes](morphology-notes.md)
-- [Proper Nouns and Named Entities](proper-nouns-and-named-entities.md)
-- [Text Dictionary Rules](text-dictionary-rules.md)
-- [Developer Guide](developer-guide.md)
-- [Classification Training Guide](classification-training-guide.md)
+---
 
-## Supporting Docs
+## Get started
 
-- [Java vs .NET Side-by-Side](java-dotnet-side-by-side.md)
-- [Java to .NET Migration Quickstart](java-to-dotnet-migration-quickstart.md)
-- [Java Wiki Porting Checklist](java-wiki-porting-checklist.md)
+| I want to… | Go to |
+|---|---|
+| Install a package and write first code | [README — Quick Start](https://github.com/JnRMnT/ZemberekDotNet#quick-start) |
+| Migrate from Java Zemberek | [Java to .NET Migration Quickstart](java-to-dotnet-migration-quickstart) |
+| Compare Java and .NET API names | [Java vs .NET Side-by-Side](java-dotnet-side-by-side) |
+| Build and test from source | [Developer Guide](developer-guide) |
+| Run CLI tools (train, evaluate, preprocess) | [Apps CLI Guide](apps-cli-guide) |
 
-## Scope Note
+---
 
-gRPC-related documentation is intentionally deferred for future work, consistent with current repository scope.
+## Module reference
+
+| Module | Wiki page |
+|---|---|
+| Morphological analysis and disambiguation | [Morphology Notes](morphology-notes) |
+| Morpheme inventory | [Morphemes Reference](morphemes-reference) |
+| Text classification (fastText) | [Classification Training Guide](classification-training-guide) |
+| Noisy text normalization / spell check | [Normalization Guide](normalization-guide) |
+| Proper nouns and named entity recognition | [Proper Nouns and Named Entities](proper-nouns-and-named-entities) |
+| Dictionary and lexicon rules | [Text Dictionary Rules](text-dictionary-rules) |
+
+---
+
+## Reference
+
+- [FAQ](faq) — common questions, licensing, performance, .NET Framework limits
+- [Java Wiki Porting Checklist](java-wiki-porting-checklist) — tracks parity between original Java wiki and this repo
+
+---
+
+## Scope notes
+
+- gRPC module documentation is deferred — the gRPC project itself is not yet in scope.
+- Apps CLI covers classification, morphology, corpus preprocessing, and NER. Additional commands may be added over time.
