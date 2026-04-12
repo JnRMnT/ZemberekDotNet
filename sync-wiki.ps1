@@ -31,16 +31,19 @@ if (-not (Test-Path $wikiDir)) {
     Pop-Location
 }
 
-# Copy all .md files from docs/ into the wiki (flat — wiki has no subdirectories)
-Copy-Item "$docsDir\*.md" $wikiDir -Force
-
-# Wiki landing page must be named Home.md
-$readme = Join-Path $wikiDir "README.md"
-$home   = Join-Path $wikiDir "Home.md"
-if (Test-Path $readme) {
-    if (Test-Path $home) { Remove-Item $home -Force }
-    Rename-Item $readme "Home.md"
+# Copy docs/*.md into the wiki (flat), but skip docs/README.md —
+# it is a docs index, not meant to be a standalone wiki page.
+Get-ChildItem "$docsDir\*.md" | Where-Object { $_.Name -ne "README.md" } | ForEach-Object {
+    Copy-Item $_.FullName $wikiDir -Force
 }
+
+# Remove any stale README.md that may have been copied in a previous run
+$staleReadme = Join-Path $wikiDir "README.md"
+if (Test-Path $staleReadme) { Remove-Item $staleReadme -Force }
+
+# Root README.md becomes the wiki Home page (replaces any auto-generated content)
+$rootReadme = Join-Path $SolutionRoot "README.md"
+Copy-Item $rootReadme (Join-Path $wikiDir "Home.md") -Force
 
 # Commit and push only if something changed
 Push-Location $wikiDir
