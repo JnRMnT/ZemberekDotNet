@@ -77,15 +77,25 @@ dotnet add package ZemberekDotNet.All
 | [Examples: Normalization](ZemberekDotNet.Examples.Normalization)   | — | Turkish spell check, word suggestions, sentence-level typo highlighting. | ✅ Available |
 | [Examples: Pipeline](ZemberekDotNet.Examples.Pipeline)             | — | End-to-end Tokenization → Morphology → LangID pipeline with POS fingerprinting. | ✅ Available |
 
-## Documentation Support
+## Documentation
 
-To support Java-to-.NET migration and improve long-term maintainability, this repository now includes dedicated documentation parity pages:
+The full developer documentation is published on the **[GitHub Wiki](https://github.com/JnRMnT/ZemberekDotNet/wiki)**.
 
-- [Documentation Support Index](docs/README.md)
-- [Java vs .NET Side-by-Side](docs/java-dotnet-side-by-side.md)
-- [Java Wiki Porting Checklist](docs/java-wiki-porting-checklist.md)
-- [Java to .NET Migration Quickstart](docs/java-to-dotnet-migration-quickstart.md)
-- [Apps CLI Guide (.NET Port)](docs/apps-cli-guide.md)
+| Page | Description |
+|---|---|
+| [Apps CLI Guide](https://github.com/JnRMnT/ZemberekDotNet/wiki/apps-cli-guide) | CLI tools for classification, morphology, corpus preprocessing, and NER |
+| [Java to .NET Migration Quickstart](https://github.com/JnRMnT/ZemberekDotNet/wiki/java-to-dotnet-migration-quickstart) | Step-by-step guide for teams moving from Java Zemberek |
+| [Developer Guide](https://github.com/JnRMnT/ZemberekDotNet/wiki/developer-guide) | Build, test, and contribute from source |
+| [Morphology Notes](https://github.com/JnRMnT/ZemberekDotNet/wiki/morphology-notes) | Morphological analysis and disambiguation internals |
+| [Morphemes Reference](https://github.com/JnRMnT/ZemberekDotNet/wiki/morphemes-reference) | Full morpheme inventory with examples |
+| [Classification Training Guide](https://github.com/JnRMnT/ZemberekDotNet/wiki/classification-training-guide) | Training and evaluating fastText text classifiers |
+| [Normalization Guide](https://github.com/JnRMnT/ZemberekDotNet/wiki/normalization-guide) | Noisy text normalization and spell checking |
+| [Proper Nouns and Named Entities](https://github.com/JnRMnT/ZemberekDotNet/wiki/proper-nouns-and-named-entities) | NER, proper noun handling, and entity types |
+| [Text Dictionary Rules](https://github.com/JnRMnT/ZemberekDotNet/wiki/text-dictionary-rules) | Lexicon format, rule syntax, and custom dictionaries |
+| [Java vs .NET Side-by-Side](https://github.com/JnRMnT/ZemberekDotNet/wiki/java-dotnet-side-by-side) | API name mapping between the Java and .NET libraries |
+| [FAQ](https://github.com/JnRMnT/ZemberekDotNet/wiki/faq) | Common questions: licensing, performance, .NET Framework limits |
+
+Wiki source lives in the [`docs/`](docs/) folder and is auto-synced to the wiki on each local build.
 
 Notes:
 
