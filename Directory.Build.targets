@@ -1,0 +1,22 @@
+<Project>
+
+  <!--
+    Post-build: sync docs/ to GitHub Wiki.
+    Runs only:
+      - for ZemberekDotNet.Apps (so it fires once per solution build, not per-project)
+      - when not on CI (CI / TF_BUILD / GITHUB_ACTIONS env vars)
+    The wiki repo is cloned next to the solution folder on first run:
+      ..\ZemberekDotNet.wiki\
+  -->
+  <Target Name="SyncDocsToWiki"
+          AfterTargets="Build"
+          Condition="'$(MSBuildProjectName)' == 'ZemberekDotNet.Apps' AND
+                     '$(CI)' != 'true' AND
+                     '$(TF_BUILD)' != 'True' AND
+                     '$(GITHUB_ACTIONS)' != 'true'">
+    <Message Text="[sync-wiki] Syncing docs/ to GitHub Wiki..." Importance="high" />
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildThisFileDirectory)sync-wiki.ps1&quot; -SolutionRoot &quot;$(MSBuildThisFileDirectory.TrimEnd('\'))&quot;"
+          ContinueOnError="true" />
+  </Target>
+
+</Project>
