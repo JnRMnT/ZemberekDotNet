@@ -13,6 +13,7 @@
 **Module Reference**
 
 - [Morphology Notes](morphology-notes)
+- [Additions and Release Notes](additions)
 - [Morphemes Reference](morphemes-reference)
 - [Classification Training Guide](classification-training-guide)
 - [Normalization Guide](normalization-guide)

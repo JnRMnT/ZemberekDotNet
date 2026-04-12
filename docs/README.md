@@ -16,6 +16,7 @@ This folder provides documentation parity support between Java Zemberek (zembere
 - [Text Dictionary Rules (.NET Port)](text-dictionary-rules.md)
 - [FAQ (.NET Port)](faq.md)
 - [Morphology Notes (.NET Port)](morphology-notes.md)
+- [Additions and Release Notes (.NET Port)](additions.md)
 - [Normalization Guide (.NET Port)](normalization-guide.md)
 - [Morphemes Reference (.NET Port)](morphemes-reference.md)
 - [Proper Nouns and Named Entities (.NET Port)](proper-nouns-and-named-entities.md)

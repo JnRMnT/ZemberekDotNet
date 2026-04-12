@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>0.19.1</Version>
+		<Version>0.19.2</Version>
 		<PackageVersion>$(Version)</PackageVersion>
 		<Product>ZemberekDotNet</Product>
 		<Authors>JnRMnT</Authors>
@@ -31,6 +31,13 @@
 
 	<ItemGroup>
 		<Protobuf Include="Proto\LexiconProto.proto" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- ZemberekDotNet addition: Turkish word-frequency corpus embedded at build time. -->
+		<EmbeddedResource Include="Extended\Resources\tr_50k.txt">
+			<LogicalName>ZemberekDotNet.Morphology.Extended.Resources.tr_50k.txt</LogicalName>
+		</EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>

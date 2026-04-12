@@ -88,6 +88,7 @@ The full developer documentation is published on the **[GitHub Wiki](https://git
 | [Developer Guide](https://github.com/JnRMnT/ZemberekDotNet/wiki/developer-guide) | Build, test, and contribute from source |
 | [Morphology Notes](https://github.com/JnRMnT/ZemberekDotNet/wiki/morphology-notes) | Morphological analysis and disambiguation internals |
 | [Morphemes Reference](https://github.com/JnRMnT/ZemberekDotNet/wiki/morphemes-reference) | Full morpheme inventory with examples |
+| [Additions and Release Notes](https://github.com/JnRMnT/ZemberekDotNet/wiki/additions) | ZemberekDotNet-specific additions and release-level API changes |
 | [Classification Training Guide](https://github.com/JnRMnT/ZemberekDotNet/wiki/classification-training-guide) | Training and evaluating fastText text classifiers |
 | [Normalization Guide](https://github.com/JnRMnT/ZemberekDotNet/wiki/normalization-guide) | Noisy text normalization and spell checking |
 | [Proper Nouns and Named Entities](https://github.com/JnRMnT/ZemberekDotNet/wiki/proper-nouns-and-named-entities) | NER, proper noun handling, and entity types |
@@ -101,6 +102,16 @@ Notes:
 
 - Current port-completion scope prioritizes core library and example parity.
 - gRPC documentation is deferred for future because the gRPC module is deferred for future in this repository.
+
+## Recent Additions
+
+Recent morphology additions are documented in [docs/additions.md](docs/additions.md), including:
+
+- `TurkishCase` enum and `SingleAnalysis` case helpers in `ZemberekDotNet.Morphology.Extended`
+- Numeric apostrophe analysis (`ExtdAnalyzeNumeralWithSuffix`)
+- Confidence-ranked analyses (`ExtdAnalyzeWithRanking`, `ExtdGetRankedAnalyses`)
+- BK-tree fuzzy analysis (`ExtendedMorphologyContext.FuzzyAnalyze`)
+- Morphology synthesis helper (`ExtdSynthesize`)
 
 ### Known Missing / Deferred Items
 

@@ -27,6 +27,7 @@ See the [repository README](https://github.com/JnRMnT/ZemberekDotNet#readme) for
 | Module | Wiki page |
 |---|---|
 | Morphological analysis and disambiguation | [Morphology Notes](morphology-notes) |
+| ZemberekDotNet-specific API additions and release notes | [Additions and Release Notes](additions) |
 | Morpheme inventory | [Morphemes Reference](morphemes-reference) |
 | Text classification (fastText) | [Classification Training Guide](classification-training-guide) |
 | Noisy text normalization / spell check | [Normalization Guide](normalization-guide) |

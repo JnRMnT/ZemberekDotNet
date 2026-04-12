@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
-		<Version>0.19.1</Version>
+		<Version>0.19.2</Version>
 		<Authors>JnRMnT</Authors>
 		<Product>ZemberekDotNet</Product>
 		<Description>Native .NET Standard 2.1. No Java or JVM required. All ZemberekDotNet modules in one package: Turkish NLP including morphological analysis, tokenization, normalization, NER, classification and language identification.</Description>

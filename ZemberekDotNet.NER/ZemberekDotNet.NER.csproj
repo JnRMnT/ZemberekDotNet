@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
-		<Version>0.19.1</Version>
+		<Version>0.19.2</Version>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Description>Native .NET Standard 2.1. No Java or JVM required. Turkish Named Entity Recognition.</Description>
 		<Product>ZemberekDotNet</Product>
