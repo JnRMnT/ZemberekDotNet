@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using ZemberekDotNet.Core.IO;
 
 namespace ZemberekDotNet.Tokenization.Antlr
 {
@@ -24,7 +25,8 @@ namespace ZemberekDotNet.Tokenization.Antlr
         {
             try
             {
-                foreach (string line in File.ReadLines("Resources/tokenization/abbreviations.txt", Encoding.UTF8))
+                string abbreviationsPath = IOs.ResolvePath("Resources/tokenization/abbreviations.txt");
+                foreach (string line in File.ReadLines(abbreviationsPath, Encoding.UTF8))
                 {
                     if (line.Trim().Length > 0)
                     {

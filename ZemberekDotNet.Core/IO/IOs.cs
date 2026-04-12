@@ -16,9 +16,78 @@ namespace ZemberekDotNet.Core.IO
         public static readonly int CharBufferSize = 1 << 20;
         private static readonly int ByteBufferSize = 1 << 20;
         private static readonly byte[] bomBytes = new byte[] { 0xef, 0xbb, 0xbf };
+        private static readonly string[] resourceModuleDirectories =
+        {
+            "",
+            "ZemberekDotNet.Core",
+            "ZemberekDotNet.Tokenization",
+            "ZemberekDotNet.Morphology",
+            "ZemberekDotNet.Normalization",
+            "ZemberekDotNet.LangID",
+            "ZemberekDotNet.NER"
+        };
 
         private IOs()
         {
+        }
+
+        public static string ResolvePath(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path) || Path.IsPathRooted(path))
+            {
+                return path;
+            }
+
+            if (File.Exists(path) || Directory.Exists(path))
+            {
+                return path;
+            }
+
+            string normalized = path
+                .Replace('\\', Path.DirectorySeparatorChar)
+                .Replace('/', Path.DirectorySeparatorChar);
+
+            foreach (string root in GetCandidateRoots())
+            {
+                foreach (string moduleDir in resourceModuleDirectories)
+                {
+                    string candidate = string.IsNullOrEmpty(moduleDir)
+                        ? Path.Combine(root, normalized)
+                        : Path.Combine(root, moduleDir, normalized);
+
+                    if (File.Exists(candidate) || Directory.Exists(candidate))
+                    {
+                        return candidate;
+                    }
+                }
+            }
+
+            return path;
+        }
+
+        private static IEnumerable<string> GetCandidateRoots()
+        {
+            HashSet<string> roots = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            AddDirectoryAndParents(Environment.CurrentDirectory, roots);
+            AddDirectoryAndParents(AppContext.BaseDirectory, roots);
+
+            return roots;
+        }
+
+        private static void AddDirectoryAndParents(string startPath, ISet<string> output)
+        {
+            if (string.IsNullOrWhiteSpace(startPath))
+            {
+                return;
+            }
+
+            DirectoryInfo current = new DirectoryInfo(startPath);
+            for (int i = 0; i < 8 && current != null; i++)
+            {
+                output.Add(current.FullName);
+                current = current.Parent;
+            }
         }
 
         /// <summary>
@@ -470,7 +539,8 @@ namespace ZemberekDotNet.Core.IO
          */
         public static StreamReader GetResourceAsStream(string resource)
         {
-            return new StreamReader(new FileStream(resource, FileMode.Open, FileAccess.Read));
+            string resolved = ResolvePath(resource);
+            return new StreamReader(new FileStream(resolved, FileMode.Open, FileAccess.Read));
         }
 
         /**

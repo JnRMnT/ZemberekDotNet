@@ -3,6 +3,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
+using ZemberekDotNet.Core.IO;
 
 namespace ZemberekDotNet.Core.Text
 {
@@ -10,7 +11,7 @@ namespace ZemberekDotNet.Core.Text
     {
         public static string LoadUtfAsstring(string filePath)
         {
-            return string.Join("\n", File.ReadAllLines(filePath, Encoding.UTF8));
+            return string.Join("\n", File.ReadAllLines(IOs.ResolvePath(filePath), Encoding.UTF8));
         }
 
         /// <summary>
@@ -20,12 +21,12 @@ namespace ZemberekDotNet.Core.Text
         /// <returns></returns>
         public static List<string> LoadLines(string path)
         {
-            return File.ReadAllLines(path, Encoding.UTF8).Where(e => e.Trim().Length > 0).ToList();
+            return File.ReadAllLines(IOs.ResolvePath(path), Encoding.UTF8).Where(e => e.Trim().Length > 0).ToList();
         }
 
         public static long LineCount(string p)
         {
-            using (StreamReader streamReader = new StreamReader(p, Encoding.UTF8))
+            using (StreamReader streamReader = new StreamReader(IOs.ResolvePath(p), Encoding.UTF8))
             {
                 int count = 1;
                 for (int c = 0; c != -1; c = streamReader.Read())
@@ -38,13 +39,13 @@ namespace ZemberekDotNet.Core.Text
 
         public static List<string> LoadLines(string path, string ignorePrefix)
         {
-            return File.ReadAllLines(path, Encoding.UTF8).Where(s => s.Trim().Length > 0 &&
+            return File.ReadAllLines(IOs.ResolvePath(path), Encoding.UTF8).Where(s => s.Trim().Length > 0 &&
                     (ignorePrefix == null || !s.Trim().StartsWith(ignorePrefix))).ToList();
         }
 
         public static List<string> LoadLinesFromCompressed(string path)
         {
-            using (FileStream originalFileStream = File.OpenRead(path))
+            using (FileStream originalFileStream = File.OpenRead(IOs.ResolvePath(path)))
             {
                 using (GZipStream decompressionStream = new GZipStream(originalFileStream, CompressionMode.Decompress))
                 {
@@ -68,7 +69,7 @@ namespace ZemberekDotNet.Core.Text
 
         public static long CharCount(string path, Encoding charset)
         {
-            using (FileStream fileStream = File.OpenRead(path))
+            using (FileStream fileStream = File.OpenRead(IOs.ResolvePath(path)))
             {
                 using (BinaryReader reader = new BinaryReader(fileStream, charset))
                 {

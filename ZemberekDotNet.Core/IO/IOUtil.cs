@@ -8,7 +8,7 @@ namespace ZemberekDotNet.Core.IO
     {
         public static BinaryReader GetDataInputStream(string path)
         {
-            return new BinaryReader(File.OpenRead(path));
+            return new BinaryReader(File.OpenRead(IOs.ResolvePath(path)));
         }
 
         public static BinaryReader GetDataInputStream(Stream inputStream)
@@ -32,7 +32,8 @@ namespace ZemberekDotNet.Core.IO
             {
                 throw new ArgumentException("Buffer size must be positive. But it is :" + bufferSize);
             }
-            return new BinaryReader(new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize));
+            string resolvedPath = IOs.ResolvePath(path);
+            return new BinaryReader(new FileStream(resolvedPath, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize));
         }
 
         public static StreamReader GetDataOutputStream(string path, int bufferSize)

@@ -86,11 +86,17 @@ namespace ZemberekDotNet.Apps.FastText
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                Console.Error.WriteLine("Error while writing predictions to " + predictions + ": " + ex.Message);
             }
 
             Console.WriteLine("Predictions are written to " + predictions);
+        }
+
+        public static void Main(string[] args)
+        {
+            new EvaluateClassifier().Execute(args);
         }
     }
 }

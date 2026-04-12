@@ -9,35 +9,67 @@ namespace ZemberekDotNet.Apps
 {
     public class ApplicationRunner
     {
-        public static void Nain(string[] args)
+        public static void Main(string[] args)
         {
+            ResourceBootstrap.EnsureGlobalResourcesRoot();
+
             Assembly currentAssembly = Assembly.GetExecutingAssembly();
-            List<Type> apps = currentAssembly.GetTypes().Where(t => typeof(ConsoleApp<object>).IsAssignableFrom(t)).ToList();
+            List<Type> apps = currentAssembly.GetTypes()
+                .Where(IsConsoleAppType)
+                .OrderBy(t => t.Name)
+                .ToList();
 
             if (apps.Count == 0)
             {
                 Console.WriteLine("No applications found.");
-                Environment.Exit(0);
+                return;
             }
             if (args.Length == 0)
             {
                 ListApplications(apps);
-                Environment.Exit(0);
+                return;
             }
             string className = args[0];
             foreach (Type app in apps)
             {
-                if (app.Name.Contains(className))
+                if (app.Name.Contains(className, StringComparison.OrdinalIgnoreCase))
                 {
-                    string[] copiedArray = null;
-                    Array.Copy(args, 1, copiedArray, 0, args.Length - 1);
-                    MethodInfo executeMethod = app.GetMethod("Execute");
-                    executeMethod.Invoke(null, copiedArray);
-                    Environment.Exit(0);
+                    object appInstance = Activator.CreateInstance(app);
+                    if (appInstance == null)
+                    {
+                        Console.WriteLine("Cannot create application instance for :" + className);
+                        return;
+                    }
+
+                    string[] copiedArray = args.Skip(1).ToArray();
+                    MethodInfo executeMethod = app.GetMethod("Execute", BindingFlags.Public | BindingFlags.Instance);
+                    executeMethod?.Invoke(appInstance, new object[] { copiedArray });
+                    return;
                 }
             }
             Console.WriteLine("Cannot find application for :" + className);
             ListApplications(apps);
+        }
+
+        private static bool IsConsoleAppType(Type type)
+        {
+            if (type.IsAbstract)
+            {
+                return false;
+            }
+
+            Type current = type;
+            while (current != null)
+            {
+                if (current.IsGenericType && current.GetGenericTypeDefinition() == typeof(ConsoleApp<>))
+                {
+                    return true;
+                }
+
+                current = current.BaseType;
+            }
+
+            return false;
         }
 
         private static void ListApplications(List<Type> apps)
@@ -49,12 +81,12 @@ namespace ZemberekDotNet.Apps
                 string simpleName = app.Name;
                 Console.WriteLine(simpleName);
                 Console.WriteLine(Strings.Repeat("-", simpleName.Length));
-                MethodInfo descriptionMethod = app.GetMethod("Description");
-                string wrapped = Wrap(descriptionMethod.Invoke(null, null) as string, 80);
+                object appInstance = Activator.CreateInstance(app);
+                MethodInfo descriptionMethod = app.GetMethod("Description", BindingFlags.Public | BindingFlags.Instance);
+                string wrapped = Wrap(descriptionMethod?.Invoke(appInstance, null) as string, 80);
                 Console.WriteLine(wrapped);
                 Console.WriteLine();
             }
-            Environment.Exit(0);
         }
 
         internal static string Wrap(string s, int lineLength)

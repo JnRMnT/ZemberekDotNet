@@ -297,7 +297,8 @@ namespace ZemberekDotNet.Core.Text
         {
             try
             {
-                StreamReader stream = new StreamReader(new FileStream(resource, FileMode.Open, FileAccess.Read));
+                string resolvedResource = IOs.ResolvePath(resource);
+                StreamReader stream = new StreamReader(new FileStream(resolvedResource, FileMode.Open, FileAccess.Read));
                 Dictionary<string, string> fullMap = new KeyValueReader(":", "!").LoadFromStream(stream, "utf-8");
                 foreach (string key in fullMap.Keys)
                 {

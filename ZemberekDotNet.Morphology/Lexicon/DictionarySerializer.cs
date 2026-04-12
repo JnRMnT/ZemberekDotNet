@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using ZemberekDotNet.Core.Enums;
+using ZemberekDotNet.Core.IO;
 using ZemberekDotNet.Core.Logging;
 using ZemberekDotNet.Core.Turkish;
 using ZemberekDotNet.Morphology.Lexicon.TR;
@@ -20,7 +21,7 @@ namespace ZemberekDotNet.Morphology.Lexicon
 
         public static RootLexicon Load(string path)
         {
-            return GetDictionaryItems(File.ReadAllBytes(path));
+            return GetDictionaryItems(File.ReadAllBytes(IOs.ResolvePath(path)));
         }
 
         public static void CreateDefaultDictionary(string path)

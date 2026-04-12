@@ -4,7 +4,7 @@
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net8.0</TargetFramework>
 		<ApplicationIcon />
-		<StartupObject />
+		<StartupObject>ZemberekDotNet.Apps.ApplicationRunner</StartupObject>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -14,6 +14,9 @@
 	<ItemGroup>
 		<ProjectReference Include="..\ZemberekDotNet.Classification\ZemberekDotNet.Classification.csproj" />
 		<ProjectReference Include="..\ZemberekDotNet.Core\ZemberekDotNet.Core.csproj" />
+		<ProjectReference Include="..\ZemberekDotNet.Morphology\ZemberekDotNet.Morphology.csproj" />
+		<ProjectReference Include="..\ZemberekDotNet.NER\ZemberekDotNet.NER.csproj" />
+		<ProjectReference Include="..\ZemberekDotNet.Tokenization\ZemberekDotNet.Tokenization.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

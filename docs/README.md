@@ -21,6 +21,7 @@ This folder provides documentation parity support between Java Zemberek (zembere
 - [Proper Nouns and Named Entities (.NET Port)](proper-nouns-and-named-entities.md)
 - [Developer Guide (.NET Port)](developer-guide.md)
 - [Classification Training Guide (.NET Port)](classification-training-guide.md)
+- [Apps CLI Guide (.NET Port)](apps-cli-guide.md)
 - [Wiki Home (.NET Port)](wiki-home-port.md)
 
 ## Scope Notes

@@ -63,12 +63,12 @@ dotnet add package ZemberekDotNet.All
 | [Morphology](ZemberekDotNet.Morphology)        | ZemberekDotNet.Morphology     | Turkish morphological analysis, disambiguation and word generation. | [![NuGet](https://img.shields.io/nuget/v/ZemberekDotNet.Morphology)](https://www.nuget.org/packages/ZemberekDotNet.Morphology/) [![NuGet](https://img.shields.io/nuget/dt/ZemberekDotNet.Morphology)](https://www.nuget.org/packages/ZemberekDotNet.Morphology/)  |
 | [Tokenization](ZemberekDotNet.Tokenization)    | ZemberekDotNet.Tokenization         | Turkish Tokenization and sentence boundary detection. | [![NuGet](https://img.shields.io/nuget/v/ZemberekDotNet.Tokenization)](https://www.nuget.org/packages/ZemberekDotNet.Tokenization/) [![NuGet](https://img.shields.io/nuget/dt/ZemberekDotNet.Tokenization)](https://www.nuget.org/packages/ZemberekDotNet.Tokenization/) |
 | [Normalization](ZemberekDotNet.Normalization)  | ZemberekDotNet.Normalization        | Basic spell checker, word suggestion. Noisy text normalization. |  [![NuGet](https://img.shields.io/nuget/v/ZemberekDotNet.Normalization)](https://www.nuget.org/packages/ZemberekDotNet.Normalization/) [![NuGet](https://img.shields.io/nuget/dt/ZemberekDotNet.Normalization)](https://www.nuget.org/packages/ZemberekDotNet.Normalization/) |
-| [NER](NER)                      | ZemberekDotNet.NER                  | Turkish Named Entity Recognition. |  [![NuGet](https://img.shields.io/nuget/v/ZemberekDotNet.NER)](https://www.nuget.org/packages/ZemberekDotNet.NER/) [![NuGet](https://img.shields.io/nuget/dt/ZemberekDotNet.NER)](https://www.nuget.org/packages/ZemberekDotNet.NER/) |
+| [NER](ZemberekDotNet.NER)                      | ZemberekDotNet.NER                  | Turkish Named Entity Recognition. |  [![NuGet](https://img.shields.io/nuget/v/ZemberekDotNet.NER)](https://www.nuget.org/packages/ZemberekDotNet.NER/) [![NuGet](https://img.shields.io/nuget/dt/ZemberekDotNet.NER)](https://www.nuget.org/packages/ZemberekDotNet.NER/) |
 | [Classification](ZemberekDotNet.Classification)| ZemberekDotNet.Classification       | High-performance fastText-based text classification. |  [![NuGet](https://img.shields.io/nuget/v/ZemberekDotNet.Classification)](https://www.nuget.org/packages/ZemberekDotNet.Classification/) [![NuGet](https://img.shields.io/nuget/dt/ZemberekDotNet.Classification)](https://www.nuget.org/packages/ZemberekDotNet.Classification/) |
 | [Language Identification](ZemberekDotNet.LangID)| ZemberekDotNet.LangID            | Fast identification of text language. |  [![NuGet](https://img.shields.io/nuget/v/ZemberekDotNet.LangID)](https://www.nuget.org/packages/ZemberekDotNet.LangID/) [![NuGet](https://img.shields.io/nuget/dt/ZemberekDotNet.LangID)](https://www.nuget.org/packages/ZemberekDotNet.LangID/) |
 | [Language Modeling](ZemberekDotNet.LM)         | ZemberekDotNet.LM                   | Provides a language model compression algorithm. |  [![NuGet](https://img.shields.io/nuget/v/ZemberekDotNet.LM)](https://www.nuget.org/packages/ZemberekDotNet.LM/) [![NuGet](https://img.shields.io/nuget/dt/ZemberekDotNet.LM)](https://www.nuget.org/packages/ZemberekDotNet.LM/) |
-| [Applications](ZemberekDotNet.Apps)            | ZemberekDotNet.Apps                 | FastText CLI trainer and evaluator. | In Progress |
-| [gRPC Server](ZemberekDotNet.GRPC)             | ZemberekDotNet.GRPC                 | gRPC server for access from other languages. | Deferred for future (not required for current port scope) |
+| [Applications](ZemberekDotNet.Apps)            | ZemberekDotNet.Apps                 | CLI tools for classification, morphology, corpus preprocessing, and NER workflows. | ✅ Available |
+| gRPC Server (planned)             | ZemberekDotNet.GRPC                 | gRPC server for access from other languages. | Deferred for future (not required for current port scope) |
 | [Examples: Classification](ZemberekDotNet.Examples.Classification) | — | News title category classification using fastText. | ✅ Available |
 | [Examples: Morphology](ZemberekDotNet.Examples.Morphology)         | — | Analysis, disambiguation, LINQ lemma extraction, word generation (conjugation + noun cases). | ✅ Available |
 | [Examples: Tokenization](ZemberekDotNet.Examples.Tokenization)     | — | Sentence splitting, token-type inspection, document processing. | ✅ Available |
@@ -85,16 +85,22 @@ To support Java-to-.NET migration and improve long-term maintainability, this re
 - [Java vs .NET Side-by-Side](docs/java-dotnet-side-by-side.md)
 - [Java Wiki Porting Checklist](docs/java-wiki-porting-checklist.md)
 - [Java to .NET Migration Quickstart](docs/java-to-dotnet-migration-quickstart.md)
+- [Apps CLI Guide (.NET Port)](docs/apps-cli-guide.md)
 
 Notes:
 
 - Current port-completion scope prioritizes core library and example parity.
 - gRPC documentation is deferred for future because the gRPC module is deferred for future in this repository.
 
+### Known Missing / Deferred Items
+
+- `ZemberekDotNet.GRPC` project is not in the repository yet. The module name is reserved in the table for future implementation.
+- Apps CLI parity is focused on high-use workflows (classification, morphology, corpus preprocessing, NER). Additional app surface from the original Java ecosystem may be expanded over time.
+
 ## Examples
 
 Each example project is a self-contained runnable console app - clone the repo, `dotnet run`, and see real output.
-All examples below have dedicated automated tests in the related `*.Tests` projects.
+Examples are validated primarily through runnable sample projects and module-level test suites.
 
 | Project | What it shows | Entry point |
 |---|---|---|

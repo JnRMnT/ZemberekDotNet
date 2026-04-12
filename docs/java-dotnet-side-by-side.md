@@ -14,7 +14,7 @@ This page maps core Java Zemberek documentation and APIs to ZemberekDotNet equiv
 | `classification` | `ZemberekDotNet.Classification` | Available |
 | `lang-id` | `ZemberekDotNet.LangID` | Available |
 | `lm` | `ZemberekDotNet.LM` | Available |
-| `apps` | `ZemberekDotNet.Apps` | In progress |
+| `apps` | `ZemberekDotNet.Apps` | Available |
 | `grpc` | `ZemberekDotNet.GRPC` | Deferred for future |
 | `examples` | `ZemberekDotNet.Examples.*` | Available |
 
@@ -38,7 +38,7 @@ This page maps core Java Zemberek documentation and APIs to ZemberekDotNet equiv
 | Root `README.md` modules and usage | Root `README.md` quick start, modules, examples |
 | `morphology/README.md` | `README.md` + `ZemberekDotNet.Examples.Morphology` |
 | `normalization/README.md` | `README.md` + `ZemberekDotNet.Examples.Normalization` |
-| `apps/README.md` | `ZemberekDotNet.Apps` + root module table |
+| `apps/README.md` | `ZemberekDotNet.Apps` + `docs/apps-cli-guide.md` |
 | Wiki pages (`FAQ`, morphology notes, dictionary rules, etc.) | `docs/` pages in this repo (ongoing port) |
 
 ## Notes
