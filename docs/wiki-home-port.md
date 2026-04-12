@@ -20,7 +20,6 @@ Use it as a landing page for all ported wiki content.
 - [Java vs .NET Side-by-Side](java-dotnet-side-by-side.md)
 - [Java to .NET Migration Quickstart](java-to-dotnet-migration-quickstart.md)
 - [Java Wiki Porting Checklist](java-wiki-porting-checklist.md)
-- [Wiki Porting Plan](wiki-porting-plan.md)
 
 ## Scope Note
 

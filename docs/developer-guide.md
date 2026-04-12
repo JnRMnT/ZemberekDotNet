@@ -84,18 +84,17 @@ Related pages:
 - [Text Dictionary Rules (.NET Port)](text-dictionary-rules.md)
 - [Morphology Notes (.NET Port)](morphology-notes.md)
 
-## 8. Documentation Porting Workflow
+## 8. Documentation Maintenance Workflow
 
-For Java wiki parity work:
+For Java wiki parity maintenance work:
 
-1. Identify source wiki page.
-2. Port to an equivalent page under docs.
+1. Identify source Java page changes.
+2. Update the equivalent docs page under docs.
 3. Adapt examples to current .NET API names.
-4. Update checklist status.
+4. Keep checklist status and notes in sync.
 
-Tracking pages:
+Tracking page:
 
-- [Wiki Porting Plan](wiki-porting-plan.md)
 - [Java Wiki Porting Checklist](java-wiki-porting-checklist.md)
 
 ## 9. Current Scope Decision
