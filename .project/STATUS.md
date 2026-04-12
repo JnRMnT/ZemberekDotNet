@@ -121,7 +121,6 @@ Current test suite: **607 passing / 29 skipped / 0 failing** (as of commit `fd95
 
 ## 5. Work Order (Next Steps)
 
-1. **[ ] Fix 1.2** — `AnalysisCache` size limit (`SizeLimit` + `Size=1` on entries)
-2. **[ ] Fix 1.3** — `InformalTurkishMorphotactics` yapıyim/okuyim/bakıyim rules
-3. **[ ] Investigate 3C** — Check if `SingleWordSpellCheckerTest.PerformanceTest` resource exists and can be enabled
-4. **[ ] Fix 1.1** — `FastText` retraining (complex, last)
+1. **[ ] Fix 1.3** — `InformalTurkishMorphotactics` yapıyim/okuyim/bakıyim rules
+2. **[ ] Investigate 3C** — Check if `SingleWordSpellCheckerTest.PerformanceTest` resource exists and can be enabled
+3. **[i] gRPC module** — Deferred for future; not required for current port-completion scope.

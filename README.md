@@ -68,7 +68,7 @@ dotnet add package ZemberekDotNet.All
 | [Language Identification](ZemberekDotNet.LangID)| ZemberekDotNet.LangID            | Fast identification of text language. |  [![NuGet](https://img.shields.io/nuget/v/ZemberekDotNet.LangID)](https://www.nuget.org/packages/ZemberekDotNet.LangID/) [![NuGet](https://img.shields.io/nuget/dt/ZemberekDotNet.LangID)](https://www.nuget.org/packages/ZemberekDotNet.LangID/) |
 | [Language Modeling](ZemberekDotNet.LM)         | ZemberekDotNet.LM                   | Provides a language model compression algorithm. |  [![NuGet](https://img.shields.io/nuget/v/ZemberekDotNet.LM)](https://www.nuget.org/packages/ZemberekDotNet.LM/) [![NuGet](https://img.shields.io/nuget/dt/ZemberekDotNet.LM)](https://www.nuget.org/packages/ZemberekDotNet.LM/) |
 | [Applications](ZemberekDotNet.Apps)            | ZemberekDotNet.Apps                 | FastText CLI trainer and evaluator. | In Progress |
-| [gRPC Server](ZemberekDotNet.GRPC)             | ZemberekDotNet.GRPC                 | gRPC server for access from other languages. | Not Started |
+| [gRPC Server](ZemberekDotNet.GRPC)             | ZemberekDotNet.GRPC                 | gRPC server for access from other languages. | Deferred for future (not required for current port scope) |
 | [Examples: Classification](ZemberekDotNet.Examples.Classification) | — | News title category classification using fastText. | ✅ Available |
 | [Examples: Morphology](ZemberekDotNet.Examples.Morphology)         | — | Analysis, disambiguation, LINQ lemma extraction, word generation (conjugation + noun cases). | ✅ Available |
 | [Examples: Tokenization](ZemberekDotNet.Examples.Tokenization)     | — | Sentence splitting, token-type inspection, document processing. | ✅ Available |
@@ -76,6 +76,20 @@ dotnet add package ZemberekDotNet.All
 | [Examples: NER](ZemberekDotNet.Examples.NER)                       | — | In-memory NER training and named-entity inference with PERSON/LOCATION/ORGANIZATION labels. | ✅ Available |
 | [Examples: Normalization](ZemberekDotNet.Examples.Normalization)   | — | Turkish spell check, word suggestions, sentence-level typo highlighting. | ✅ Available |
 | [Examples: Pipeline](ZemberekDotNet.Examples.Pipeline)             | — | End-to-end Tokenization → Morphology → LangID pipeline with POS fingerprinting. | ✅ Available |
+
+## Documentation Support
+
+To support Java-to-.NET migration and improve long-term maintainability, this repository now includes dedicated documentation parity pages:
+
+- [Documentation Support Index](docs/README.md)
+- [Java vs .NET Side-by-Side](docs/java-dotnet-side-by-side.md)
+- [Java Wiki Porting Checklist](docs/java-wiki-porting-checklist.md)
+- [Java to .NET Migration Quickstart](docs/java-to-dotnet-migration-quickstart.md)
+
+Notes:
+
+- Current port-completion scope prioritizes core library and example parity.
+- gRPC documentation is deferred for future because the gRPC module is deferred for future in this repository.
 
 ## Examples
 
