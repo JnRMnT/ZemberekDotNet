@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.1;net8.0</TargetFrameworks>
-		<Version>0.19.3</Version>
+		<Version>0.19.4</Version>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>JnRMnT</Authors>
 		<Product>ZemberekDotNet</Product>
@@ -34,3 +34,4 @@
 	</ItemGroup>
 
 </Project>
+

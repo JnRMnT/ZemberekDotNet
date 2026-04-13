@@ -210,7 +210,11 @@ namespace ZemberekDotNet.Morphology.Ambiguity
                         Dictionary<string, SingleAnalysis> analysisMap = new Dictionary<string, SingleAnalysis>();
                         foreach (SingleAnalysis single in w)
                         {
-                            analysisMap.Add(single.FormatLong(), single);
+                            string key = single.FormatLong();
+                            if (!analysisMap.ContainsKey(key))
+                            {
+                                analysisMap.Add(key, single);
+                            }
                         }
 
                         WordDataStr s = sentenceFromTrain.WordList[i];

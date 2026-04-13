@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.1;net8.0</TargetFrameworks>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>0.19.3</Version>
+		<Version>0.19.4</Version>
 		<PackageProjectUrl>https://github.com/JnRMnT/ZemberekDotNet</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/JnRMnT/ZemberekDotNet</RepositoryUrl>
 		<Product>ZemberekDotNet</Product>
@@ -41,3 +41,4 @@
 		</Content>
 	</ItemGroup>
 </Project>
+

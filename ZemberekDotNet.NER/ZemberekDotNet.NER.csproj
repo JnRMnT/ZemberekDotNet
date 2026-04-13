@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.1;net8.0</TargetFrameworks>
-		<Version>0.19.3</Version>
+		<Version>0.19.4</Version>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Description>Native .NET Standard 2.1. No Java or JVM required. Turkish Named Entity Recognition.</Description>
 		<Product>ZemberekDotNet</Product>
@@ -20,3 +20,4 @@
 		<ProjectReference Include="..\ZemberekDotNet.Tokenization\ZemberekDotNet.Tokenization.csproj" />
 	</ItemGroup>
 </Project>
+

@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.1;net8.0</TargetFrameworks>
-		<Version>0.19.3</Version>
+		<Version>0.19.4</Version>
 		<Description>Native .NET Standard 2.1. No Java or JVM required. Contains specialized data structures and helper classes.</Description>
 		<PackageProjectUrl>https://github.com/JnRMnT/ZemberekDotNet</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/JnRMnT/ZemberekDotNet</RepositoryUrl>
@@ -29,3 +29,4 @@
 		</Content>
 	</ItemGroup>
 </Project>
+

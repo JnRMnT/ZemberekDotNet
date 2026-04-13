@@ -52,7 +52,14 @@ namespace ZemberekDotNet.Core.Compression
 
         private static int GetFingerprint(string s)
         {
-            return s.GetHashCode() & 0x7ffffff;
+            // Must match Java's String.hashCode() so Java-serialized model fingerprints
+            // are compatible when loaded in .NET.
+            int h = 0;
+            for (int i = 0; i < s.Length; i++)
+            {
+                h = 31 * h + s[i];
+            }
+            return h & 0x7ffffff;
         }
 
         /// <summary>

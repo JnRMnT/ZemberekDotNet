@@ -15,6 +15,8 @@ dotnet run --project ZemberekDotNet.Apps/ZemberekDotNet.Apps.csproj
 - `ClassificationConsole`: Interactive prediction console for a trained classification model.
 - `PreprocessTurkishCorpus`: Sentence split and tokenize corpus files (with optional lemma preprocessing).
 - `MorphologyConsole`: Interactive Turkish morphology analysis and disambiguation.
+- `ValidateParityConsole`: Compare Java and .NET morphology outputs and emit a parity JSON report.
+- `ValidateParityAbConsole`: Run baseline vs trained ambiguity-resolver parity A/B and emit a compact summary JSON.
 - `TrainNerModel`: Train Turkish perceptron NER model and export text + compressed variants.
 - `EvaluateNer`: Evaluate NER output from either a model run or a hypothesis file.
 - `FindNamedEntities`: Run NER on plain text input.
@@ -73,6 +75,27 @@ dotnet run --project ZemberekDotNet.Apps/ZemberekDotNet.Apps.csproj -- EvaluateN
 ```sh
 dotnet run --project ZemberekDotNet.Apps/ZemberekDotNet.Apps.csproj -- MorphologyConsole
 ```
+
+### Java vs .NET Parity (Single Run)
+
+```sh
+dotnet run --project ZemberekDotNet.Apps/ZemberekDotNet.Apps.csproj -- ValidateParityConsole \
+  --input data/parity-input.txt \
+  --java-output data/parity-java.tsv \
+  --output out/parity-report.json
+```
+
+### Java vs .NET Parity (Baseline vs Trained A/B)
+
+```sh
+dotnet run --project ZemberekDotNet.Apps/ZemberekDotNet.Apps.csproj -- ValidateParityAbConsole \
+  --input data/parity-input.txt \
+  --java-output data/parity-java.tsv \
+  --iterations 3 \
+  --output out/parity-ab-report.json
+```
+
+Optional: provide `--java-jar` instead of `--java-output` to generate the TSV automatically.
 
 ## Notes
 

@@ -86,11 +86,14 @@ namespace ZemberekDotNet.Morphology.Ambiguity
             {
                 string lemma = sa.GetDictionaryItem().lemma;
                 SecondaryPos secPos = sa.GetDictionaryItem().secondaryPos;
-                string sp = secPos == SecondaryPos.None ? "" : secPos.GetStringForm();
+                // Java uses SecondaryPos.name() which returns the enum constant name ("ProperNoun"),
+                // NOT the short form ("Prop"). LongForm matches Java's .name() for all values.
+                string sp = secPos == SecondaryPos.None ? "" : secPos.LongForm;
 
                 List<string> igs = new List<string>(sa.GroupCount());
                 for (int i = 0; i < sa.GroupCount(); i++)
                 {
+                    // Java also always uses getGroup(0) here - this is intentional, matches Java source exactly
                     string s = sa.GetGroup(0).LexicalForm();
                     if (i == 0)
                     {

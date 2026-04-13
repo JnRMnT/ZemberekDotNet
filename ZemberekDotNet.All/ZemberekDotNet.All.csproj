@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.1;net8.0</TargetFrameworks>
-		<Version>0.19.3</Version>
+		<Version>0.19.4</Version>
 		<Authors>JnRMnT</Authors>
 		<Product>ZemberekDotNet</Product>
 		<Description>Native .NET Standard 2.1. No Java or JVM required. All ZemberekDotNet modules in one package: Turkish NLP including morphological analysis, tokenization, normalization, NER, classification and language identification.</Description>
@@ -130,3 +130,4 @@
 		</None>
 	</ItemGroup>
 </Project>
+

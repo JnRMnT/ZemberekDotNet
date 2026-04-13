@@ -33,11 +33,11 @@ namespace ZemberekDotNet.Apps.Morphology
             Description = "Path to input text file with one sentence per line. Required.")]
         string inputPath;
 
-        [Parameter("--java-output", "-j",
+        [Parameter("--java-output", "-j", Required = Required.No,
             Description = "Pre-generated Java Zemberek analysis TSV file. See class header for format.")]
         string javaOutputPath;
 
-        [Parameter("--java-jar",
+        [Parameter("--java-jar", Required = Required.No,
             Description = "Path to the Zemberek fat JAR. When provided Java is invoked automatically ('java' must be in PATH).")]
         string javaJarPath;
 
@@ -46,7 +46,7 @@ namespace ZemberekDotNet.Apps.Morphology
                           "Default: 'zemberek.apps.ApplicationRunner MorphAnalyze --input {input} --output {output}'")]
         string javaArgs = "";
 
-        [Parameter("--output", "-o",
+        [Parameter("--output", "-o", Required = Required.No,
             Description = "Output JSON report file path. If omitted the summary is printed to stdout only.")]
         string outputPath;
 

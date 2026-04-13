@@ -83,7 +83,11 @@ namespace ZemberekDotNet.NER.Tests
         public void TrainedModelDetectsOrganizationToken()
         {
             NerDataSet training = GetTrainingSet();
-            TurkishMorphology morphology = TurkishMorphology.CreateWithDefaults();
+            TurkishMorphology morphology = TurkishMorphology.Builder()
+                .SetLexicon("Ahmet", "Yılmaz", "Mehmet", "Demir", "İstanbul", "Ankara", "İzmir",
+                    "TBMM", "Türk", "Telekom", "dün", "gitti", "yeni", "bir", "proje", "başlattı",
+                    "Ege", "incisi", "yasayı", "onayladı", "duyurusunu", "yaptı", "bugün", "toplandı")
+                .Build();
             PerceptronNer ner = new PerceptronNerTrainer(morphology)
                 .Train(training, training, 12, 0.1f);
 
