@@ -121,7 +121,7 @@ namespace ZemberekDotNet.Apps.Morphology
                 javaAnalyses.TryGetValue(si, out var javaWords);
                 if (javaWords == null || javaWords.Count == 0) continue;
 
-                List<WordAnalysis> dotNetWords = morphology.AnalyzeSentence(sentence);
+                    List<WordAnalysis> dotNetWords = DotNetAnalysisRunner.AnalyzeSentenceForJavaParity(morphology, sentence);
                 if (dotNetWords.Count != javaWords.Count)
                 {
                     result.TokenizationDiffs++;
@@ -179,7 +179,7 @@ namespace ZemberekDotNet.Apps.Morphology
                 javaAnalyses.TryGetValue(si, out var javaWords);
                 if (javaWords == null || javaWords.Count == 0) continue;
 
-                List<WordAnalysis> wordAnalyses = morphology.AnalyzeSentence(sentence);
+                    List<WordAnalysis> wordAnalyses = DotNetAnalysisRunner.AnalyzeSentenceForJavaParity(morphology, sentence);
                 if (wordAnalyses.Count != javaWords.Count)
                 {
                     result.TokenizationDiffs++;
@@ -190,7 +190,7 @@ namespace ZemberekDotNet.Apps.Morphology
                 SentenceAnalysis disambiguated;
                 try
                 {
-                    disambiguated = morphology.AnalyzeAndDisambiguate(sentence);
+                    disambiguated = morphology.Disambiguate(sentence, wordAnalyses);
                 }
                 catch
                 {

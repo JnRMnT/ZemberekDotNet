@@ -14,7 +14,7 @@
 		<IncludeSymbols>true</IncludeSymbols>
 	</PropertyGroup>
 	
-	<ItemGroup>
+		<Version>0.19.7</Version>
 		<ProjectReference Include="..\ZemberekDotNet.Core\ZemberekDotNet.Core.csproj" />
 	</ItemGroup>
 

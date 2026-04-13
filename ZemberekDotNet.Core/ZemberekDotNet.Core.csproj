@@ -14,7 +14,7 @@
 		<PackageTags>nlp machine-learning natural-language-processing turkish morphology language zemberek-nlp zemberek csharp nuget turkish-nlp dotnet-core csharp-nlp netstandard jvm-free</PackageTags>
 		<IncludeSymbols>true</IncludeSymbols>
 	</PropertyGroup>
-
+		<Version>0.19.7</Version>
 	<ItemGroup>
 		<PackageReference Include="log4net" Version="3.3.0" />
 	</ItemGroup>

@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using ZemberekDotNet.Core.Turkish;
 using ZemberekDotNet.Morphology;
 using ZemberekDotNet.Morphology.Analysis;
+using ZemberekDotNet.Morphology.Morphotactics;
 
 namespace ZemberekDotNet.Apps.Morphology.Parity
 {
@@ -33,7 +36,9 @@ namespace ZemberekDotNet.Apps.Morphology.Parity
 
                 try
                 {
-                    SentenceAnalysis sentenceAnalysis = morphology.AnalyzeAndDisambiguate(sentence);
+                    List<WordAnalysis> sentenceWordAnalyses = AnalyzeSentenceForJavaParity(morphology, sentence);
+
+                    SentenceAnalysis sentenceAnalysis = morphology.Disambiguate(sentence, sentenceWordAnalyses);
                     var words = new List<DotNetWordAnalysis>();
 
                     foreach (SentenceWordAnalysis swa in sentenceAnalysis)
@@ -65,6 +70,41 @@ namespace ZemberekDotNet.Apps.Morphology.Parity
             }
 
             return result;
+        }
+
+        public static List<WordAnalysis> AnalyzeSentenceForJavaParity(
+            TurkishMorphology morphology,
+            string sentence)
+        {
+            return morphology.AnalyzeSentence(sentence)
+                .Select(FilterForJavaParity)
+                .ToList();
+        }
+
+        private static WordAnalysis FilterForJavaParity(WordAnalysis analysis)
+        {
+            List<SingleAnalysis> analyses = analysis.GetAnalysisResults();
+            if (analyses.Count == 0)
+            {
+                return analysis;
+            }
+
+            List<SingleAnalysis> filtered = analyses
+                .Where(a => !IsJavaDisabledReciprocal(a))
+                .ToList();
+
+            if (filtered.Count == 0 || filtered.Count == analyses.Count)
+            {
+                return analysis;
+            }
+
+            return analysis.CopyFor(filtered);
+        }
+
+        private static bool IsJavaDisabledReciprocal(SingleAnalysis analysis)
+        {
+            return analysis.ContainsMorpheme(TurkishMorphotactics.recip)
+                && !analysis.GetDictionaryItem().HasAttribute(RootAttribute.Reciprocal);
         }
     }
 

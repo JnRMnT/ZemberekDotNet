@@ -13,7 +13,7 @@
 		<PackageTags>nlp machine-learning natural-language-processing turkish morphology language zemberek-nlp zemberek csharp nuget turkish-nlp dotnet-core csharp-nlp netstandard jvm-free language-model n-gram compression</PackageTags>
 		<IncludeSymbols>true</IncludeSymbols>
 	</PropertyGroup>
-
+		<Version>0.19.7</Version>
 	<ItemGroup>
 		<ProjectReference Include="..\ZemberekDotNet.Core\ZemberekDotNet.Core.csproj" />
 	</ItemGroup>
