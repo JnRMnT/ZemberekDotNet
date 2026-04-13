@@ -1,6 +1,7 @@
 using Commander.NET.Attributes;
 using System;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using ZemberekDotNet.Apps.Morphology.Parity;
 using ZemberekDotNet.Morphology;
@@ -87,7 +88,9 @@ namespace ZemberekDotNet.Apps.Morphology
             ResourceBootstrap.EnsureGlobalResourcesRoot();
 
             // Load sentences
-            string[] allLines = File.ReadAllLines(inputPath);
+            string[] allLines = File.ReadAllLines(inputPath)
+                .Select(s => s.TrimStart('\uFEFF'))
+                .ToArray();
             string[] sentences = allLines.Length > maxSentences
                 ? allLines[..maxSentences]
                 : allLines;

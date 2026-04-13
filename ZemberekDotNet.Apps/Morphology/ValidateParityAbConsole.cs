@@ -41,6 +41,9 @@ namespace ZemberekDotNet.Apps.Morphology
         [Parameter("--iterations", Description = "Perceptron training iteration count. Default: 2.")]
         int iterationCount = 2;
 
+        [Parameter("--train-ratio", Description = "Train split ratio for generated corpus. Range: (0,1]. Default: 0.8. Use 1.0 to train on all usable sentences (overfit mode).")]
+        double trainRatio = 0.8;
+
         [Parameter("--train-file", Description = "Optional explicit path for generated training file.")]
         string trainFilePath = "";
 
@@ -64,7 +67,9 @@ namespace ZemberekDotNet.Apps.Morphology
 
             ResourceBootstrap.EnsureGlobalResourcesRoot();
 
-            string[] allLines = File.ReadAllLines(inputPath);
+            string[] allLines = File.ReadAllLines(inputPath)
+                .Select(s => s.TrimStart('\uFEFF'))
+                .ToArray();
             string[] sentences = allLines.Length > maxSentences ? allLines[..maxSentences] : allLines;
 
             Console.WriteLine($"Processing {sentences.Length} sentence(s) from: {inputPath}");
@@ -112,7 +117,8 @@ namespace ZemberekDotNet.Apps.Morphology
                     javaAnalyses,
                     baselineMorphology,
                     trainFile,
-                    devFile);
+                    devFile,
+                    trainRatio);
 
                 if (corpusStats.TrainSentences == 0 || corpusStats.DevSentences == 0)
                 {
@@ -224,6 +230,12 @@ namespace ZemberekDotNet.Apps.Morphology
                 return false;
             }
 
+            if (trainRatio <= 0 || trainRatio > 1.0)
+            {
+                Console.Error.WriteLine("Error: --train-ratio must be in range (0, 1].");
+                return false;
+            }
+
             return true;
         }
 
@@ -232,7 +244,8 @@ namespace ZemberekDotNet.Apps.Morphology
             Dictionary<int, List<JavaWordAnalysis>> javaAnalyses,
             TurkishMorphology morphology,
             string trainFile,
-            string devFile)
+            string devFile,
+            double trainRatio)
         {
             var usableBlocks = new List<List<string>>();
 
@@ -328,19 +341,31 @@ namespace ZemberekDotNet.Apps.Morphology
                 usableBlocks.Add(block);
             }
 
-            int trainCount = (int)(usableBlocks.Count * 0.8);
-            if (trainCount <= 0 && usableBlocks.Count > 1)
-            {
-                trainCount = 1;
-            }
+            List<List<string>> trainBlocks;
+            List<List<string>> devBlocks;
 
-            if (trainCount >= usableBlocks.Count && usableBlocks.Count > 1)
+            if (trainRatio >= 1.0)
             {
-                trainCount = usableBlocks.Count - 1;
+                // Overfit mode for parity debugging: train and evaluate with the same usable set.
+                trainBlocks = new List<List<string>>(usableBlocks);
+                devBlocks = new List<List<string>>(usableBlocks);
             }
+            else
+            {
+                int trainCount = (int)(usableBlocks.Count * trainRatio);
+                if (trainCount <= 0 && usableBlocks.Count > 1)
+                {
+                    trainCount = 1;
+                }
 
-            var trainBlocks = usableBlocks.Take(trainCount).ToList();
-            var devBlocks = usableBlocks.Skip(trainCount).ToList();
+                if (trainCount >= usableBlocks.Count && usableBlocks.Count > 1)
+                {
+                    trainCount = usableBlocks.Count - 1;
+                }
+
+                trainBlocks = usableBlocks.Take(trainCount).ToList();
+                devBlocks = usableBlocks.Skip(trainCount).ToList();
+            }
 
             WriteBlocks(trainFile, trainBlocks);
             WriteBlocks(devFile, devBlocks);

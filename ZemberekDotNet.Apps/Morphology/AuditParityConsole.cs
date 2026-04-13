@@ -61,7 +61,9 @@ namespace ZemberekDotNet.Apps.Morphology
 
             ResourceBootstrap.EnsureGlobalResourcesRoot();
 
-            string[] allLines = File.ReadAllLines(inputPath);
+            string[] allLines = File.ReadAllLines(inputPath)
+                .Select(s => s.TrimStart('\uFEFF'))
+                .ToArray();
             string[] sentences = allLines.Length > maxSentences ? allLines[..maxSentences] : allLines;
             Console.WriteLine($"Auditing {sentences.Length} sentence(s) from: {inputPath}");
 

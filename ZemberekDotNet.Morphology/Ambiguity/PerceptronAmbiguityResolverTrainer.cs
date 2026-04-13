@@ -61,7 +61,9 @@ namespace ZemberekDotNet.Morphology.Ambiguity
                     }
                     numExamples++;
                     DecodeResult result = decoder.BestPath(sentence.AmbiguousAnalysis());
-                    if (sentence.BestAnalysis().Equals(result.BestParse))
+                    // Java List.equals compares sequence contents; C# List.Equals compares references.
+                    // Use SequenceEqual to avoid false mismatches and unnecessary model updates.
+                    if (sentence.BestAnalysis().SequenceEqual(result.BestParse))
                     {
                         continue;
                     }

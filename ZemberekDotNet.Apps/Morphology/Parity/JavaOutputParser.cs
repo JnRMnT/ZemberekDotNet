@@ -64,7 +64,7 @@ namespace ZemberekDotNet.Apps.Morphology.Parity
                 var entry = new JavaWordAnalysis
                 {
                     SentenceIndex = sentenceIndex,
-                    Word = parts[1],
+                    Word = parts[1].TrimStart('\uFEFF'),
                     BestAnalysis = parts[2],
                     AnalysisCount = count
                 };
