@@ -1,9 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>netstandard2.1</TargetFramework>
+		<TargetFrameworks>netstandard2.1;net8.0</TargetFrameworks>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>0.19.2</Version>
+		<Version>0.19.3</Version>
 		<PackageVersion>$(Version)</PackageVersion>
 		<Product>ZemberekDotNet</Product>
 		<Authors>JnRMnT</Authors>
@@ -46,6 +46,7 @@
 			<Pack>true</Pack>
 			<PackagePath>contentFiles\any\any\Resources</PackagePath>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
 		</Content>
 	</ItemGroup>
 </Project>

@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+#if NET8_0_OR_GREATER
+using System.Text.Json;
+#else
+using System.Runtime.Serialization.Formatters.Binary;
+#endif
 
 namespace ZemberekDotNet.Normalization.Deasciifier
 {
@@ -178,6 +182,11 @@ namespace ZemberekDotNet.Normalization.Deasciifier
 
         public static void SavePatternTable(string filename)
         {
+#if NET8_0_OR_GREATER
+            throw new PlatformNotSupportedException(
+                "SavePatternTable uses BinaryFormatter which is not supported on .NET 8+. " +
+                "Use the JSON-format file (turkishPatternTable.json) instead.");
+#else
             try
             {
                 using (FileStream fileStream = new FileStream(filename, FileMode.Create, FileAccess.Write, FileShare.Write))
@@ -190,6 +199,7 @@ namespace ZemberekDotNet.Normalization.Deasciifier
             {
                 Console.Error.WriteLine(e);
             }
+#endif
         }
 
         public void SetAsciiString(string asciiString)
@@ -398,12 +408,22 @@ namespace ZemberekDotNet.Normalization.Deasciifier
                 return;
             }
             turkishPatternTable = new Dictionary<string, Dictionary<string, int>>();
+#if NET8_0_OR_GREATER
+            try
+            {
+                using FileStream fileStream = File.OpenRead("Resources/patterns/turkishPatternTable.json");
+                turkishPatternTable = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, int>>>(fileStream)
+                    ?? new Dictionary<string, Dictionary<string, int>>();
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine(e);
+            }
+#else
             using (FileStream fileStream = File.OpenRead("Resources/patterns/turkishPatternTable"))
             {
                 try
                 {
-                    // net8+ disables BinaryFormatter by default. Enable it for this legacy table.
-                    AppContext.SetSwitch("System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization", true);
                     BinaryFormatter binaryFormatter = new BinaryFormatter();
                     turkishPatternTable = (Dictionary<string, Dictionary<string, int>>)binaryFormatter.Deserialize(fileStream);
                 }
@@ -412,6 +432,7 @@ namespace ZemberekDotNet.Normalization.Deasciifier
                     Console.Error.WriteLine(e);
                 }
             }
+#endif
         }
 
     }

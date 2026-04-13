@@ -95,6 +95,7 @@ The full developer documentation is published on the **[GitHub Wiki](https://git
 | [Text Dictionary Rules](https://github.com/JnRMnT/ZemberekDotNet/wiki/text-dictionary-rules) | Lexicon format, rule syntax, and custom dictionaries |
 | [Java vs .NET Side-by-Side](https://github.com/JnRMnT/ZemberekDotNet/wiki/java-dotnet-side-by-side) | API name mapping between the Java and .NET libraries |
 | [FAQ](https://github.com/JnRMnT/ZemberekDotNet/wiki/faq) | Common questions: licensing, performance, .NET Framework limits |
+| [2026 SOTA Roadmap](docs/sota-roadmap-2026.md) | Phased improvement plan: parity tooling, performance sprint, Native AOT, neural disambiguation |
 
 Wiki source lives in the [`docs/`](docs/) folder and is auto-synced to the wiki on each local build.
 

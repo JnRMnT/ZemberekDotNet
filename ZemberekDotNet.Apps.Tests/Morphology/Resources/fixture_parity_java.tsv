@@ -1,0 +1,29 @@
+# ZemberekDotNet Parity Validation — Synthetic Fixture
+# Format: sentence_index <TAB> word <TAB> best_analysis <TAB> analysis_count
+#
+# This fixture is deliberately synthetic: it is used solely to unit-test
+# ParityDiffEngine categorisation logic WITHOUT requiring a live Java process.
+#
+# Mismatch categories covered:
+#   FullMatch        — s0: identical analyses on both sides
+#   LexiconGap       — s1: word unknown on Java side (count=0)
+#   BestAnalysisDiff — s2: analysis strings differ
+#   AnalysisCountDiff— s3: same best but different candidate count
+#   BothUnknown      — s4: both sides return count=0
+#   TokenizationDiff — tested in-code with separate word lists (no TSV row needed)
+#
+# Sentence 0 — all words match
+0	kitap	kitap:Noun+A3sg+Nom	1
+0	güzel	güzel:Adj	2
+#
+# Sentence 1 — LexiconGap: "blogging" unknown on Java side
+1	blogging	?	0
+#
+# Sentence 2 — BestAnalysisDiff: "geldi" analyses diverge
+2	geldi	gel:Verb+Past+A3sg	1
+#
+# Sentence 3 — AnalysisCountDiff: same best but different candidate count
+3	araba	araba:Noun+A3sg+Nom	1
+#
+# Sentence 4 — BothUnknown
+4	xyzqrst	?	0
