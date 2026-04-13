@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.1;net8.0</TargetFrameworks>
-		<Version>0.19.6</Version>
+		<Version>0.19.8</Version>
 		<Authors>JnRMnT</Authors>
 		<Product>ZemberekDotNet</Product>
 		<Description>Native .NET Standard 2.1. No Java or JVM required. All ZemberekDotNet modules in one package: Turkish NLP including morphological analysis, tokenization, normalization, NER, classification and language identification.</Description>
@@ -13,7 +13,6 @@
 		<PackageTags>nlp machine-learning natural-language-processing turkish morphology language zemberek-nlp zemberek csharp nuget turkish-nlp dotnet-core csharp-nlp netstandard jvm-free</PackageTags>
 		<IncludeSymbols>true</IncludeSymbols>
 	</PropertyGroup>
-		<Version>0.19.7</Version>
 	<ItemGroup>
 		<ProjectReference Include="..\ZemberekDotNet.Classification\ZemberekDotNet.Classification.csproj">
 			<IncludeAssets>all</IncludeAssets>

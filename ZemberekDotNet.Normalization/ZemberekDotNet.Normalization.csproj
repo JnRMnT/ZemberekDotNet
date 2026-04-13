@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.1;net8.0</TargetFrameworks>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>0.19.6</Version>
+		<Version>0.19.8</Version>
 		<PackageProjectUrl>https://github.com/JnRMnT/ZemberekDotNet</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/JnRMnT/ZemberekDotNet</RepositoryUrl>
 		<Product>ZemberekDotNet</Product>
@@ -14,7 +14,7 @@
 		<IncludeSymbols>true</IncludeSymbols>
 	</PropertyGroup>
 
-		<Version>0.19.7</Version>
+	<ItemGroup>
 		<PackageReference Include="System.Collections.Immutable" Version="8.0.0" />
 		<PackageReference Include="System.Text.Json" Version="8.0.5" Condition="'$(TargetFramework)' == 'netstandard2.1'" />
 	</ItemGroup>

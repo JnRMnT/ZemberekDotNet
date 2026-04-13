@@ -286,8 +286,18 @@ namespace ZemberekDotNet.Morphology.Analysis
             public override int GetHashCode()
             {
                 int result = morpheme.GetHashCode();
-                result = 31 * result + surface.GetHashCode();
+                result = 31 * result + GetJavaStringHash(surface);
                 return result;
+            }
+
+            private static int GetJavaStringHash(string value)
+            {
+                int hash = 0;
+                for (int i = 0; i < value.Length; i++)
+                {
+                    hash = 31 * hash + value[i];
+                }
+                return hash;
             }
         }
 
@@ -538,7 +548,7 @@ namespace ZemberekDotNet.Morphology.Analysis
             {
                 return false;
             }
-            return morphemeDataList.Equals(that.morphemeDataList);
+            return morphemeDataList.SequenceEqual(that.morphemeDataList);
         }
 
         public override int GetHashCode()
@@ -548,8 +558,18 @@ namespace ZemberekDotNet.Morphology.Analysis
                 return hash;
             }
             int result = item.GetHashCode();
-            result = 31 * result + morphemeDataList.GetHashCode();
+            result = 31 * result + GetJavaListHashCode(morphemeDataList);
             result = 31 * result + hash;
+            return result;
+        }
+
+        private static int GetJavaListHashCode(IReadOnlyList<MorphemeData> items)
+        {
+            int result = 1;
+            for (int i = 0; i < items.Count; i++)
+            {
+                result = 31 * result + (items[i]?.GetHashCode() ?? 0);
+            }
             return result;
         }
     }

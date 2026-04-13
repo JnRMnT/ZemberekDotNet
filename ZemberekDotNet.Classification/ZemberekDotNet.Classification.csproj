@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.1;net8.0</TargetFrameworks>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>0.19.6</Version>
+		<Version>0.19.8</Version>
 		<Product>ZemberekDotNet</Product>
 		<Authors>JnRMnT</Authors>
 		<PackageProjectUrl>https://github.com/JnRMnT/ZemberekDotNet</PackageProjectUrl>
@@ -13,8 +13,8 @@
 		<PackageTags>nlp machine-learning natural-language-processing turkish morphology language zemberek-nlp zemberek csharp nuget turkish-nlp dotnet-core csharp-nlp netstandard jvm-free text-classification fasttext sentence-classification</PackageTags>
 		<IncludeSymbols>true</IncludeSymbols>
 	</PropertyGroup>
-	
-		<Version>0.19.7</Version>
+
+	<ItemGroup>
 		<ProjectReference Include="..\ZemberekDotNet.Core\ZemberekDotNet.Core.csproj" />
 	</ItemGroup>
 

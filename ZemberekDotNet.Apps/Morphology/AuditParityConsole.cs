@@ -6,7 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using ZemberekDotNet.Apps.Morphology.Parity;
+using ZemberekDotNet.Core.Collections;
+using ZemberekDotNet.Core.Data;
 using ZemberekDotNet.Morphology;
+using ZemberekDotNet.Morphology.Ambiguity;
 using ZemberekDotNet.Morphology.Analysis;
 
 namespace ZemberekDotNet.Apps.Morphology
@@ -48,6 +51,9 @@ namespace ZemberekDotNet.Apps.Morphology
 
         [Parameter("--top", "-t", Description = "Show top N gap patterns in console summary. Default: 20.")]
         int topPatterns = 20;
+
+        [Parameter("--debug-miss-count", Description = "Print feature-level debug for the first N DISAMBIG_MISS entries. Default: 0.")]
+        int debugMissCount = 0;
 
         public override string Description() =>
             "Audits Java vs .NET parity at the candidate-list level. " +
@@ -96,6 +102,11 @@ namespace ZemberekDotNet.Apps.Morphology
                 }
 
                 PrintSummary(result);
+
+                if (debugMissCount > 0)
+                {
+                    PrintDisambigDebug(morphology, sentences, javaAnalyses, result);
+                }
             }
             finally
             {
@@ -227,7 +238,7 @@ namespace ZemberekDotNet.Apps.Morphology
                     if (javaUnknown != dotNetUnknown)
                     {
                         result.LexiconGap++;
-                        result.AddGap("LexiconGap", jw.Word, jw.BestAnalysis, dotNetBest.FormatLexical(), sentence);
+                        result.AddGap("LexiconGap", jw.Word, jw.BestAnalysis, dotNetBest.FormatLexical(), sentence, si, wi);
                         continue;
                     }
 
@@ -248,14 +259,14 @@ namespace ZemberekDotNet.Apps.Morphology
                     if (javaBestInCandidates)
                     {
                         result.DisambigMiss++;
-                        result.AddMiss("DisambigMiss", jw.Word, javaBest, dotNetBestStr, sentence);
+                        result.AddMiss("DisambigMiss", jw.Word, javaBest, dotNetBestStr, sentence, si, wi);
                     }
                     else
                     {
                         result.CandidateGap++;
                         // Derive a pattern key from the Java analysis suffix for grouping
                         string pattern = DerivePattern(javaBest);
-                        result.AddGap(pattern, jw.Word, javaBest, dotNetBestStr, sentence);
+                        result.AddGap(pattern, jw.Word, javaBest, dotNetBestStr, sentence, si, wi);
                     }
                 }
             }
@@ -324,6 +335,232 @@ namespace ZemberekDotNet.Apps.Morphology
             }
         }
 
+        private void PrintDisambigDebug(
+            TurkishMorphology morphology,
+            string[] sentences,
+            Dictionary<int, List<JavaWordAnalysis>> javaAnalyses,
+            AuditResult result)
+        {
+            PerceptronAmbiguityResolver resolver = PerceptronAmbiguityResolver.FromModelFile("Resources/tr/ambiguity/model-compressed");
+            var extractor = new PerceptronAmbiguityResolver.FeatureExtractor(false);
+            IWeightLookup model = resolver.GetModel();
+
+            Console.WriteLine();
+            Console.WriteLine("=== Disambig Debug ===");
+
+            foreach (GapEntry miss in result.MissEntries.Take(debugMissCount))
+            {
+                if (!javaAnalyses.TryGetValue(miss.SentenceIndex, out List<JavaWordAnalysis> javaWords))
+                {
+                    continue;
+                }
+
+                string sentence = sentences[miss.SentenceIndex];
+                List<WordAnalysis> wordAnalyses = DotNetAnalysisRunner.AnalyzeSentenceForJavaParity(morphology, sentence);
+                List<SingleAnalysis> javaSequence = BuildJavaBestSequence(wordAnalyses, javaWords);
+                if (javaSequence == null)
+                {
+                    Console.WriteLine($"Skipped debug for sentence {miss.SentenceIndex}: could not reconstruct Java best sequence.");
+                    continue;
+                }
+
+                List<SingleAnalysis> dotNetSequence = resolver.Disambiguate(sentence, wordAnalyses).BestAnalysis();
+                IntValueMap<string> javaFeatures = AggregateAffectedFeatures(javaSequence, miss.WordIndex, extractor);
+                IntValueMap<string> dotNetFeatures = AggregateAffectedFeatures(dotNetSequence, miss.WordIndex, extractor);
+
+                float javaScore = ScoreFeatures(javaFeatures, model);
+                float dotNetScore = ScoreFeatures(dotNetFeatures, model);
+
+                Console.WriteLine();
+                Console.WriteLine($"Sentence {miss.SentenceIndex}, word {miss.WordIndex}: {miss.Word}");
+                Console.WriteLine($"  Text   : {miss.Sentence}");
+                Console.WriteLine($"  Java   : {miss.JavaBest}");
+                Console.WriteLine($"  .NET   : {miss.DotNetBest}");
+                Console.WriteLine($"  Scores : java={javaScore:F3}  dotnet={dotNetScore:F3}  delta={(javaScore - dotNetScore):F3}");
+
+                List<SingleAnalysis> candidates = wordAnalyses[miss.WordIndex].GetAnalysisResults();
+                int javaIndex = FindAnalysisIndex(candidates, miss.JavaBest);
+                int dotNetIndex = FindAnalysisIndex(candidates, miss.DotNetBest);
+                Console.WriteLine($"  Candidate order: javaIndex={javaIndex}  dotnetIndex={dotNetIndex}");
+                for (int i = 0; i < candidates.Count; i++)
+                {
+                    string marker = i == javaIndex && i == dotNetIndex ? "JD"
+                        : i == javaIndex ? "J "
+                        : i == dotNetIndex ? "D "
+                        : "  ";
+                    Console.WriteLine($"    [{i,2}] {marker} {candidates[i].FormatLexical()}");
+                }
+
+                foreach (TrigramDebug trigram in BuildAffectedTrigramDebug(javaSequence, dotNetSequence, miss.WordIndex, extractor, model))
+                {
+                    Console.WriteLine($"  Trigram {trigram.Label}");
+                    Console.WriteLine($"    Java  : {trigram.JavaLabel}  score={trigram.JavaScore:F3}");
+                    Console.WriteLine($"    .NET  : {trigram.DotNetLabel}  score={trigram.DotNetScore:F3}");
+                }
+
+                Console.WriteLine("  Top feature deltas (java - dotnet):");
+                foreach (FeatureDelta delta in GetTopFeatureDeltas(javaFeatures, dotNetFeatures, model, 12))
+                {
+                    Console.WriteLine(
+                        $"    {delta.Key,-40} deltaCount={delta.DeltaCount,3} weight={delta.Weight,8:F3} deltaScore={delta.DeltaScore,8:F3}");
+                }
+            }
+        }
+
+        private static List<SingleAnalysis> BuildJavaBestSequence(
+            List<WordAnalysis> wordAnalyses,
+            List<JavaWordAnalysis> javaWords)
+        {
+            if (wordAnalyses.Count != javaWords.Count)
+            {
+                return null;
+            }
+
+            var result = new List<SingleAnalysis>(wordAnalyses.Count);
+            for (int i = 0; i < wordAnalyses.Count; i++)
+            {
+                JavaWordAnalysis javaWord = javaWords[i];
+                if (javaWord.AnalysisCount == 0 || javaWord.BestAnalysis == "?")
+                {
+                    result.Add(SingleAnalysis.Unknown(wordAnalyses[i].GetInput()));
+                    continue;
+                }
+
+                SingleAnalysis match = wordAnalyses[i]
+                    .GetAnalysisResults()
+                    .FirstOrDefault(a => string.Equals(a.FormatLexical(), javaWord.BestAnalysis, StringComparison.Ordinal));
+
+                if (match == null)
+                {
+                    return null;
+                }
+
+                result.Add(match);
+            }
+
+            return result;
+        }
+
+        private static IntValueMap<string> AggregateAffectedFeatures(
+            List<SingleAnalysis> sequence,
+            int wordIndex,
+            PerceptronAmbiguityResolver.FeatureExtractor extractor)
+        {
+            var aggregate = new IntValueMap<string>();
+            foreach (SingleAnalysis[] trigram in GetAffectedTrigrams(sequence, wordIndex))
+            {
+                IntValueMap<string> features = extractor.ExtractFromTrigram(trigram);
+                foreach (IntValueMap<string>.Entry<string> entry in features.GetAsEntryList())
+                {
+                    aggregate.IncrementByAmount(entry.key, entry.count);
+                }
+            }
+            return aggregate;
+        }
+
+        private static IEnumerable<TrigramDebug> BuildAffectedTrigramDebug(
+            List<SingleAnalysis> javaSequence,
+            List<SingleAnalysis> dotNetSequence,
+            int wordIndex,
+            PerceptronAmbiguityResolver.FeatureExtractor extractor,
+            IWeightLookup model)
+        {
+            List<SingleAnalysis[]> javaTrigrams = GetAffectedTrigrams(javaSequence, wordIndex).ToList();
+            List<SingleAnalysis[]> dotNetTrigrams = GetAffectedTrigrams(dotNetSequence, wordIndex).ToList();
+
+            for (int i = 0; i < javaTrigrams.Count; i++)
+            {
+                IntValueMap<string> javaFeatures = extractor.ExtractFromTrigram(javaTrigrams[i]);
+                IntValueMap<string> dotNetFeatures = extractor.ExtractFromTrigram(dotNetTrigrams[i]);
+                yield return new TrigramDebug
+                {
+                    Label = $"#{i + 1}",
+                    JavaLabel = string.Join(" | ", javaTrigrams[i].Select(FormatAnalysisLabel)),
+                    DotNetLabel = string.Join(" | ", dotNetTrigrams[i].Select(FormatAnalysisLabel)),
+                    JavaScore = ScoreFeatures(javaFeatures, model),
+                    DotNetScore = ScoreFeatures(dotNetFeatures, model)
+                };
+            }
+        }
+
+        private static IEnumerable<SingleAnalysis[]> GetAffectedTrigrams(List<SingleAnalysis> sequence, int wordIndex)
+        {
+            List<SingleAnalysis> padded = new List<SingleAnalysis>
+            {
+                SingleAnalysis.Unknown("<s>"),
+                SingleAnalysis.Unknown("<s>")
+            };
+            padded.AddRange(sequence);
+            padded.Add(SingleAnalysis.Unknown("</s>"));
+
+            for (int currentIndex = wordIndex + 2; currentIndex <= wordIndex + 4 && currentIndex < padded.Count; currentIndex++)
+            {
+                yield return new[]
+                {
+                    padded[currentIndex - 2],
+                    padded[currentIndex - 1],
+                    padded[currentIndex]
+                };
+            }
+        }
+
+        private static float ScoreFeatures(IntValueMap<string> features, IWeightLookup model)
+        {
+            float score = 0;
+            foreach (IntValueMap<string>.Entry<string> entry in features.GetAsEntryList())
+            {
+                score += model.Get(entry.key) * entry.count;
+            }
+            return score;
+        }
+
+        private static List<FeatureDelta> GetTopFeatureDeltas(
+            IntValueMap<string> javaFeatures,
+            IntValueMap<string> dotNetFeatures,
+            IWeightLookup model,
+            int take)
+        {
+            HashSet<string> keys = new HashSet<string>(javaFeatures.GetKeyList());
+            keys.UnionWith(dotNetFeatures.GetKeyList());
+
+            return keys
+                .Select(key =>
+                {
+                    int deltaCount = javaFeatures.Get(key) - dotNetFeatures.Get(key);
+                    float weight = model.Get(key);
+                    return new FeatureDelta
+                    {
+                        Key = key,
+                        DeltaCount = deltaCount,
+                        Weight = weight,
+                        DeltaScore = deltaCount * weight
+                    };
+                })
+                .Where(x => x.DeltaCount != 0)
+                .OrderByDescending(x => Math.Abs(x.DeltaScore))
+                .ThenByDescending(x => Math.Abs(x.Weight))
+                .Take(take)
+                .ToList();
+        }
+
+        private static string FormatAnalysisLabel(SingleAnalysis analysis)
+        {
+            return analysis.IsUnknown() ? "?" : analysis.FormatLexical();
+        }
+
+        private static int FindAnalysisIndex(List<SingleAnalysis> analyses, string lexical)
+        {
+            for (int i = 0; i < analyses.Count; i++)
+            {
+                if (string.Equals(analyses[i].FormatLexical(), lexical, StringComparison.Ordinal))
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
         // ─── Validation ───────────────────────────────────────────────────────────
 
         private bool ValidateArgs()
@@ -360,7 +597,7 @@ namespace ZemberekDotNet.Apps.Morphology
         public List<GapEntry> GapEntries { get; set; } = new List<GapEntry>();
         public List<GapEntry> MissEntries { get; set; } = new List<GapEntry>();
 
-        public void AddGap(string pattern, string word, string javaBest, string dotNetBest, string sentence)
+        public void AddGap(string pattern, string word, string javaBest, string dotNetBest, string sentence, int sentenceIndex, int wordIndex)
         {
             GapEntries.Add(new GapEntry
             {
@@ -368,11 +605,13 @@ namespace ZemberekDotNet.Apps.Morphology
                 Word = word,
                 JavaBest = javaBest,
                 DotNetBest = dotNetBest,
-                Sentence = sentence
+                Sentence = sentence,
+                SentenceIndex = sentenceIndex,
+                WordIndex = wordIndex
             });
         }
 
-        public void AddMiss(string pattern, string word, string javaBest, string dotNetBest, string sentence)
+        public void AddMiss(string pattern, string word, string javaBest, string dotNetBest, string sentence, int sentenceIndex, int wordIndex)
         {
             MissEntries.Add(new GapEntry
             {
@@ -380,7 +619,9 @@ namespace ZemberekDotNet.Apps.Morphology
                 Word = word,
                 JavaBest = javaBest,
                 DotNetBest = dotNetBest,
-                Sentence = sentence
+                Sentence = sentence,
+                SentenceIndex = sentenceIndex,
+                WordIndex = wordIndex
             });
         }
     }
@@ -392,5 +633,24 @@ namespace ZemberekDotNet.Apps.Morphology
         public string JavaBest { get; set; }
         public string DotNetBest { get; set; }
         public string Sentence { get; set; }
+        public int SentenceIndex { get; set; }
+        public int WordIndex { get; set; }
+    }
+
+    public class FeatureDelta
+    {
+        public string Key { get; set; }
+        public int DeltaCount { get; set; }
+        public float Weight { get; set; }
+        public float DeltaScore { get; set; }
+    }
+
+    public class TrigramDebug
+    {
+        public string Label { get; set; }
+        public string JavaLabel { get; set; }
+        public string DotNetLabel { get; set; }
+        public float JavaScore { get; set; }
+        public float DotNetScore { get; set; }
     }
 }

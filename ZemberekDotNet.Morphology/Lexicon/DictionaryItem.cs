@@ -245,7 +245,17 @@ namespace ZemberekDotNet.Morphology.Lexicon
 
         public override int GetHashCode()
         {
-            return id.GetHashCode();
+            return GetJavaStringHash(id);
+        }
+
+        private static int GetJavaStringHash(string value)
+        {
+            int hash = 0;
+            for (int i = 0; i < value.Length; i++)
+            {
+                hash = 31 * hash + value[i];
+            }
+            return hash;
         }
     }
 }

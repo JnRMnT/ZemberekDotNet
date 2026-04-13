@@ -125,12 +125,22 @@ namespace ZemberekDotNet.Morphology.Morphotactics
 
         public override int GetHashCode()
         {
-            return Id.GetHashCode();
+            return GetJavaStringHash(Id);
         }
 
         public override string ToString()
         {
             return Name + ':' + Id;
+        }
+
+        private static int GetJavaStringHash(string value)
+        {
+            int hash = 0;
+            for (int i = 0; i < value.Length; i++)
+            {
+                hash = 31 * hash + value[i];
+            }
+            return hash;
         }
     }
 }
