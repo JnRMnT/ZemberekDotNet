@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.1;net8.0</TargetFrameworks>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>0.19.5</Version>
+		<Version>0.19.6</Version>
 		<PackageVersion>$(Version)</PackageVersion>
 		<Product>ZemberekDotNet</Product>
 		<Authors>JnRMnT</Authors>

@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.1;net8.0</TargetFrameworks>
-		<Version>0.19.5</Version>
+		<Version>0.19.6</Version>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>JnRMnT</Authors>
 		<Product>ZemberekDotNet</Product>

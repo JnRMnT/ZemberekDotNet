@@ -158,6 +158,8 @@ namespace ZemberekDotNet.Apps.Morphology
             Console.WriteLine($"  Words      : {report.TotalWords}");
             Console.WriteLine($"  Match      : {report.MatchingWords} ({report.MatchRatePct:F1}%)");
             Console.WriteLine($"  Mismatch   : {report.MismatchingWords}");
+            if (report.BothUnknownWords > 0)
+                Console.WriteLine($"  BothUnknown: {report.BothUnknownWords} (counted as match)");
 
             if (report.MismatchCounts.Count > 0)
             {

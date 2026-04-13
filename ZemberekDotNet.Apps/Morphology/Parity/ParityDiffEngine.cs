@@ -127,6 +127,10 @@ namespace ZemberekDotNet.Apps.Morphology.Parity
                 if (match)
                 {
                     report.MatchingWords++;
+                    // Track BothUnknown separately even though it counts as a match.
+                    bool jUnk = jCount == 0 || jBest == "?";
+                    bool dUnk = dCount == 0 || dBest == "?";
+                    if (jUnk && dUnk) report.BothUnknownWords++;
                 }
                 else
                 {
@@ -148,8 +152,9 @@ namespace ZemberekDotNet.Apps.Morphology.Parity
             bool jUnknown = jCount == 0 || jBest == "?";
             bool dUnknown = dCount == 0 || dBest == "?";
 
+            // Both systems agree the word is unknown — treat as a match.
             if (jUnknown && dUnknown)
-                return MismatchCategory.BothUnknown;
+                return null;
 
             if (jUnknown != dUnknown)
                 return MismatchCategory.LexiconGap;

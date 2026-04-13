@@ -28,7 +28,7 @@ namespace ZemberekDotNet.Morphology.Analysis.TR
         {
             try
             {
-                return new KeyValueReader("=", "##").LoadFromFile(resource, "utf-8");
+                return new KeyValueReader("=", "##").LoadFromFile(IOs.ResolvePath(resource), "utf-8");
             }
             catch (IOException e)
             {

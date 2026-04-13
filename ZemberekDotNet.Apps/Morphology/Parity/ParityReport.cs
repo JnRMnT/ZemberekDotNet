@@ -22,6 +22,9 @@ namespace ZemberekDotNet.Apps.Morphology.Parity
         /// <summary>Counts per <see cref="MismatchCategory"/> string key.</summary>
         public Dictionary<string, int> MismatchCounts { get; set; } = new Dictionary<string, int>();
 
+        /// <summary>Words where both Java and .NET returned unknown — counted as matches.</summary>
+        public int BothUnknownWords { get; set; }
+
         /// <summary>Per-sentence detail. May be empty when only a summary is requested.</summary>
         public List<SentenceParity> Sentences { get; set; } = new List<SentenceParity>();
     }
